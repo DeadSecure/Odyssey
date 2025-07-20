@@ -1,0 +1,103 @@
+[
+  {
+    "name": "Sony",
+    "domain": "https://www.sony.com",
+    "restriction": "Limited product and service access for Iranian IPs; no direct store support"
+  },
+  {
+    "name": "PlayStation Network (PSN)",
+    "domain": "https://www.playstation.com",
+    "restriction": "Iran not supported in PSN region list; access via VPN or alternate regions required"
+  },
+  {
+    "name": "Xbox",
+    "domain": "https://www.xbox.com",
+    "restriction": "Xbox Live not officially available in Iran; geo-restrictions on some services"
+  },
+  {
+    "name": "Microsoft (Gaming Services)",
+    "domain": "https://www.microsoft.com",
+    "restriction": "Iran is not a supported region for Xbox/Microsoft Store; IP blocks in place"
+  },
+  {
+    "name": "Twitch",
+    "domain": "https://www.twitch.tv",
+    "restriction": "Access partially blocked or throttled in Iran; payout system not available"
+  },
+  {
+    "name": "Steam",
+    "domain": "https://store.steampowered.com",
+    "restriction": "Iran not in official region list; wallet loading and purchase issues for Iranian users"
+  },
+  {
+    "name": "Epic Games",
+    "domain": "https://www.epicgames.com",
+    "restriction": "No official support for Iranian users; payment and account creation issues reported"
+  },
+  {
+    "name": "EA Games (Origin)",
+    "domain": "https://www.ea.com",
+    "restriction": "Access limited; EA Help confirms Iran is unsupported; payment restrictions apply"
+  },
+  {
+    "name": "Blizzard",
+    "domain": "https://www.blizzard.com",
+    "restriction": "Accounts from Iran restricted; many features (Battle.net, purchases) blocked"
+  },
+  {
+    "name": "Riot Games",
+    "domain": "https://www.riotgames.com",
+    "restriction": "League of Legends, Valorant blocked in Iran; users see sanction-related error messages"
+  },
+  {
+    "name": "Supercell",
+    "domain": "https://supercell.com",
+    "restriction": "Games like Clash of Clans and Clash Royale blocked for Iranian users, including purchases"
+  },
+  {
+    "name": "Respawn Entertainment",
+    "domain": "https://www.respawn.com",
+    "restriction": "Apex Legends subject to EA's geo-blocking; Iranian users locked out"
+  },
+  {
+    "name": "Capcom",
+    "domain": "https://www.capcom.com",
+    "restriction": "Access to Street Fighter and other titles blocked; Iranian IPs restricted"
+  },
+  {
+    "name": "Activision",
+    "domain": "https://www.activision.com",
+    "restriction": "Call of Duty Mobile blocks Iranian accounts; VPN use may trigger bans"
+  },
+  {
+    "name": "Psyonix",
+    "domain": "https://www.psyonix.com",
+    "restriction": "Rocket League inaccessible from Iran; online services disabled"
+  },
+  {
+    "name": "Digital Extremes",
+    "domain": "https://www.digitalextremes.com",
+    "restriction": "Warframe blocked in Iran; access and account creation restricted"
+  },
+  {
+    "name": "Amazon Games",
+    "domain": "https://www.amazongames.com",
+    "restriction": "Iranian IPs blocked from accessing certain game titles"
+  },
+  {
+    "name": "ArenaNet",
+    "domain": "https://www.arena.net",
+    "restriction": "Guild Wars and Guild Wars 2 region-blocked; IP access blocked for Iran"
+  },
+  {
+    "name": "Square Enix",
+    "domain": "https://www.square-enix.com",
+    "restriction": "Various games region-blocked; access from Iran often denied"
+  },
+  {
+    "name": "Amazon Web Services (AWS)",
+    "domain": "https://aws.amazon.com",
+    "restriction": "Backends for games and services inaccessible from Iran due to sanctions"
+  }
+]
+

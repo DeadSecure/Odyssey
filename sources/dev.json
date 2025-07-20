@@ -1,0 +1,123 @@
+[
+  {
+    "name": "GitHub",
+    "domain": "https://github.com",
+    "restriction": "Previously restricted private repos; OFAC license now allows limited access"
+  },
+  {
+    "name": "GitLab",
+    "domain": "https://gitlab.com",
+    "restriction": "IP-based access restrictions still apply for Iranian users"
+  },
+  {
+    "name": "Google Developers",
+    "domain": "https://developers.google.com",
+    "restriction": "Blocked or limited access to documentation and downloads for some tools"
+  },
+  {
+    "name": "Android Studio & Google Play Console",
+    "domain": "https://developer.android.com",
+    "restriction": "Downloads blocked; Play Console inaccessible from Iran"
+  },
+  {
+    "name": "Firebase",
+    "domain": "https://firebase.google.com",
+    "restriction": "Access blocked for Iranian IPs"
+  },
+  {
+    "name": "Google Cloud Platform",
+    "domain": "https://cloud.google.com",
+    "restriction": "Full access blocked in Iran due to U.S. sanctions"
+  },
+  {
+    "name": "Docker Hub",
+    "domain": "https://hub.docker.com",
+    "restriction": "Download and login services restricted based on Iranian IPs"
+  },
+  {
+    "name": "Oracle Developer Tools",
+    "domain": "https://developer.oracle.com",
+    "restriction": "Java and developer downloads blocked for Iranian IPs"
+  },
+  {
+    "name": "Adobe Developer Tools",
+    "domain": "https://developer.adobe.com",
+    "restriction": "Blocked for Iranian users including Creative Cloud access"
+  },
+  {
+    "name": "Microsoft Azure",
+    "domain": "https://azure.microsoft.com",
+    "restriction": "Blocked for Iranian users due to OFAC sanctions"
+  },
+  {
+    "name": "Figma",
+    "domain": "https://www.figma.com",
+    "restriction": "Access restricted based on IP and payment info"
+  },
+  {
+    "name": "OpenAI API / ChatGPT",
+    "domain": "https://platform.openai.com",
+    "restriction": "Access blocked for Iranian IPs; API keys deactivated"
+  },
+  {
+    "name": "Adobe Flash Tools",
+    "domain": "https://www.adobe.com/products/flash.html",
+    "restriction": "Download access blocked for Iranian IPs"
+  },
+  {
+    "name": "ClamAV",
+    "domain": "https://www.clamav.net",
+    "restriction": "Reported download restrictions for Iranian IPs"
+  },
+  {
+    "name": "SendGrid",
+    "domain": "https://sendgrid.com",
+    "restriction": "Account creation and services blocked in Iran"
+  },
+  {
+    "name": "Mailgun",
+    "domain": "https://www.mailgun.com",
+    "restriction": "Blocked access for users in Iran due to sanctions"
+  },
+  {
+    "name": "Envato / CodeCanyon",
+    "domain": "https://codecanyon.net",
+    "restriction": "Purchase and account services blocked for Iranian users"
+  },
+  {
+    "name": "Coursera",
+    "domain": "https://www.coursera.org",
+    "restriction": "Restricted course access and certification for Iranian users"
+  },
+  {
+    "name": "JetBrains",
+    "domain": "https://www.jetbrains.com",
+    "restriction": "Account creation and product downloads blocked from Iran"
+  },
+  {
+    "name": "Microsoft Visual Studio",
+    "domain": "https://visualstudio.microsoft.com",
+    "restriction": "Download and licensing services blocked for Iranian IPs"
+  },
+  {
+    "name": "Google Analytics",
+    "domain": "https://analytics.google.com",
+    "restriction": "Service usage restricted; blocked sign-up from Iranian IPs"
+  },
+  {
+    "name": "CentOS Repositories",
+    "domain": "https://centos.org",
+    "restriction": "Mirror access blocked or throttled for Iranian IPs"
+  },
+  {
+    "name": "Nvidia Experience",
+    "domain": "https://www.nvidia.com",
+    "restriction": "Developer drivers and SDKs restricted for Iranian users"
+  },
+  {
+    "name": "Spotify Developer Tools",
+    "domain": "https://developer.spotify.com",
+    "restriction": "Access blocked from Iranian IPs; API use prohibited"
+  }
+]
+

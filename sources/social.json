@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Google",
+    "domain": "https://www.google.com",
+    "restriction": "Core search services blocked or heavily censored in Iran"
+  },
+  {
+    "name": "YouTube",
+    "domain": "https://www.youtube.com",
+    "restriction": "Permanently blocked in Iran; state foreign‑ministry accounts terminated by YouTube"
+  },
+  {
+    "name": "Bing",
+    "domain": "https://www.bing.com",
+    "restriction": "Search results and services censored or inaccessible in Iran"
+  },
+  {
+    "name": "Spotify",
+    "domain": "https://www.spotify.com",
+    "restriction": "Service blocked or inaccessible; Iranian IPs routinely geo‑blocked"
+  },
+  {
+    "name": "SoundCloud",
+    "domain": "https://www.soundcloud.com",
+    "restriction": "Access restricted/censored for users in Iran"
+  },
+  {
+    "name": "Instagram",
+    "domain": "https://www.instagram.com",
+    "restriction": "Blocked since September 2022; intermittent temporary access possible"
+  },
+  {
+    "name": "Telegram",
+    "domain": "https://www.telegram.org",
+    "restriction": "Blocked since 2018; used via VPNs; still widely popular"
+  },
+  {
+    "name": "WhatsApp",
+    "domain": "https://www.whatsapp.com",
+    "restriction": "Blocked during protests (2022); lifted late 2024; still partially urged to avoid usage"
+  },
+  {
+    "name": "X (Twitter)",
+    "domain": "https://www.x.com",
+    "restriction": "Blocked in Iran; widely accessed via VPNs"
+  },
+  {
+    "name": "LinkedIn",
+    "domain": "https://www.linkedin.com",
+    "restriction": "Blocked since 2009; remains inaccessible without VPN"
+  },
+  {
+    "name": "Discord",
+    "domain": "https://www.discord.com",
+    "restriction": "Censored/blocked in Iran along with other messaging platforms"
+  },
+  {
+    "name": "Reddit",
+    "domain": "https://www.reddit.com",
+    "restriction": "Blocked since 2009; heavy censorship continues"
+  }
+]
+
