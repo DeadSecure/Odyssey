@@ -1,20 +1,11 @@
+import { curlFormat, SitesTestResponse } from "@/server/models/interfaces";
 import { exec } from "child_process";
 
-const sites = [
-  "https://youtube.com",
-  "https://instagram.com",
-  "https://twitter.com",
-];
 
-const curlFormat = [
-  "namelookup: %{time_namelookup}s",
-  "connect: %{time_connect}s",
-  "starttransfer: %{time_starttransfer}s",
-  "total: %{time_total}s",
-  "",
-].join("\n");
 
-function testSite(site: string): Promise<void> {
+
+
+function testSite(site: string): Promise<SitesTestResponse> {
   return new Promise((resolve, reject) => {
     console.log(`Testing: ${site}`);
 
@@ -29,20 +20,10 @@ function testSite(site: string): Promise<void> {
       if (stderr) {
         console.error(`Stderr for ${site}:`, stderr);
       }
+      let formatted_res: SitesTestResponse = JSON.parse(stdout);
       console.log(stdout);
-      resolve();
+      resolve(formatted_res);
     });
   });
 }
 
-async function main() {
-  for (const site of sites) {
-    try {
-      await testSite(site);
-    } catch {
-      // Continue with next site on error
-    }
-  }
-}
-
-main();
