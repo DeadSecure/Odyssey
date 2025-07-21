@@ -1,5 +1,4 @@
-import { handleAccess } from "@/server/controllers/access";
-import { Categories } from "@/server/models/interfaces";
+import { handleRealDelay } from "@/server/controllers/realDelay";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -7,15 +6,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method == "GET") {
-    let { category } = req.query;
     try {
-      let cat: string = category as string;
-      if (!category) {
-        return res
-          .status(400)
-          .json({ error: "Invalid or missing parameter", cat });
-      }
-      let user = await handleAccess(cat as Categories);
+      let user = await handleRealDelay();
       if (user.code === 200) {
         return res.status(200).json(user.message);
       } else {

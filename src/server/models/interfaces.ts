@@ -1,10 +1,4 @@
-export const curlFormat = [
-  "namelookup: %{time_namelookup}s",
-  "connect: %{time_connect}s",
-  "starttransfer: %{time_starttransfer}s",
-  "total: %{time_total}s",
-  "",
-].join("\n");
+export const curlFormat = `'{"namelookup": %{time_namelookup}, "connect": %{time_connect}, "starttransfer": %{time_starttransfer}, "total": %{time_total}, "size_upload": %{size_upload}, "size_download": %{size_download}, "speed_upload": %{speed_upload}, "speed_download": %{speed_download}, "url": "%{url}"}'`;
 
 export interface SitesTestResponse {
   namelookup: number;
@@ -41,4 +35,9 @@ export interface ConfigReq {
 export interface Config {
   name: string;
   raw: string;
+}
+
+export interface RelayDelayResponse {
+  host_name: string;
+  real_delay: number;
 }

@@ -7,7 +7,7 @@ import {
 } from "@/server/models/sources/sources";
 import { testSite } from "../services/utils/access";
 import { Response } from "../models/interfaces";
-export async function HandleAccess(
+export async function handleAccess(
   category: Categories
 ): Response<SitesTestResponse[]> {
   let sites =
@@ -19,7 +19,7 @@ export async function HandleAccess(
       ? gamingRoutes
       : devRoutes;
   let results: SitesTestResponse[] = [];
-
+    console.log(sites);
   for (const site of sites) {
     try {
       let res = await testSite(site.domain);

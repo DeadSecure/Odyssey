@@ -1,0 +1,10 @@
+[
+  {
+    "ty": "download",
+    "domain": "https://cachefly.cachefly.net/2mb.test"
+  },
+  {
+    "ty": "upload",
+    "domain": "https://httpbin.org/post"
+  }
+]
