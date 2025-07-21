@@ -13,8 +13,11 @@ import { findMultipleFreePorts } from "../services/utils/ports";
 export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
   try {
     const configsDir = path.join(process.cwd(), "configs");
+    const exclusiveDir = path.join(configsDir, sub_data.name);
+    const jsonDir = path.join(exclusiveDir, "json");
+
     const outputPath = path.join(
-      configsDir,
+      exclusiveDir,
       sub_data.name.includes(".json") ? sub_data.name : sub_data.name + ".json"
     );
     if (!sub_data.url) {
@@ -26,6 +29,12 @@ export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
     // Ensure the configs directory exists
     if (!fs.existsSync(configsDir)) {
       fs.mkdirSync(configsDir);
+    }
+    if (!fs.existsSync(exclusiveDir)) {
+      fs.mkdirSync(exclusiveDir);
+    }
+    if (!fs.existsSync(jsonDir)) {
+      fs.mkdirSync(jsonDir);
     }
 
     const configs = extractVlessConfigs(decodedContent);
@@ -41,8 +50,18 @@ export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
 
     // Save to file inside "configs/"
     fs.writeFileSync(outputPath, JSON.stringify(configs), "utf-8");
-    console.log(`✅ Decoded content saved to "${outputPath}"`);
 
+    // generating and writing the json files
+
+    configs.forEach((config, index) => {
+      fs.writeFileSync(
+        path.join(jsonDir, config.name + ".json"),
+        JSON.stringify(config.json),
+        "utf-8"
+      );
+    });
+
+    console.log(`✅ Configs saved to "${outputPath}" and "${jsonDir}"`);
     return {
       code: 200,
       message: configs,

@@ -6,7 +6,7 @@
       "inbounds": [
         {
           "listen": "127.0.0.1",
-          "port": 53737,
+          "port": 54768,
           "protocol": "socks",
           "settings": { "auth": "noauth", "udp": true },
           "tag": "socks"
@@ -58,7 +58,7 @@
       "inbounds": [
         {
           "listen": "127.0.0.1",
-          "port": 53738,
+          "port": 54769,
           "protocol": "socks",
           "settings": { "auth": "noauth", "udp": true },
           "tag": "socks"
@@ -110,7 +110,7 @@
       "inbounds": [
         {
           "listen": "127.0.0.1",
-          "port": 53739,
+          "port": 54770,
           "protocol": "socks",
           "settings": { "auth": "noauth", "udp": true },
           "tag": "socks"
@@ -162,7 +162,7 @@
       "inbounds": [
         {
           "listen": "127.0.0.1",
-          "port": 53740,
+          "port": 54771,
           "protocol": "socks",
           "settings": { "auth": "noauth", "udp": true },
           "tag": "socks"
@@ -214,7 +214,7 @@
       "inbounds": [
         {
           "listen": "127.0.0.1",
-          "port": 53741,
+          "port": 54772,
           "protocol": "socks",
           "settings": { "auth": "noauth", "udp": true },
           "tag": "socks"
@@ -266,7 +266,7 @@
       "inbounds": [
         {
           "listen": "127.0.0.1",
-          "port": 53742,
+          "port": 54773,
           "protocol": "socks",
           "settings": { "auth": "noauth", "udp": true },
           "tag": "socks"
@@ -313,12 +313,12 @@
   },
   {
     "name": "  🇩🇪 GERMANY 🍺  SKY 🏙  TUNNEL ⛏️",
-    "raw": "vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAiY2FydmFuYWdlLmlyIiwgImlkIjogImJlMTQ1N2Q3LTZiMzAtNGMzMy05N2U1LWQ5MTFjMDVjNjJkOSIsICJuZXQiOiAidGNwIiwgInBhdGgiOiAiL2FwaS9yZWdpc3Rlci9uZXcvbmFtZS9kYXYvcmVzcG9uc2UvY21WMGFYSmxaQ0JvWld4c2J5Qm9iM2NnWVhKbElIbHZkU0IwYUdseklHbHpJRzE1SUc1bGR5Qm9aV0ZrWlhJZ2QiLCAicG9ydCI6IDIwNDAsICJwcyI6ICIgIFx1ZDgzY1x1ZGRlOVx1ZDgzY1x1ZGRlYSBHRVJNQU5ZIFx1ZDgzY1x1ZGY3YSAgU0tZIFx1ZDgzY1x1ZGZkOSAgVFVOTkVMIFx1MjZjZlx1ZmUwZiIsICJzY3kiOiAiYXV0byIsICJ0bHMiOiAibm9uZSIsICJ0eXBlIjogImh0dHAiLCAidiI6ICIyIn0=",
+    "raw": "vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAicmVnLmFwYXJhdC5pciIsICJpZCI6ICJiZTE0NTdkNy02YjMwLTRjMzMtOTdlNS1kOTExYzA1YzYyZDkiLCAibmV0IjogInRjcCIsICJwYXRoIjogIi9hcGkvcmVnaXN0ZXIvbmV3L25hbWUvZGF2L3Jlc3BvbnNlL2NtVjBhWEpsWkNCb1pXeHNieUJvYjNjZ1lYSmxJSGx2ZFNCMGFHbHpJR2x6SUcxNUlHNWxkeUJvWldGa1pYSWdkIiwgInBvcnQiOiAyMDQwLCAicHMiOiAiICBcdWQ4M2NcdWRkZTlcdWQ4M2NcdWRkZWEgR0VSTUFOWSBcdWQ4M2NcdWRmN2EgIFNLWSBcdWQ4M2NcdWRmZDkgIFRVTk5FTCBcdTI2Y2ZcdWZlMGYiLCAic2N5IjogImF1dG8iLCAidGxzIjogIm5vbmUiLCAidHlwZSI6ICJodHRwIiwgInYiOiAiMiJ9",
     "json": {
       "inbounds": [
         {
           "listen": "127.0.0.1",
-          "port": 53743,
+          "port": 54774,
           "protocol": "socks",
           "settings": { "auth": "noauth", "udp": true },
           "tag": "socks"
@@ -352,7 +352,7 @@
                   "path": [
                     "/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"
                   ],
-                  "headers": { "Host": ["carvanage.ir"] }
+                  "headers": { "Host": ["reg.aparat.ir"] }
                 }
               }
             }
@@ -371,7 +371,7 @@
       "inbounds": [
         {
           "listen": "127.0.0.1",
-          "port": 53744,
+          "port": 54775,
           "protocol": "socks",
           "settings": { "auth": "noauth", "udp": true },
           "tag": "socks"
@@ -424,7 +424,7 @@
       "inbounds": [
         {
           "listen": "127.0.0.1",
-          "port": 53745,
+          "port": 54776,
           "protocol": "socks",
           "settings": { "auth": "noauth", "udp": true },
           "tag": "socks"
@@ -472,12 +472,12 @@
   },
   {
     "name": "🇩🇪  GERMANY 🍺 TUNNEL ⛏️",
-    "raw": "vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAiY2FydmFuYWdlLmlyIiwgImlkIjogImJlMTQ1N2Q3LTZiMzAtNGMzMy05N2U1LWQ5MTFjMDVjNjJkOSIsICJuZXQiOiAidGNwIiwgInBhdGgiOiAiL2FwaS9yZWdpc3Rlci9uZXcvbmFtZS9kYXYvcmVzcG9uc2UvY21WMGFYSmxaQ0JvWld4c2J5Qm9iM2NnWVhKbElIbHZkU0IwYUdseklHbHpJRzE1SUc1bGR5Qm9aV0ZrWlhJZ2QiLCAicG9ydCI6IDIwNzAsICJwcyI6ICJcdWQ4M2NcdWRkZTlcdWQ4M2NcdWRkZWEgIEdFUk1BTlkgXHVkODNjXHVkZjdhIFRVTk5FTCBcdTI2Y2ZcdWZlMGYiLCAic2N5IjogImF1dG8iLCAidGxzIjogIm5vbmUiLCAidHlwZSI6ICJodHRwIiwgInYiOiAiMiJ9",
+    "raw": "vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAicGFyc2Fici5jb20iLCAiaWQiOiAiYmUxNDU3ZDctNmIzMC00YzMzLTk3ZTUtZDkxMWMwNWM2MmQ5IiwgIm5ldCI6ICJ0Y3AiLCAicGF0aCI6ICIvYXBpL3JlZ2lzdGVyL25ldy9uYW1lL2Rhdi9yZXNwb25zZS9jbVYwYVhKbFpDQm9aV3hzYnlCb2IzY2dZWEpsSUhsdmRTQjBhR2x6SUdseklHMTVJRzVsZHlCb1pXRmtaWElnZCIsICJwb3J0IjogMjA3MCwgInBzIjogIlx1ZDgzY1x1ZGRlOVx1ZDgzY1x1ZGRlYSAgR0VSTUFOWSBcdWQ4M2NcdWRmN2EgVFVOTkVMIFx1MjZjZlx1ZmUwZiIsICJzY3kiOiAiYXV0byIsICJ0bHMiOiAibm9uZSIsICJ0eXBlIjogImh0dHAiLCAidiI6ICIyIn0=",
     "json": {
       "inbounds": [
         {
           "listen": "127.0.0.1",
-          "port": 53746,
+          "port": 54777,
           "protocol": "socks",
           "settings": { "auth": "noauth", "udp": true },
           "tag": "socks"
@@ -511,7 +511,7 @@
                   "path": [
                     "/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"
                   ],
-                  "headers": { "Host": ["carvanage.ir"] }
+                  "headers": { "Host": ["parsabr.com"] }
                 }
               }
             }
@@ -525,12 +525,12 @@
   },
   {
     "name": "🇸🇪  SWEEDEN 👑 TUNNEL ⛏️",
-    "raw": "vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAicGFyc2Fici5jb20iLCAiaWQiOiAiYmUxNDU3ZDctNmIzMC00YzMzLTk3ZTUtZDkxMWMwNWM2MmQ5IiwgIm5ldCI6ICJ0Y3AiLCAicGF0aCI6ICIvYXBpL3JlZ2lzdGVyL25ldy9uYW1lL2Rhdi9yZXNwb25zZS9jbVYwYVhKbFpDQm9aV3hzYnlCb2IzY2dZWEpsSUhsdmRTQjBhR2x6SUdseklHMTVJRzVsZHlCb1pXRmtaWElnZCIsICJwb3J0IjogMjA4MCwgInBzIjogIlx1ZDgzY1x1ZGRmOFx1ZDgzY1x1ZGRlYSAgU1dFRURFTiBcdWQ4M2RcdWRjNTEgVFVOTkVMIFx1MjZjZlx1ZmUwZiIsICJzY3kiOiAiYXV0byIsICJ0bHMiOiAibm9uZSIsICJ0eXBlIjogImh0dHAiLCAidiI6ICIyIn0=",
+    "raw": "vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAiY2FydmFuYWdlLmlyIiwgImlkIjogImJlMTQ1N2Q3LTZiMzAtNGMzMy05N2U1LWQ5MTFjMDVjNjJkOSIsICJuZXQiOiAidGNwIiwgInBhdGgiOiAiL2FwaS9yZWdpc3Rlci9uZXcvbmFtZS9kYXYvcmVzcG9uc2UvY21WMGFYSmxaQ0JvWld4c2J5Qm9iM2NnWVhKbElIbHZkU0IwYUdseklHbHpJRzE1SUc1bGR5Qm9aV0ZrWlhJZ2QiLCAicG9ydCI6IDIwODAsICJwcyI6ICJcdWQ4M2NcdWRkZjhcdWQ4M2NcdWRkZWEgIFNXRUVERU4gXHVkODNkXHVkYzUxIFRVTk5FTCBcdTI2Y2ZcdWZlMGYiLCAic2N5IjogImF1dG8iLCAidGxzIjogIm5vbmUiLCAidHlwZSI6ICJodHRwIiwgInYiOiAiMiJ9",
     "json": {
       "inbounds": [
         {
           "listen": "127.0.0.1",
-          "port": 53747,
+          "port": 54778,
           "protocol": "socks",
           "settings": { "auth": "noauth", "udp": true },
           "tag": "socks"
@@ -564,7 +564,7 @@
                   "path": [
                     "/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"
                   ],
-                  "headers": { "Host": ["parsabr.com"] }
+                  "headers": { "Host": ["carvanage.ir"] }
                 }
               }
             }
