@@ -41,6 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 
-./src/server/services/core/*
+src/server/services/core/*
 
-./configs/*
+configs/
