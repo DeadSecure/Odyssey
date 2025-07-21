@@ -7,7 +7,7 @@ import {
 } from "../services/utils/configs";
 import fs from "fs";
 import { Response } from "../models/interfaces";
-import { generateV2rayConfigFromLink } from "../services/utils/generateV2rayJson";
+import { combineConfigs, generateV2rayConfigFromLink } from "../services/utils/generateV2rayJson";
 import { findMultipleFreePorts } from "../services/utils/ports";
 
 export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
@@ -15,7 +15,8 @@ export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
     const configsDir = path.join(process.cwd(), "configs");
     const exclusiveDir = path.join(configsDir, sub_data.name);
     const jsonDir = path.join(exclusiveDir, "json");
-    const portsDir = path.join(jsonDir, "ports.json");
+    const portsDir = path.join(exclusiveDir, "ports.json");
+    const combinedDir = path.join(exclusiveDir, "combined.json");
     const outputPath = path.join(
       exclusiveDir,
       sub_data.name.includes(".json") ? sub_data.name : sub_data.name + ".json"
@@ -63,10 +64,14 @@ export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
     });
 
     // save the ports.json file
-
     fs.writeFileSync(portsDir, JSON.stringify(ports), "utf-8");
 
+    // saving the combined file 
+    let combinedConfig = await combineConfigs(sub_data.name);
+    fs.writeFileSync(combinedDir, JSON.stringify(combinedConfig), "utf-8");
+
     console.log(`✅ Configs saved to "${outputPath}" and "${jsonDir}"`);
+
     return {
       code: 200,
       message: configs,
