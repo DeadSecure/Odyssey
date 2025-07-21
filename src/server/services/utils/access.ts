@@ -1,11 +1,11 @@
 import { curlFormat, SitesTestResponse } from "@/server/models/interfaces";
 import { exec } from "child_process";
 
-export function testSite(site: string): Promise<SitesTestResponse> {
+export function testSite(site: string, port: number): Promise<SitesTestResponse> {
   return new Promise((resolve, reject) => {
     console.log(`Testing: ${site}`);
 
-    const cmd = `curl -o /dev/null -s -w ${curlFormat} --socks5 localhost:1080 "${site}"`;
+    const cmd = `curl -o /dev/null -s -w ${curlFormat} --socks5 localhost:${port} "${site}"`;
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
         console.error(`Error testing ${site}:`, error.message);

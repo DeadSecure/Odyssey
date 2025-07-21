@@ -6,6 +6,8 @@ export interface SitesTestResponse {
   starttransfer: number;
   total: number;
   url: string;
+  config_name?: string;
+  config_raw?: string;
 }
 
 export enum Categories {
@@ -36,9 +38,12 @@ export interface Config {
   name: string;
   raw: string;
   json?: any;
+  port?: number;
 }
 
 export interface RelayDelayResponse {
   host_name: string;
+  config_name: string;
+  config_raw: string;
   real_delay: number;
 }

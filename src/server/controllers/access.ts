@@ -7,8 +7,13 @@ import {
 } from "@/server/models/sources/sources";
 import { testSite } from "../services/utils/access";
 import { Response } from "../models/interfaces";
+import {
+  getConfigLinkByPort,
+  getPortsByUsername,
+} from "../services/utils/ports";
 export async function handleAccess(
-  category: Categories
+  category: Categories,
+  username: string
 ): Response<SitesTestResponse[]> {
   let sites =
     category === Categories.social
@@ -19,13 +24,22 @@ export async function handleAccess(
       ? gamingRoutes
       : devRoutes;
   let results: SitesTestResponse[] = [];
-    console.log(sites);
-  for (const site of sites) {
-    try {
-      let res = await testSite(site.domain);
-      results.push(res);
-    } catch (error) {
-      continue;
+  let ports = await getPortsByUsername(username);
+
+  console.log(sites);
+  for (const port of ports) {
+    for (const site of sites) {
+      try {
+        let res = await testSite(site.domain, port);
+        let config = await getConfigLinkByPort(username, port);
+        results.push({
+          ...res,
+          config_name: config.name,
+          config_raw: config.raw,
+        });
+      } catch (error) {
+        continue;
+      }
     }
   }
 

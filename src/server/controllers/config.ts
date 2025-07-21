@@ -15,7 +15,7 @@ export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
     const configsDir = path.join(process.cwd(), "configs");
     const exclusiveDir = path.join(configsDir, sub_data.name);
     const jsonDir = path.join(exclusiveDir, "json");
-
+    const portsDir = path.join(jsonDir, "ports.json");
     const outputPath = path.join(
       exclusiveDir,
       sub_data.name.includes(".json") ? sub_data.name : sub_data.name + ".json"
@@ -46,6 +46,7 @@ export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
     configs.forEach((config, index) => {
       let v2rayJson = generateV2rayConfigFromLink(config.raw, ports[index]);
       config.json = v2rayJson;
+      config.port = ports[index];
     });
 
     // Save to file inside "configs/"
@@ -60,6 +61,10 @@ export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
         "utf-8"
       );
     });
+
+    // save the ports.json file
+
+    fs.writeFileSync(portsDir, JSON.stringify(ports), "utf-8");
 
     console.log(`✅ Configs saved to "${outputPath}" and "${jsonDir}"`);
     return {

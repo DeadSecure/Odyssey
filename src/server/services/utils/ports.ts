@@ -1,5 +1,7 @@
 import * as net from "net";
-
+import path from "path";
+import fs from "fs";
+import { Config } from "@/server/models/interfaces";
 /**
  * Finds a free TCP port by letting the OS assign one.
  */
@@ -37,4 +39,40 @@ export async function findMultipleFreePorts(count: number): Promise<number[]> {
   }
 
   return Array.from(ports);
+}
+
+export async function getPortsByUsername(username: string): Promise<number[]> {
+  let ports_path = path.join(
+    process.cwd(),
+    "configs",
+    username,
+    "json/ports.json"
+  );
+  if (!fs.existsSync(ports_path)) {
+    throw new Error("No ports.json file found");
+  }
+  let ports: number[] = JSON.parse(fs.readFileSync(ports_path, "utf-8"));
+  return ports;
+}
+
+export async function getConfigLinkByPort(
+  username: string,
+  port: number
+): Promise<Config> {
+  let configs_path = path.join(
+    process.cwd(),
+    "configs",
+    username,
+    username,
+    ".json"
+  );
+  if (!fs.existsSync(configs_path)) {
+    throw new Error(`No ${username}.json file found`);
+  }
+  let configs: Config[] = JSON.parse(fs.readFileSync(configs_path, "utf-8"));
+  let config = configs.find((config) => config.port === port);
+  if (!config) {
+    throw new Error("No config found for port");
+  }
+  return config;
 }
