@@ -15,13 +15,11 @@ export function testSite(site: string): Promise<SitesTestResponse> {
       if (stderr) {
         console.error(`Stderr for ${site}:`, stderr);
       }
-      console.log("curl output:", stdout);
 
       let formatted_res: SitesTestResponse = JSON.parse(stdout);
       if (!formatted_res) {
         reject(new Error("Invalid response from curl"));
       }
-      console.log("formatted_res", formatted_res);
       resolve(formatted_res);
     });
   });
