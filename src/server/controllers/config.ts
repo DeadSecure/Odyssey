@@ -7,6 +7,7 @@ import {
 } from "../services/utils/configs";
 import fs from "fs";
 import { Response } from "../models/interfaces";
+import { generateV2rayConfigFromLink } from "../services/utils/generateV2rayJson";
 
 export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
   try {
@@ -29,6 +30,13 @@ export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
     const configs = extractVlessConfigs(decodedContent);
     configs.push(...extractVmessConfigs(decodedContent));
     console.log(`✅ Decoded content:\n`, configs);
+
+    // generating the v2ray full jsons
+    configs.forEach((config) => {
+      let v2rayJson = generateV2rayConfigFromLink(config.raw, 5555);
+      config.json = v2rayJson;
+    });
+
     // Save to file inside "configs/"
     fs.writeFileSync(outputPath, JSON.stringify(configs), "utf-8");
     console.log(`✅ Decoded content saved to "${outputPath}"`);

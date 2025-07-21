@@ -1,7 +1,7 @@
 import https from "https";
 import fs from "fs";
 import path from "path";
-import { ConfigReq } from "@/server/models/interfaces";
+import { Config, ConfigReq } from "@/server/models/interfaces";
 
 export async function fetchRawConfigs(sub_Data: ConfigReq): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -54,7 +54,7 @@ export function extractVmessConfigs(
 
 export function extractVlessConfigs(
   input: string
-): { name: string; raw: string }[] {
+): Config[] {
   const vlessRegex = /vless:\/\/[^\s]+/g;
   const matches = input.match(vlessRegex) || [];
 

@@ -35,6 +35,7 @@ export interface ConfigReq {
 export interface Config {
   name: string;
   raw: string;
+  json?: any;
 }
 
 export interface RelayDelayResponse {
