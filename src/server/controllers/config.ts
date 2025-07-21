@@ -8,6 +8,7 @@ import {
 import fs from "fs";
 import { Response } from "../models/interfaces";
 import { generateV2rayConfigFromLink } from "../services/utils/generateV2rayJson";
+import { findMultipleFreePorts } from "../services/utils/ports";
 
 export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
   try {
@@ -30,10 +31,11 @@ export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
     const configs = extractVlessConfigs(decodedContent);
     configs.push(...extractVmessConfigs(decodedContent));
     console.log(`✅ Decoded content:\n`, configs);
+    let ports = await findMultipleFreePorts(configs.length);
 
     // generating the v2ray full jsons
-    configs.forEach((config) => {
-      let v2rayJson = generateV2rayConfigFromLink(config.raw, 5555);
+    configs.forEach((config, index) => {
+      let v2rayJson = generateV2rayConfigFromLink(config.raw, ports[index]);
       config.json = v2rayJson;
     });
 
