@@ -1,11 +1,7 @@
 import { curlFormat, SitesTestResponse } from "@/server/models/interfaces";
 import { exec } from "child_process";
 
-
-
-
-
-function testSite(site: string): Promise<SitesTestResponse> {
+export function testSite(site: string): Promise<SitesTestResponse> {
   return new Promise((resolve, reject) => {
     console.log(`Testing: ${site}`);
 
@@ -21,9 +17,11 @@ function testSite(site: string): Promise<SitesTestResponse> {
         console.error(`Stderr for ${site}:`, stderr);
       }
       let formatted_res: SitesTestResponse = JSON.parse(stdout);
+      if (!formatted_res) {
+        reject(new Error("Invalid response from curl"));
+      }
       console.log(stdout);
       resolve(formatted_res);
     });
   });
 }
-
