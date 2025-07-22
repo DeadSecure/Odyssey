@@ -1,4 +1,5 @@
 import { handleRealDelay } from "@/server/controllers/realDelay";
+import { PortManger } from "@/server/services/utils/ports";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -6,21 +7,10 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method == "GET") {
-    let { username } = req.query;
-    let username_parse: string = username as string;
-    if (!username_parse) {
-      return res
-        .status(400)
-        .json({ error: "Invalid or missing parameter", username_parse });
-    }
-
     try {
-      let user = await handleRealDelay(username_parse);
-      if (user.code === 200) {
-        return res.status(200).json(user.message);
-      } else {
-        return res.status(user.code).json(user.message);
-      }
+      let list = PortManger.list();
+      console.log(list);
+      return res.status(200).json(list);
     } catch (error) {
       return res
         .status(400)

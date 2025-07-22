@@ -89,12 +89,7 @@ export async function findMultipleFreePorts(count: number): Promise<number[]> {
 }
 
 export async function getPortsByUsername(username: string): Promise<number[]> {
-  let ports_path = path.join(
-    process.cwd(),
-    "configs",
-    username,
-    "json/ports.json"
-  );
+  let ports_path = path.join(process.cwd(), "configs", username, "ports.json");
   if (!fs.existsSync(ports_path)) {
     throw new Error("No ports.json file found");
   }
@@ -110,8 +105,7 @@ export async function getConfigLinkByPort(
     process.cwd(),
     "configs",
     username,
-    username,
-    ".json"
+    username + ".json"
   );
   if (!fs.existsSync(configs_path)) {
     throw new Error(`No ${username}.json file found`);

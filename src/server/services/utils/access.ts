@@ -1,26 +1,44 @@
 import { curlFormat, SitesTestResponse } from "@/server/models/interfaces";
 import { exec } from "child_process";
 
-export function testSite(site: string, port: number): Promise<SitesTestResponse> {
-  return new Promise((resolve, reject) => {
+export function testSite(
+  site: string,
+  port: number
+): Promise<SitesTestResponse> {
+  return new Promise((resolve) => {
     console.log(`Testing: ${site}`);
 
     const cmd = `curl -o /dev/null -s -w ${curlFormat} --socks5 localhost:${port} "${site}"`;
+
     exec(cmd, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Error testing ${site}:`, error.message);
-        reject(error);
-        return;
-      }
-      if (stderr) {
-        console.error(`Stderr for ${site}:`, stderr);
+      if (error || stderr || !stdout) {
+        console.error(`Error testing ${site}:`, error?.message);
+        return resolve({
+          namelookup: -1,
+          connect: -1,
+          starttransfer: -1,
+          total: -1,
+          url: "",
+          config_name: "",
+          config_raw: "",
+        });
       }
 
-      let formatted_res: SitesTestResponse = JSON.parse(stdout);
-      if (!formatted_res) {
-        reject(new Error("Invalid response from curl"));
+      try {
+        const parsed: SitesTestResponse = JSON.parse(stdout.trim());
+        resolve(parsed);
+      } catch (e) {
+        console.warn(`Failed to parse response for ${site}:`, e);
+        resolve({
+          namelookup: -1,
+          connect: -1,
+          starttransfer: -1,
+          total: -1,
+          url: "",
+          config_name: "",
+          config_raw: "",
+        });
       }
-      resolve(formatted_res);
     });
   });
 }
