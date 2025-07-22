@@ -1,1 +1,590 @@
-[{"name":"🇺🇸  USA 🚀 TCP ⚡","raw":"vless://fe2400d2-232e-481f-b942-534674de89b6@Tamizsyakuzaksks4ne.ivy-net.ir:2061?security=none&type=tcp&headerType=http&path=%2Fapi%2Fregister%2Fnew%2Fname%2Fdav%2Fresponse%2FcmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd&host=parsabr.com#%F0%9F%87%BA%F0%9F%87%B8%20%20USA%20%F0%9F%9A%80%20TCP%20%E2%9A%A1","json":{"inbounds":[{"listen":"127.0.0.1","port":61593,"protocol":"socks","settings":{"auth":"noauth","udp":true},"tag":"socks"}],"outbounds":[{"protocol":"vless","settings":{"vnext":[{"address":"Tamizsyakuzaksks4ne.ivy-net.ir","port":2061,"users":[{"id":"fe2400d2-232e-481f-b942-534674de89b6","encryption":"none"}]}]},"streamSettings":{"network":"tcp","security":"none","tcpSettings":{"header":{"type":"http","request":{"path":["/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"],"headers":{"Host":["parsabr.com"]}}}}},"tag":"proxy"},{"protocol":"freedom","tag":"direct"},{"protocol":"blackhole","tag":"block"}]},"port":61593},{"name":"🇩🇪  GERMANY 🍺 TCP ⚡️","raw":"vless://fe2400d2-232e-481f-b942-534674de89b6@Tamizsyakuzaksks4ne.ivy-net.ir:2071?security=none&type=tcp&headerType=http&path=%2Fapi%2Fregister%2Fnew%2Fname%2Fdav%2Fresponse%2FcmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd&host=parsabr.com#%F0%9F%87%A9%F0%9F%87%AA%20%20GERMANY%20%F0%9F%8D%BA%20TCP%20%E2%9A%A1%EF%B8%8F","json":{"inbounds":[{"listen":"127.0.0.1","port":61594,"protocol":"socks","settings":{"auth":"noauth","udp":true},"tag":"socks"}],"outbounds":[{"protocol":"vless","settings":{"vnext":[{"address":"Tamizsyakuzaksks4ne.ivy-net.ir","port":2071,"users":[{"id":"fe2400d2-232e-481f-b942-534674de89b6","encryption":"none"}]}]},"streamSettings":{"network":"tcp","security":"none","tcpSettings":{"header":{"type":"http","request":{"path":["/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"],"headers":{"Host":["parsabr.com"]}}}}},"tag":"proxy"},{"protocol":"freedom","tag":"direct"},{"protocol":"blackhole","tag":"block"}]},"port":61594},{"name":"🇸🇪  SWEEDEN 👑 TCP ⚡","raw":"vless://fe2400d2-232e-481f-b942-534674de89b6@Tamizsyakuzaksks4ne.ivy-net.ir:2081?security=none&type=tcp&headerType=http&path=%2Fapi%2Fregister%2Fnew%2Fname%2Fdav%2Fresponse%2FcmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd&host=parsabr.com#%F0%9F%87%B8%F0%9F%87%AA%20%20SWEEDEN%20%F0%9F%91%91%20TCP%20%E2%9A%A1","json":{"inbounds":[{"listen":"127.0.0.1","port":61595,"protocol":"socks","settings":{"auth":"noauth","udp":true},"tag":"socks"}],"outbounds":[{"protocol":"vless","settings":{"vnext":[{"address":"Tamizsyakuzaksks4ne.ivy-net.ir","port":2081,"users":[{"id":"fe2400d2-232e-481f-b942-534674de89b6","encryption":"none"}]}]},"streamSettings":{"network":"tcp","security":"none","tcpSettings":{"header":{"type":"http","request":{"path":["/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"],"headers":{"Host":["parsabr.com"]}}}}},"tag":"proxy"},{"protocol":"freedom","tag":"direct"},{"protocol":"blackhole","tag":"block"}]},"port":61595},{"name":"🇺🇸  USA 🚀 WS 🔪","raw":"vless://fe2400d2-232e-481f-b942-534674de89b6@Tamizsyakuzaksks4ne.ivy-net.ir:2062?security=none&type=ws&headerType=&path=%2Flklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwj%3Fed%3D4096&host=parsabr.com#%F0%9F%87%BA%F0%9F%87%B8%20%20USA%20%F0%9F%9A%80%20WS%20%F0%9F%94%AA","json":{"inbounds":[{"listen":"127.0.0.1","port":61596,"protocol":"socks","settings":{"auth":"noauth","udp":true},"tag":"socks"}],"outbounds":[{"protocol":"vless","settings":{"vnext":[{"address":"Tamizsyakuzaksks4ne.ivy-net.ir","port":2062,"users":[{"id":"fe2400d2-232e-481f-b942-534674de89b6","encryption":"none"}]}]},"streamSettings":{"network":"ws","security":"none","wsSettings":{"header":{"type":"none","request":{"path":["/lklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwj?ed=4096"],"headers":{"Host":["parsabr.com"]}}}}},"tag":"proxy"},{"protocol":"freedom","tag":"direct"},{"protocol":"blackhole","tag":"block"}]},"port":61596},{"name":"🇩🇪  GERMANY 🍺 WS 🔪","raw":"vless://fe2400d2-232e-481f-b942-534674de89b6@Tamizsyakuzaksks4ne.ivy-net.ir:2072?security=none&type=ws&headerType=&path=%2Flklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwj%3Fed%3D4096&host=parsabr.com#%F0%9F%87%A9%F0%9F%87%AA%20%20GERMANY%20%F0%9F%8D%BA%20WS%20%F0%9F%94%AA","json":{"inbounds":[{"listen":"127.0.0.1","port":61597,"protocol":"socks","settings":{"auth":"noauth","udp":true},"tag":"socks"}],"outbounds":[{"protocol":"vless","settings":{"vnext":[{"address":"Tamizsyakuzaksks4ne.ivy-net.ir","port":2072,"users":[{"id":"fe2400d2-232e-481f-b942-534674de89b6","encryption":"none"}]}]},"streamSettings":{"network":"ws","security":"none","wsSettings":{"header":{"type":"none","request":{"path":["/lklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwj?ed=4096"],"headers":{"Host":["parsabr.com"]}}}}},"tag":"proxy"},{"protocol":"freedom","tag":"direct"},{"protocol":"blackhole","tag":"block"}]},"port":61597},{"name":"🇸🇪  SWEEDEN 👑 WS 🔪","raw":"vless://fe2400d2-232e-481f-b942-534674de89b6@Tamizsyakuzaksks4ne.ivy-net.ir:2082?security=none&type=ws&headerType=&path=%2Flklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwj%3Fed%3D4096&host=parsabr.com#%F0%9F%87%B8%F0%9F%87%AA%20%20SWEEDEN%20%F0%9F%91%91%20WS%20%F0%9F%94%AA","json":{"inbounds":[{"listen":"127.0.0.1","port":61598,"protocol":"socks","settings":{"auth":"noauth","udp":true},"tag":"socks"}],"outbounds":[{"protocol":"vless","settings":{"vnext":[{"address":"Tamizsyakuzaksks4ne.ivy-net.ir","port":2082,"users":[{"id":"fe2400d2-232e-481f-b942-534674de89b6","encryption":"none"}]}]},"streamSettings":{"network":"ws","security":"none","wsSettings":{"header":{"type":"none","request":{"path":["/lklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwj?ed=4096"],"headers":{"Host":["parsabr.com"]}}}}},"tag":"proxy"},{"protocol":"freedom","tag":"direct"},{"protocol":"blackhole","tag":"block"}]},"port":61598},{"name":"  🇩🇪 GERMANY 🍺  SKY 🏙  TUNNEL ⛏️","raw":"vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAicmVnLmFwYXJhdC5pciIsICJpZCI6ICJiZTE0NTdkNy02YjMwLTRjMzMtOTdlNS1kOTExYzA1YzYyZDkiLCAibmV0IjogInRjcCIsICJwYXRoIjogIi9hcGkvcmVnaXN0ZXIvbmV3L25hbWUvZGF2L3Jlc3BvbnNlL2NtVjBhWEpsWkNCb1pXeHNieUJvYjNjZ1lYSmxJSGx2ZFNCMGFHbHpJR2x6SUcxNUlHNWxkeUJvWldGa1pYSWdkIiwgInBvcnQiOiAyMDQwLCAicHMiOiAiICBcdWQ4M2NcdWRkZTlcdWQ4M2NcdWRkZWEgR0VSTUFOWSBcdWQ4M2NcdWRmN2EgIFNLWSBcdWQ4M2NcdWRmZDkgIFRVTk5FTCBcdTI2Y2ZcdWZlMGYiLCAic2N5IjogImF1dG8iLCAidGxzIjogIm5vbmUiLCAidHlwZSI6ICJodHRwIiwgInYiOiAiMiJ9","json":{"inbounds":[{"listen":"127.0.0.1","port":61599,"protocol":"socks","settings":{"auth":"noauth","udp":true},"tag":"socks"}],"outbounds":[{"protocol":"vmess","settings":{"vnext":[{"address":"Tamizsyakuzaksks4ne.ivy-net.ir","port":2040,"users":[{"id":"be1457d7-6b30-4c33-97e5-d911c05c62d9","alterId":0,"security":"auto"}]}]},"streamSettings":{"network":"tcp","security":"none","tcpSettings":{"header":{"type":"http","request":{"path":["/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"],"headers":{"Host":["reg.aparat.ir"]}}}}},"tag":"proxy"},{"protocol":"freedom","tag":"direct"},{"protocol":"blackhole","tag":"block"}]},"port":61599},{"name":"🇫🇮  FINLAND ❄️ TUNNEL ⛏️","raw":"vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAiY2FydmFuYWdlLmlyIiwgImlkIjogImJlMTQ1N2Q3LTZiMzAtNGMzMy05N2U1LWQ5MTFjMDVjNjJkOSIsICJuZXQiOiAidGNwIiwgInBhdGgiOiAiL2FwaS9yZWdpc3Rlci9uZXcvbmFtZS9kYXYvcmVzcG9uc2UvY21WMGFYSmxaQ0JvWld4c2J5Qm9iM2NnWVhKbElIbHZkU0IwYUdseklHbHpJRzE1SUc1bGR5Qm9aV0ZrWlhJZ2QiLCAicG9ydCI6IDIwNTAsICJwcyI6ICJcdWQ4M2NcdWRkZWJcdWQ4M2NcdWRkZWUgIEZJTkxBTkQgXHUyNzQ0XHVmZTBmIFRVTk5FTCBcdTI2Y2ZcdWZlMGYiLCAic2N5IjogImF1dG8iLCAidGxzIjogIm5vbmUiLCAidHlwZSI6ICJodHRwIiwgInYiOiAiMiJ9","json":{"inbounds":[{"listen":"127.0.0.1","port":61600,"protocol":"socks","settings":{"auth":"noauth","udp":true},"tag":"socks"}],"outbounds":[{"protocol":"vmess","settings":{"vnext":[{"address":"Tamizsyakuzaksks4ne.ivy-net.ir","port":2050,"users":[{"id":"be1457d7-6b30-4c33-97e5-d911c05c62d9","alterId":0,"security":"auto"}]}]},"streamSettings":{"network":"tcp","security":"none","tcpSettings":{"header":{"type":"http","request":{"path":["/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"],"headers":{"Host":["carvanage.ir"]}}}}},"tag":"proxy"},{"protocol":"freedom","tag":"direct"},{"protocol":"blackhole","tag":"block"}]},"port":61600},{"name":"🇺🇸  USA 🚀  TUNNEL ⛏️","raw":"vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAicmVnLmFwYXJhdC5pciIsICJpZCI6ICJiZTE0NTdkNy02YjMwLTRjMzMtOTdlNS1kOTExYzA1YzYyZDkiLCAibmV0IjogInRjcCIsICJwYXRoIjogIi9hcGkvcmVnaXN0ZXIvbmV3L25hbWUvZGF2L3Jlc3BvbnNlL2NtVjBhWEpsWkNCb1pXeHNieUJvYjNjZ1lYSmxJSGx2ZFNCMGFHbHpJR2x6SUcxNUlHNWxkeUJvWldGa1pYSWdkIiwgInBvcnQiOiAyMDYwLCAicHMiOiAiXHVkODNjXHVkZGZhXHVkODNjXHVkZGY4ICBVU0EgXHVkODNkXHVkZTgwICBUVU5ORUwgXHUyNmNmXHVmZTBmIiwgInNjeSI6ICJhdXRvIiwgInRscyI6ICJub25lIiwgInR5cGUiOiAiaHR0cCIsICJ2IjogIjIifQ==","json":{"inbounds":[{"listen":"127.0.0.1","port":61601,"protocol":"socks","settings":{"auth":"noauth","udp":true},"tag":"socks"}],"outbounds":[{"protocol":"vmess","settings":{"vnext":[{"address":"Tamizsyakuzaksks4ne.ivy-net.ir","port":2060,"users":[{"id":"be1457d7-6b30-4c33-97e5-d911c05c62d9","alterId":0,"security":"auto"}]}]},"streamSettings":{"network":"tcp","security":"none","tcpSettings":{"header":{"type":"http","request":{"path":["/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"],"headers":{"Host":["reg.aparat.ir"]}}}}},"tag":"proxy"},{"protocol":"freedom","tag":"direct"},{"protocol":"blackhole","tag":"block"}]},"port":61601},{"name":"🇩🇪  GERMANY 🍺 TUNNEL ⛏️","raw":"vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAicmVnLmFwYXJhdC5pciIsICJpZCI6ICJiZTE0NTdkNy02YjMwLTRjMzMtOTdlNS1kOTExYzA1YzYyZDkiLCAibmV0IjogInRjcCIsICJwYXRoIjogIi9hcGkvcmVnaXN0ZXIvbmV3L25hbWUvZGF2L3Jlc3BvbnNlL2NtVjBhWEpsWkNCb1pXeHNieUJvYjNjZ1lYSmxJSGx2ZFNCMGFHbHpJR2x6SUcxNUlHNWxkeUJvWldGa1pYSWdkIiwgInBvcnQiOiAyMDcwLCAicHMiOiAiXHVkODNjXHVkZGU5XHVkODNjXHVkZGVhICBHRVJNQU5ZIFx1ZDgzY1x1ZGY3YSBUVU5ORUwgXHUyNmNmXHVmZTBmIiwgInNjeSI6ICJhdXRvIiwgInRscyI6ICJub25lIiwgInR5cGUiOiAiaHR0cCIsICJ2IjogIjIifQ==","json":{"inbounds":[{"listen":"127.0.0.1","port":61602,"protocol":"socks","settings":{"auth":"noauth","udp":true},"tag":"socks"}],"outbounds":[{"protocol":"vmess","settings":{"vnext":[{"address":"Tamizsyakuzaksks4ne.ivy-net.ir","port":2070,"users":[{"id":"be1457d7-6b30-4c33-97e5-d911c05c62d9","alterId":0,"security":"auto"}]}]},"streamSettings":{"network":"tcp","security":"none","tcpSettings":{"header":{"type":"http","request":{"path":["/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"],"headers":{"Host":["reg.aparat.ir"]}}}}},"tag":"proxy"},{"protocol":"freedom","tag":"direct"},{"protocol":"blackhole","tag":"block"}]},"port":61602},{"name":"🇸🇪  SWEEDEN 👑 TUNNEL ⛏️","raw":"vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAiY2FydmFuYWdlLmlyIiwgImlkIjogImJlMTQ1N2Q3LTZiMzAtNGMzMy05N2U1LWQ5MTFjMDVjNjJkOSIsICJuZXQiOiAidGNwIiwgInBhdGgiOiAiL2FwaS9yZWdpc3Rlci9uZXcvbmFtZS9kYXYvcmVzcG9uc2UvY21WMGFYSmxaQ0JvWld4c2J5Qm9iM2NnWVhKbElIbHZkU0IwYUdseklHbHpJRzE1SUc1bGR5Qm9aV0ZrWlhJZ2QiLCAicG9ydCI6IDIwODAsICJwcyI6ICJcdWQ4M2NcdWRkZjhcdWQ4M2NcdWRkZWEgIFNXRUVERU4gXHVkODNkXHVkYzUxIFRVTk5FTCBcdTI2Y2ZcdWZlMGYiLCAic2N5IjogImF1dG8iLCAidGxzIjogIm5vbmUiLCAidHlwZSI6ICJodHRwIiwgInYiOiAiMiJ9","json":{"inbounds":[{"listen":"127.0.0.1","port":61603,"protocol":"socks","settings":{"auth":"noauth","udp":true},"tag":"socks"}],"outbounds":[{"protocol":"vmess","settings":{"vnext":[{"address":"Tamizsyakuzaksks4ne.ivy-net.ir","port":2080,"users":[{"id":"be1457d7-6b30-4c33-97e5-d911c05c62d9","alterId":0,"security":"auto"}]}]},"streamSettings":{"network":"tcp","security":"none","tcpSettings":{"header":{"type":"http","request":{"path":["/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"],"headers":{"Host":["carvanage.ir"]}}}}},"tag":"proxy"},{"protocol":"freedom","tag":"direct"},{"protocol":"blackhole","tag":"block"}]},"port":61603}]
+[
+  {
+    "name": "🇺🇸  USA 🚀 TCP ⚡",
+    "raw": "vless://fe2400d2-232e-481f-b942-534674de89b6@Tamizsyakuzaksks4ne.ivy-net.ir:2061?security=none&type=tcp&headerType=http&path=%2Fapi%2Fregister%2Fnew%2Fname%2Fdav%2Fresponse%2FcmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd&host=parsabr.com#%F0%9F%87%BA%F0%9F%87%B8%20%20USA%20%F0%9F%9A%80%20TCP%20%E2%9A%A1",
+    "json": {
+      "inbounds": [
+        {
+          "listen": "127.0.0.1",
+          "port": 50415,
+          "protocol": "socks",
+          "settings": { "auth": "noauth", "udp": true },
+          "tag": "socks"
+        }
+      ],
+      "outbounds": [
+        {
+          "protocol": "vless",
+          "settings": {
+            "vnext": [
+              {
+                "address": "Tamizsyakuzaksks4ne.ivy-net.ir",
+                "port": 2061,
+                "users": [
+                  {
+                    "id": "fe2400d2-232e-481f-b942-534674de89b6",
+                    "encryption": "none"
+                  }
+                ]
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "none",
+            "tcpSettings": {
+              "header": {
+                "type": "http",
+                "request": {
+                  "path": [
+                    "/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"
+                  ],
+                  "headers": { "Host": ["parsabr.com"] }
+                }
+              }
+            }
+          },
+          "tag": "proxy"
+        },
+        { "protocol": "freedom", "tag": "direct" },
+        { "protocol": "blackhole", "tag": "block" }
+      ]
+    },
+    "port": 50415
+  },
+  {
+    "name": "🇩🇪  GERMANY 🍺 TCP ⚡️",
+    "raw": "vless://fe2400d2-232e-481f-b942-534674de89b6@Tamizsyakuzaksks4ne.ivy-net.ir:2071?security=none&type=tcp&headerType=http&path=%2Fapi%2Fregister%2Fnew%2Fname%2Fdav%2Fresponse%2FcmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd&host=parsabr.com#%F0%9F%87%A9%F0%9F%87%AA%20%20GERMANY%20%F0%9F%8D%BA%20TCP%20%E2%9A%A1%EF%B8%8F",
+    "json": {
+      "inbounds": [
+        {
+          "listen": "127.0.0.1",
+          "port": 50416,
+          "protocol": "socks",
+          "settings": { "auth": "noauth", "udp": true },
+          "tag": "socks"
+        }
+      ],
+      "outbounds": [
+        {
+          "protocol": "vless",
+          "settings": {
+            "vnext": [
+              {
+                "address": "Tamizsyakuzaksks4ne.ivy-net.ir",
+                "port": 2071,
+                "users": [
+                  {
+                    "id": "fe2400d2-232e-481f-b942-534674de89b6",
+                    "encryption": "none"
+                  }
+                ]
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "none",
+            "tcpSettings": {
+              "header": {
+                "type": "http",
+                "request": {
+                  "path": [
+                    "/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"
+                  ],
+                  "headers": { "Host": ["parsabr.com"] }
+                }
+              }
+            }
+          },
+          "tag": "proxy"
+        },
+        { "protocol": "freedom", "tag": "direct" },
+        { "protocol": "blackhole", "tag": "block" }
+      ]
+    },
+    "port": 50416
+  },
+  {
+    "name": "🇸🇪  SWEEDEN 👑 TCP ⚡",
+    "raw": "vless://fe2400d2-232e-481f-b942-534674de89b6@Tamizsyakuzaksks4ne.ivy-net.ir:2081?security=none&type=tcp&headerType=http&path=%2Fapi%2Fregister%2Fnew%2Fname%2Fdav%2Fresponse%2FcmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd&host=parsabr.com#%F0%9F%87%B8%F0%9F%87%AA%20%20SWEEDEN%20%F0%9F%91%91%20TCP%20%E2%9A%A1",
+    "json": {
+      "inbounds": [
+        {
+          "listen": "127.0.0.1",
+          "port": 50417,
+          "protocol": "socks",
+          "settings": { "auth": "noauth", "udp": true },
+          "tag": "socks"
+        }
+      ],
+      "outbounds": [
+        {
+          "protocol": "vless",
+          "settings": {
+            "vnext": [
+              {
+                "address": "Tamizsyakuzaksks4ne.ivy-net.ir",
+                "port": 2081,
+                "users": [
+                  {
+                    "id": "fe2400d2-232e-481f-b942-534674de89b6",
+                    "encryption": "none"
+                  }
+                ]
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "none",
+            "tcpSettings": {
+              "header": {
+                "type": "http",
+                "request": {
+                  "path": [
+                    "/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"
+                  ],
+                  "headers": { "Host": ["parsabr.com"] }
+                }
+              }
+            }
+          },
+          "tag": "proxy"
+        },
+        { "protocol": "freedom", "tag": "direct" },
+        { "protocol": "blackhole", "tag": "block" }
+      ]
+    },
+    "port": 50417
+  },
+  {
+    "name": "🇺🇸  USA 🚀 WS 🔪",
+    "raw": "vless://fe2400d2-232e-481f-b942-534674de89b6@Tamizsyakuzaksks4ne.ivy-net.ir:2062?security=none&type=ws&headerType=&path=%2Flklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwj%3Fed%3D4096&host=parsabr.com#%F0%9F%87%BA%F0%9F%87%B8%20%20USA%20%F0%9F%9A%80%20WS%20%F0%9F%94%AA",
+    "json": {
+      "inbounds": [
+        {
+          "listen": "127.0.0.1",
+          "port": 50418,
+          "protocol": "socks",
+          "settings": { "auth": "noauth", "udp": true },
+          "tag": "socks"
+        }
+      ],
+      "outbounds": [
+        {
+          "protocol": "vless",
+          "settings": {
+            "vnext": [
+              {
+                "address": "Tamizsyakuzaksks4ne.ivy-net.ir",
+                "port": 2062,
+                "users": [
+                  {
+                    "id": "fe2400d2-232e-481f-b942-534674de89b6",
+                    "encryption": "none"
+                  }
+                ]
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "ws",
+            "security": "none",
+            "wsSettings": {
+              "header": {
+                "type": "none",
+                "request": {
+                  "path": [
+                    "/lklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwj?ed=4096"
+                  ],
+                  "headers": { "Host": ["parsabr.com"] }
+                }
+              }
+            }
+          },
+          "tag": "proxy"
+        },
+        { "protocol": "freedom", "tag": "direct" },
+        { "protocol": "blackhole", "tag": "block" }
+      ]
+    },
+    "port": 50418
+  },
+  {
+    "name": "🇩🇪  GERMANY 🍺 WS 🔪",
+    "raw": "vless://fe2400d2-232e-481f-b942-534674de89b6@Tamizsyakuzaksks4ne.ivy-net.ir:2072?security=none&type=ws&headerType=&path=%2Flklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwj%3Fed%3D4096&host=parsabr.com#%F0%9F%87%A9%F0%9F%87%AA%20%20GERMANY%20%F0%9F%8D%BA%20WS%20%F0%9F%94%AA",
+    "json": {
+      "inbounds": [
+        {
+          "listen": "127.0.0.1",
+          "port": 50419,
+          "protocol": "socks",
+          "settings": { "auth": "noauth", "udp": true },
+          "tag": "socks"
+        }
+      ],
+      "outbounds": [
+        {
+          "protocol": "vless",
+          "settings": {
+            "vnext": [
+              {
+                "address": "Tamizsyakuzaksks4ne.ivy-net.ir",
+                "port": 2072,
+                "users": [
+                  {
+                    "id": "fe2400d2-232e-481f-b942-534674de89b6",
+                    "encryption": "none"
+                  }
+                ]
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "ws",
+            "security": "none",
+            "wsSettings": {
+              "header": {
+                "type": "none",
+                "request": {
+                  "path": [
+                    "/lklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwj?ed=4096"
+                  ],
+                  "headers": { "Host": ["parsabr.com"] }
+                }
+              }
+            }
+          },
+          "tag": "proxy"
+        },
+        { "protocol": "freedom", "tag": "direct" },
+        { "protocol": "blackhole", "tag": "block" }
+      ]
+    },
+    "port": 50419
+  },
+  {
+    "name": "🇸🇪  SWEEDEN 👑 WS 🔪",
+    "raw": "vless://fe2400d2-232e-481f-b942-534674de89b6@Tamizsyakuzaksks4ne.ivy-net.ir:2082?security=none&type=ws&headerType=&path=%2Flklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwj%3Fed%3D4096&host=parsabr.com#%F0%9F%87%B8%F0%9F%87%AA%20%20SWEEDEN%20%F0%9F%91%91%20WS%20%F0%9F%94%AA",
+    "json": {
+      "inbounds": [
+        {
+          "listen": "127.0.0.1",
+          "port": 50420,
+          "protocol": "socks",
+          "settings": { "auth": "noauth", "udp": true },
+          "tag": "socks"
+        }
+      ],
+      "outbounds": [
+        {
+          "protocol": "vless",
+          "settings": {
+            "vnext": [
+              {
+                "address": "Tamizsyakuzaksks4ne.ivy-net.ir",
+                "port": 2082,
+                "users": [
+                  {
+                    "id": "fe2400d2-232e-481f-b942-534674de89b6",
+                    "encryption": "none"
+                  }
+                ]
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "ws",
+            "security": "none",
+            "wsSettings": {
+              "header": {
+                "type": "none",
+                "request": {
+                  "path": [
+                    "/lklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwjlklklkopkpwqkepoqwejdiojqowijedopjqwepdijqwedjpqwoejopjdwj?ed=4096"
+                  ],
+                  "headers": { "Host": ["parsabr.com"] }
+                }
+              }
+            }
+          },
+          "tag": "proxy"
+        },
+        { "protocol": "freedom", "tag": "direct" },
+        { "protocol": "blackhole", "tag": "block" }
+      ]
+    },
+    "port": 50420
+  },
+  {
+    "name": "  🇩🇪 GERMANY 🍺  SKY 🏙  TUNNEL ⛏️",
+    "raw": "vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAicmVzdHBvZGl1bS5pciIsICJpZCI6ICJiZTE0NTdkNy02YjMwLTRjMzMtOTdlNS1kOTExYzA1YzYyZDkiLCAibmV0IjogInRjcCIsICJwYXRoIjogIi9hcGkvcmVnaXN0ZXIvbmV3L25hbWUvZGF2L3Jlc3BvbnNlL2NtVjBhWEpsWkNCb1pXeHNieUJvYjNjZ1lYSmxJSGx2ZFNCMGFHbHpJR2x6SUcxNUlHNWxkeUJvWldGa1pYSWdkIiwgInBvcnQiOiAyMDQwLCAicHMiOiAiICBcdWQ4M2NcdWRkZTlcdWQ4M2NcdWRkZWEgR0VSTUFOWSBcdWQ4M2NcdWRmN2EgIFNLWSBcdWQ4M2NcdWRmZDkgIFRVTk5FTCBcdTI2Y2ZcdWZlMGYiLCAic2N5IjogImF1dG8iLCAidGxzIjogIm5vbmUiLCAidHlwZSI6ICJodHRwIiwgInYiOiAiMiJ9",
+    "json": {
+      "inbounds": [
+        {
+          "listen": "127.0.0.1",
+          "port": 50421,
+          "protocol": "socks",
+          "settings": { "auth": "noauth", "udp": true },
+          "tag": "socks"
+        }
+      ],
+      "outbounds": [
+        {
+          "protocol": "vmess",
+          "settings": {
+            "vnext": [
+              {
+                "address": "Tamizsyakuzaksks4ne.ivy-net.ir",
+                "port": 2040,
+                "users": [
+                  {
+                    "id": "be1457d7-6b30-4c33-97e5-d911c05c62d9",
+                    "alterId": 0,
+                    "security": "auto"
+                  }
+                ]
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "none",
+            "tcpSettings": {
+              "header": {
+                "type": "http",
+                "request": {
+                  "path": [
+                    "/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"
+                  ],
+                  "headers": { "Host": ["restpodium.ir"] }
+                }
+              }
+            }
+          },
+          "tag": "proxy"
+        },
+        { "protocol": "freedom", "tag": "direct" },
+        { "protocol": "blackhole", "tag": "block" }
+      ]
+    },
+    "port": 50421
+  },
+  {
+    "name": "🇫🇮  FINLAND ❄️ TUNNEL ⛏️",
+    "raw": "vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAicmVnLmFwYXJhdC5pciIsICJpZCI6ICJiZTE0NTdkNy02YjMwLTRjMzMtOTdlNS1kOTExYzA1YzYyZDkiLCAibmV0IjogInRjcCIsICJwYXRoIjogIi9hcGkvcmVnaXN0ZXIvbmV3L25hbWUvZGF2L3Jlc3BvbnNlL2NtVjBhWEpsWkNCb1pXeHNieUJvYjNjZ1lYSmxJSGx2ZFNCMGFHbHpJR2x6SUcxNUlHNWxkeUJvWldGa1pYSWdkIiwgInBvcnQiOiAyMDUwLCAicHMiOiAiXHVkODNjXHVkZGViXHVkODNjXHVkZGVlICBGSU5MQU5EIFx1Mjc0NFx1ZmUwZiBUVU5ORUwgXHUyNmNmXHVmZTBmIiwgInNjeSI6ICJhdXRvIiwgInRscyI6ICJub25lIiwgInR5cGUiOiAiaHR0cCIsICJ2IjogIjIifQ==",
+    "json": {
+      "inbounds": [
+        {
+          "listen": "127.0.0.1",
+          "port": 50422,
+          "protocol": "socks",
+          "settings": { "auth": "noauth", "udp": true },
+          "tag": "socks"
+        }
+      ],
+      "outbounds": [
+        {
+          "protocol": "vmess",
+          "settings": {
+            "vnext": [
+              {
+                "address": "Tamizsyakuzaksks4ne.ivy-net.ir",
+                "port": 2050,
+                "users": [
+                  {
+                    "id": "be1457d7-6b30-4c33-97e5-d911c05c62d9",
+                    "alterId": 0,
+                    "security": "auto"
+                  }
+                ]
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "none",
+            "tcpSettings": {
+              "header": {
+                "type": "http",
+                "request": {
+                  "path": [
+                    "/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"
+                  ],
+                  "headers": { "Host": ["reg.aparat.ir"] }
+                }
+              }
+            }
+          },
+          "tag": "proxy"
+        },
+        { "protocol": "freedom", "tag": "direct" },
+        { "protocol": "blackhole", "tag": "block" }
+      ]
+    },
+    "port": 50422
+  },
+  {
+    "name": "🇺🇸  USA 🚀  TUNNEL ⛏️",
+    "raw": "vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAicmVnLmFwYXJhdC5pciIsICJpZCI6ICJiZTE0NTdkNy02YjMwLTRjMzMtOTdlNS1kOTExYzA1YzYyZDkiLCAibmV0IjogInRjcCIsICJwYXRoIjogIi9hcGkvcmVnaXN0ZXIvbmV3L25hbWUvZGF2L3Jlc3BvbnNlL2NtVjBhWEpsWkNCb1pXeHNieUJvYjNjZ1lYSmxJSGx2ZFNCMGFHbHpJR2x6SUcxNUlHNWxkeUJvWldGa1pYSWdkIiwgInBvcnQiOiAyMDYwLCAicHMiOiAiXHVkODNjXHVkZGZhXHVkODNjXHVkZGY4ICBVU0EgXHVkODNkXHVkZTgwICBUVU5ORUwgXHUyNmNmXHVmZTBmIiwgInNjeSI6ICJhdXRvIiwgInRscyI6ICJub25lIiwgInR5cGUiOiAiaHR0cCIsICJ2IjogIjIifQ==",
+    "json": {
+      "inbounds": [
+        {
+          "listen": "127.0.0.1",
+          "port": 50423,
+          "protocol": "socks",
+          "settings": { "auth": "noauth", "udp": true },
+          "tag": "socks"
+        }
+      ],
+      "outbounds": [
+        {
+          "protocol": "vmess",
+          "settings": {
+            "vnext": [
+              {
+                "address": "Tamizsyakuzaksks4ne.ivy-net.ir",
+                "port": 2060,
+                "users": [
+                  {
+                    "id": "be1457d7-6b30-4c33-97e5-d911c05c62d9",
+                    "alterId": 0,
+                    "security": "auto"
+                  }
+                ]
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "none",
+            "tcpSettings": {
+              "header": {
+                "type": "http",
+                "request": {
+                  "path": [
+                    "/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"
+                  ],
+                  "headers": { "Host": ["reg.aparat.ir"] }
+                }
+              }
+            }
+          },
+          "tag": "proxy"
+        },
+        { "protocol": "freedom", "tag": "direct" },
+        { "protocol": "blackhole", "tag": "block" }
+      ]
+    },
+    "port": 50423
+  },
+  {
+    "name": "🇩🇪  GERMANY 🍺 TUNNEL ⛏️",
+    "raw": "vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAiY2FydmFuYWdlLmlyIiwgImlkIjogImJlMTQ1N2Q3LTZiMzAtNGMzMy05N2U1LWQ5MTFjMDVjNjJkOSIsICJuZXQiOiAidGNwIiwgInBhdGgiOiAiL2FwaS9yZWdpc3Rlci9uZXcvbmFtZS9kYXYvcmVzcG9uc2UvY21WMGFYSmxaQ0JvWld4c2J5Qm9iM2NnWVhKbElIbHZkU0IwYUdseklHbHpJRzE1SUc1bGR5Qm9aV0ZrWlhJZ2QiLCAicG9ydCI6IDIwNzAsICJwcyI6ICJcdWQ4M2NcdWRkZTlcdWQ4M2NcdWRkZWEgIEdFUk1BTlkgXHVkODNjXHVkZjdhIFRVTk5FTCBcdTI2Y2ZcdWZlMGYiLCAic2N5IjogImF1dG8iLCAidGxzIjogIm5vbmUiLCAidHlwZSI6ICJodHRwIiwgInYiOiAiMiJ9",
+    "json": {
+      "inbounds": [
+        {
+          "listen": "127.0.0.1",
+          "port": 50424,
+          "protocol": "socks",
+          "settings": { "auth": "noauth", "udp": true },
+          "tag": "socks"
+        }
+      ],
+      "outbounds": [
+        {
+          "protocol": "vmess",
+          "settings": {
+            "vnext": [
+              {
+                "address": "Tamizsyakuzaksks4ne.ivy-net.ir",
+                "port": 2070,
+                "users": [
+                  {
+                    "id": "be1457d7-6b30-4c33-97e5-d911c05c62d9",
+                    "alterId": 0,
+                    "security": "auto"
+                  }
+                ]
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "none",
+            "tcpSettings": {
+              "header": {
+                "type": "http",
+                "request": {
+                  "path": [
+                    "/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"
+                  ],
+                  "headers": { "Host": ["carvanage.ir"] }
+                }
+              }
+            }
+          },
+          "tag": "proxy"
+        },
+        { "protocol": "freedom", "tag": "direct" },
+        { "protocol": "blackhole", "tag": "block" }
+      ]
+    },
+    "port": 50424
+  },
+  {
+    "name": "🇸🇪  SWEEDEN 👑 TUNNEL ⛏️",
+    "raw": "vmess://eyJhZGQiOiAiVGFtaXpzeWFrdXpha3NrczRuZS5pdnktbmV0LmlyIiwgImFpZCI6ICIwIiwgImhvc3QiOiAicmVnLmFwYXJhdC5pciIsICJpZCI6ICJiZTE0NTdkNy02YjMwLTRjMzMtOTdlNS1kOTExYzA1YzYyZDkiLCAibmV0IjogInRjcCIsICJwYXRoIjogIi9hcGkvcmVnaXN0ZXIvbmV3L25hbWUvZGF2L3Jlc3BvbnNlL2NtVjBhWEpsWkNCb1pXeHNieUJvYjNjZ1lYSmxJSGx2ZFNCMGFHbHpJR2x6SUcxNUlHNWxkeUJvWldGa1pYSWdkIiwgInBvcnQiOiAyMDgwLCAicHMiOiAiXHVkODNjXHVkZGY4XHVkODNjXHVkZGVhICBTV0VFREVOIFx1ZDgzZFx1ZGM1MSBUVU5ORUwgXHUyNmNmXHVmZTBmIiwgInNjeSI6ICJhdXRvIiwgInRscyI6ICJub25lIiwgInR5cGUiOiAiaHR0cCIsICJ2IjogIjIifQ==",
+    "json": {
+      "inbounds": [
+        {
+          "listen": "127.0.0.1",
+          "port": 50425,
+          "protocol": "socks",
+          "settings": { "auth": "noauth", "udp": true },
+          "tag": "socks"
+        }
+      ],
+      "outbounds": [
+        {
+          "protocol": "vmess",
+          "settings": {
+            "vnext": [
+              {
+                "address": "Tamizsyakuzaksks4ne.ivy-net.ir",
+                "port": 2080,
+                "users": [
+                  {
+                    "id": "be1457d7-6b30-4c33-97e5-d911c05c62d9",
+                    "alterId": 0,
+                    "security": "auto"
+                  }
+                ]
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "none",
+            "tcpSettings": {
+              "header": {
+                "type": "http",
+                "request": {
+                  "path": [
+                    "/api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd"
+                  ],
+                  "headers": { "Host": ["reg.aparat.ir"] }
+                }
+              }
+            }
+          },
+          "tag": "proxy"
+        },
+        { "protocol": "freedom", "tag": "direct" },
+        { "protocol": "blackhole", "tag": "block" }
+      ]
+    },
+    "port": 50425
+  }
+]

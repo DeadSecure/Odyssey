@@ -1,7 +1,7 @@
 import * as net from "net";
-import path from "path";
-import fs from "fs";
-import { Config } from "@/server/models/interfaces";
+import * as path from "path";
+import * as fs from "fs";
+import { Config } from "../../models/interfaces";
 
 // lib/PortManager.ts
 type ProcessMap = Map<string, number>;

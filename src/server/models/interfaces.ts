@@ -1,4 +1,4 @@
-export const curlFormat = `'{"namelookup": %{time_namelookup}, "connect": %{time_connect}, "starttransfer": %{time_starttransfer}, "total": %{time_total}, "size_upload": %{size_upload}, "size_download": %{size_download}, "speed_upload": %{speed_upload}, "speed_download": %{speed_download}, "url": "%{url}"}'`;
+export const curlFormat = `{"namelookup": %{time_namelookup}, "connect": %{time_connect}, "starttransfer": %{time_starttransfer}, "total": %{time_total}, "size_upload": %{size_upload}, "size_download": %{size_download}, "speed_upload": %{speed_upload}, "speed_download": %{speed_download}, "url": "%{url}"}`;
 
 export interface SitesTestResponse {
   namelookup: number;

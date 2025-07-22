@@ -187,14 +187,16 @@ interface V2RayConfig {
   };
 }
 
-export async function combineConfigs(username: string): Promise<V2RayConfig> {
+export async function combineConfigs(
+  username: string
+): Promise<[V2RayConfig, number[]]> {
   let jsons_path = path.join(process.cwd(), "configs", username, "json");
   const entries = await fs.readdir(jsons_path, { withFileTypes: true });
   // Filter to get only files (not subdirectories)
   const filenames = entries
     .filter((entry) => entry.isFile())
     .map((file) => path.join(jsons_path, file.name));
-
+  let ports: number[] = [];
   const combinedConfig: V2RayConfig = {
     inbounds: [],
     outbounds: [],
@@ -208,12 +210,17 @@ export async function combineConfigs(username: string): Promise<V2RayConfig> {
     const content = await fs.readFile(file, "utf-8");
     const config: V2RayConfig = JSON.parse(content);
 
+    if (config.outbounds[0]["streamSettings"]["network"] === "ws") {
+      continue;
+    }
+
     const baseName = path.basename(file, path.extname(file));
     console.log(file);
 
     // Modify inbound tags
     const newInbounds = config.inbounds.map((inbound, index) => {
       // New tag pattern: <filename>_in
+      ports.push(inbound.port);
       return {
         ...inbound,
         tag: `${baseName}_in${index > 0 ? `_${index}` : ""}`,
@@ -227,7 +234,6 @@ export async function combineConfigs(username: string): Promise<V2RayConfig> {
         tag: `${baseName}_out${index > 0 ? `_${index}` : ""}`,
       };
     });
-
     combinedConfig.inbounds.push(...newInbounds);
     combinedConfig.outbounds.push(...newOutbounds);
 
@@ -267,5 +273,5 @@ export async function combineConfigs(username: string): Promise<V2RayConfig> {
     });
   }
 
-  return combinedConfig;
+  return [combinedConfig, ports];
 }

@@ -1,18 +1,34 @@
-import { curlFormat, SitesTestResponse } from "@/server/models/interfaces";
-import { exec } from "child_process";
+import { curlFormat, SitesTestResponse } from "../../models/interfaces";
+import { spawn } from "child_process";
 
-export function testSite(
-  site: string,
-  port: number
-): Promise<SitesTestResponse> {
+export function testSite(site: string, port: number): Promise<SitesTestResponse> {
   return new Promise((resolve) => {
     console.log(`Testing: ${site}`);
 
-    const cmd = `curl -o /dev/null -s -w ${curlFormat} --socks5 localhost:${port} "${site}"`;
+    const curlArgs = [
+      "-o", "/dev/null",
+      "-s",
+      "-w", curlFormat,
+      "--socks5-hostname", `localhost:${port}`,
+      site,
+    ];
 
-    exec(cmd, (error, stdout, stderr) => {
-      if (error || stderr || !stdout) {
-        console.error(`Error testing ${site}:`, error?.message);
+    const child = spawn("curl", curlArgs, { env: process.env });
+
+    let stdout = "";
+    let stderr = "";
+
+    child.stdout.on("data", (data) => {
+      stdout += data.toString();
+    });
+
+    child.stderr.on("data", (data) => {
+      stderr += data.toString();
+    });
+
+    child.on("close", () => {
+      if (stderr || !stdout) {
+        console.error(`Error testing ${site}: ${stderr}`);
         return resolve({
           namelookup: -1,
           connect: -1,
@@ -42,6 +58,7 @@ export function testSite(
     });
   });
 }
+
 
 // upload
 // curl -s -T 2mb.pdf \
