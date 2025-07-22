@@ -11,35 +11,29 @@ import {
   getConfigLinkByPort,
   getPortsByUsername,
 } from "../services/utils/ports";
+import { runWorker } from "../services/utils/workerHandler";
+import path from "path";
 
 export async function handleRealDelay(
   username: string
-): Response<RelayDelayResponse[]> {
-  let ports = await getPortsByUsername(username);
+): Response<SitesTestResponse[]> {
   let sites = realDelayRoutes;
-  let results: RelayDelayResponse[] = [];
-  console.log(ports, sites);
-  for (const port of ports) {
-    for (const site of sites) {
-      try {
-        let res = await testSite(site.domain, port);
-        console.log("this is the test site result", res);
-        let config = await getConfigLinkByPort(username, port);
-        console.log("this is the config link", config);
-        results.push({
-          host_name: site.name,
-          real_delay: res.total,
-          config_name: config.name,
-          config_raw: config.raw,
-        });
-      } catch (error) {
-        console.log("error", error);
-        continue;
+
+  const ports = await getPortsByUsername(username);
+
+  const promises = ports.map((port) =>
+    runWorker(
+      path.resolve(process.cwd(), "src/server/services/utils/worker.js"),
+      {
+        port,
+        sites,
+        username,
       }
-    }
-  }
-  console.log("results");
-  console.log(results);
+    )
+  );
+
+  const results = (await Promise.all(promises)).flat();
+
   return {
     code: 200,
     message: results,
