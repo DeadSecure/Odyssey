@@ -2,6 +2,53 @@ import * as net from "net";
 import path from "path";
 import fs from "fs";
 import { Config } from "@/server/models/interfaces";
+
+// lib/PortManager.ts
+type ProcessMap = Map<string, number>;
+
+class PortManager {
+  private static instance: PortManager;
+  private processMap: ProcessMap = new Map();
+
+  private constructor() {}
+
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new PortManager();
+    }
+    return this.instance;
+  }
+
+  add(name: string, pid: number) {
+    this.processMap.set(name, pid);
+  }
+
+  remove(name: string) {
+    this.processMap.delete(name);
+  }
+
+  get(name: string): number | undefined {
+    return this.processMap.get(name);
+  }
+
+  list(): Record<string, number> {
+    return Object.fromEntries(this.processMap);
+  }
+
+  isAlive(name: string): boolean {
+    const pid = this.get(name);
+    if (!pid) return false;
+    try {
+      process.kill(pid, 0);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+}
+
+export const PortManger = PortManager.getInstance();
+
 /**
  * Finds a free TCP port by letting the OS assign one.
  */
