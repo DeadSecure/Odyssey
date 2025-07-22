@@ -7,11 +7,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method == "GET") {
-    let { category, username_raw } = req.query;
+    let { category, username } = req.query;
     try {
       let cat: string = (category as string) || "";
-      let username: string = (username_raw as string) || "";
-      if (!category || !username) {
+      let user: string = (username as string) || "";
+      if (!category || !user) {
         return res.status(400).json({ error: "Invalid or missing parameter" });
       }
       if (!category) {
@@ -19,11 +19,11 @@ export default async function handler(
           .status(400)
           .json({ error: "Invalid or missing parameter", cat });
       }
-      let user = await handleAccess(cat as Categories, username);
-      if (user.code === 200) {
-        return res.status(200).json(user.message);
+      let access_res = await handleAccess(cat as Categories, user);
+      if (access_res.code === 200) {
+        return res.status(200).json(access_res.message);
       } else {
-        return res.status(user.code).json(user.message);
+        return res.status(access_res.code).json(access_res.message);
       }
     } catch (error) {
       return res
