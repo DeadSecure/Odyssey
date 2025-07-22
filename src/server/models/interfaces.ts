@@ -47,3 +47,8 @@ export interface RelayDelayResponse {
   config_raw: string;
   real_delay: number;
 }
+
+export interface CoreStartResponse {
+  port: number;
+  name: string;
+}
