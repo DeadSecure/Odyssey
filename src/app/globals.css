@@ -1,6 +1,10 @@
 /* globals.css */
 @import "tailwindcss";
 
+body {
+  font-family: var(--font-kdam) !important;
+}
+
 :root {
   --dark-background: #213448;
   --light-background: #e8ffff;

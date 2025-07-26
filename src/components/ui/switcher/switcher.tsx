@@ -61,8 +61,6 @@ export const DayNightToggle = ({
   );
 };
 
-
-
 export const LanguageToggle = ({
   onToggle,
   initialLanguage = "en",
@@ -77,7 +75,6 @@ export const LanguageToggle = ({
     setLang(newLang);
     onToggle(newLang);
   };
-
 
   return (
     <button
@@ -108,8 +105,7 @@ export const LanguageToggle = ({
           fontSize: "18px",
           userSelect: "none",
         }}
-      >
-      </div>
+      ></div>
 
       {/* Background labels */}
       <div
@@ -122,7 +118,7 @@ export const LanguageToggle = ({
         }}
       >
         <span>ENG</span>
-        <span>فارسی</span>
+        <span style={{ fontSize: "15px" }}>فارسی</span>
       </div>
     </button>
   );
