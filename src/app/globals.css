@@ -1,26 +1,62 @@
+/* globals.css */
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --dark-background: #213448;
+  --light-background: #e8ffff;
+
+  --toggle-bg-light: #a6f6f1;
+  --toggle-bg-dark: #94b4c1;
+
+  --toggle-dark-knob-bg: #ecefca;
+  --toggle-light-knob-bg: #41aea9;
+
+  --toggle-icon-light: #1a202c;
+  --toggle-icon-dark: #f7fafc;
+
+  /* --toggle-button-bg: var(--toggle-bg-light);
+  --toggle-knob-bg: var(--toggle-bg-light);
+  --toggle-knob-text: var(--toggle-text-light);
+  --toggle-knob-border-color: var(--toggle-knob-border);
+  --toggle-label-color: #718096;  */
+}
+.dark {
+  --toggle-button-bg: var(--toggle-button-bg-dark);
+  --toggle-knob-bg: var(--toggle-bg-dark);
+  --toggle-knob-text: var(--toggle-text-dark);
+}
+/* Button background and text */
+.toggle-button {
+  background-color: var(--toggle-bg-light);
+  color: var(--toggle-icon-light);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
+.dark .toggle-button {
+  background-color: var(--toggle-bg-dark);
+  color: var(--toggle-icon-dark);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Knob styles */
+.toggle-knob {
+  transition: background-color 0.3s ease,
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* smooth slide */
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), sans-serif;
+.toggle-knob.light {
+  background-color: var(--toggle-light-knob-bg);
+}
+
+.toggle-knob.dark {
+  background-color: var(--toggle-dark-knob-bg);
+}
+
+.landing-container {
+  background-color: #e8ffff;
+  color: #213448;
+}
+
+.dark .landing-container {
+  background-color: #213448;
+  color: #e8ffff;
 }
