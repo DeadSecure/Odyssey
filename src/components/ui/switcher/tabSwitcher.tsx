@@ -1,6 +1,10 @@
 "use client";
 import React, { useEffect } from "react";
 import "../../../app/globals.css";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetStaticProps } from "next";
+import { useRouter } from "next/router";
 type Tab = "status" | "access" | "latency";
 
 type Props = {
@@ -25,7 +29,8 @@ const TabSwitcher: React.FC<Props> = ({ activeTab, onTabChange }) => {
 
   const translateXMobile = activeIndex * tabWidthMobile + offsetMobile;
   const translateXLg = activeIndex * tabWidthLg + offsetLg;
-
+  const { t } = useTranslation("common");
+  const { locale } = useRouter();
   return (
     <div className="flex justify-center w-full">
       {" "}
@@ -61,7 +66,7 @@ const TabSwitcher: React.FC<Props> = ({ activeTab, onTabChange }) => {
               }`}
               style={{ width: `${tabWidthMobile}px` }}
             >
-              <span className="text-base lg:text-lg">{tab}</span>
+              <span className="text-base lg:text-lg">{t(tab)}</span>
 
               <style jsx>{`
                 button {

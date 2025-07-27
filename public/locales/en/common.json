@@ -2,5 +2,8 @@
   "odyssey": "Odyssey",
   "description": "A unified platform built on X-Ray core to fully monitor x-ray based services.",
   "purchase": "purchase",
-  "watchDemo": "watch demo"
+  "watchDemo": "watch demo",
+  "access": "access",
+  "latency": "latency",
+  "status": "status"
 }
