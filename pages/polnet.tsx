@@ -12,7 +12,8 @@ export default function PolnetPage() {
 
   useEffect(() => {
     const tab_knob = document.querySelector(".tab-knob")!;
-    console.log(tab_knob);
+    // This runs only on the client side
+
     if (
       !tab_knob.classList.contains("dark") ||
       !tab_knob.classList.contains("light")
@@ -22,15 +23,20 @@ export default function PolnetPage() {
       if (mode.contains("dark")) {
         tab_knob.classList.add("dark");
         tab_knob.classList.remove("light");
+  
       }
       if (mode.contains("light")) {
         tab_knob.classList.add("light");
         tab_knob.classList.remove("dark");
+
       }
     }
   });
   return (
-    <ClientLayout activeTab={activeTab} onTabChange={setActiveTab}>
+    <ClientLayout
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
+    >
       <ClientStatusWrapper />
     </ClientLayout>
   );

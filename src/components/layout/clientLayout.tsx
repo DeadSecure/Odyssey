@@ -29,6 +29,7 @@ export default function ClientLayout({
   const [isDayMode, setIsDayMode] = useState(false);
   const { locale } = useRouter();
   const isRTL = locale === "fa";
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -37,10 +38,14 @@ export default function ClientLayout({
       root.classList.remove("dark");
       lang_knb.forEach((el) => el.classList.remove("dark"));
       lang_knb.forEach((el) => el.classList.add("light"));
+      setIsDark(true);
+      console.log("dark mode");
     } else {
       root.classList.add("dark");
       lang_knb.forEach((el) => el.classList.add("dark"));
       lang_knb.forEach((el) => el.classList.remove("light"));
+      setIsDark(false);
+      console.log("light mode");
     }
   }, [isDayMode]);
 
@@ -59,7 +64,11 @@ export default function ClientLayout({
 
       <div className="flex justify-center mt-4 lg:mt-6">
         <div className="w-[180px] h-[60px] lg:w-[200px] lg:h-[80px]">
-          <TabSwitcher activeTab={activeTab} onTabChange={onTabChange} />
+          <TabSwitcher
+            activeTab={activeTab}
+            onTabChange={onTabChange}
+            isDark={isDark}
+          />
         </div>
       </div>
 

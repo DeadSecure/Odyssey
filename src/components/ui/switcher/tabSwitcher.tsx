@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../../app/globals.css";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -10,9 +10,10 @@ type Tab = "status" | "access" | "latency";
 type Props = {
   activeTab: Tab;
   onTabChange: (tab: Tab) => void;
+  isDark: boolean;
 };
 
-const TabSwitcher: React.FC<Props> = ({ activeTab, onTabChange }) => {
+const TabSwitcher: React.FC<Props> = ({ activeTab, onTabChange, isDark }) => {
   const tabs: Tab[] = ["status", "access", "latency"];
   const containerWidthMobile = 360;
   const containerWidthLg = 400;
@@ -31,6 +32,7 @@ const TabSwitcher: React.FC<Props> = ({ activeTab, onTabChange }) => {
   const translateXLg = activeIndex * tabWidthLg + offsetLg;
   const { t } = useTranslation("common");
   const { locale } = useRouter();
+
   return (
     <div className="flex justify-center w-full">
       {" "}
@@ -57,12 +59,19 @@ const TabSwitcher: React.FC<Props> = ({ activeTab, onTabChange }) => {
         {/* Buttons */}
         {tabs.map((tab) => {
           const isActive = activeTab === tab;
+
           return (
             <button
               key={tab}
               onClick={() => onTabChange(tab)}
               className={`relative z-10 flex items-center justify-center h-full font-semibold transition-colors duration-200 ${
-                isActive ? "text-black" : "text-white"
+                isActive
+                  ? isDark
+                    ? "text-white" //light mode active
+                    : "text-black" // dark mode active
+                  : isDark
+                  ? "text-black"
+                  : "text-white" 
               }`}
               style={{ width: `${tabWidthMobile}px` }}
             >
