@@ -17,12 +17,6 @@ body {
 
   --toggle-icon-light: #1a202c;
   --toggle-icon-dark: #f7fafc;
-
-  /* --toggle-button-bg: var(--toggle-bg-light);
-  --toggle-knob-bg: var(--toggle-bg-light);
-  --toggle-knob-text: var(--toggle-text-light);
-  --toggle-knob-border-color: var(--toggle-knob-border);
-  --toggle-label-color: #718096;  */
 }
 .dark {
   --toggle-button-bg: var(--toggle-button-bg-dark);

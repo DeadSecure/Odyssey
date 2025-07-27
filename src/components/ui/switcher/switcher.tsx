@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import "./../../../app/globals.css";
+import { useRouter } from "next/router";
 
 export const DayNightToggle = ({
   onToggle,
@@ -62,19 +64,23 @@ export const DayNightToggle = ({
 };
 
 export const LanguageToggle = ({
-  onToggle,
-  initialLanguage = "en",
+  initialLang = "en",
 }: {
-  onToggle: (lang: "en" | "fa") => void;
-  initialLanguage?: "en" | "fa";
+  initialLang?: "en" | "fa";
 }) => {
-  const [lang, setLang] = useState<"en" | "fa">(initialLanguage);
+  const [lang, setLang] = useState<"en" | "fa">("en");
+  const router = useRouter();
 
-  const handleToggle = () => {
+  const handleToggle = async () => {
     const newLang = lang === "en" ? "fa" : "en";
     setLang(newLang);
-    onToggle(newLang);
+    router.push(router.pathname, router.asPath, { locale: newLang });
   };
+
+  useEffect(() => {
+    console.log(initialLang);
+    setLang(initialLang);
+  }, [initialLang]);
 
   return (
     <button
@@ -86,7 +92,6 @@ export const LanguageToggle = ({
       style={{
         width: "120px",
         height: "60px",
-        // backgroundColor: "var(--toggle-button-bg)",
         transition: "background-color 0.3s ease",
       }}
     >
