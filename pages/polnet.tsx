@@ -4,7 +4,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ClientStatusWrapper from "@/components/ui/clientWrapper";
 import ClientLayout from "@/components/layout/clientLayout";
 import { use, useEffect, useState } from "react";
-
+// import statusData from ../configs/polnet/
 export default function PolnetPage() {
   const [activeTab, setActiveTab] = useState<"status" | "access" | "latency">(
     "access"
@@ -37,7 +37,7 @@ export default function PolnetPage() {
       activeTab={activeTab}
       onTabChange={setActiveTab}
     >
-      <ClientStatusWrapper />
+      <ClientStatusWrapper statusBars={[]} />
     </ClientLayout>
   );
 }
