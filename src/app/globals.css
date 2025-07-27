@@ -49,6 +49,13 @@ body {
   background-color: var(--toggle-dark-knob-bg);
 }
 
+.lang-toggle-knob.light {
+  background-color: var(--toggle-light-knob-bg);
+}
+
+.lang-toggle-knob.dark {
+  background-color: var(--toggle-dark-knob-bg);
+}
 .landing-container {
   background-color: #e8ffff;
   color: #213448;

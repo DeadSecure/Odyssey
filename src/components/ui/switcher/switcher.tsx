@@ -88,7 +88,7 @@ export const LanguageToggle = ({
       aria-pressed={lang === "en"}
       role="switch"
       aria-label="Toggle Language"
-      className=" toggle-button relative flex items-center rounded-full cursor-pointer"
+      className="toggle-button relative flex items-center rounded-full cursor-pointer"
       style={{
         width: "120px",
         height: "60px",

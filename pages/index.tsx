@@ -26,15 +26,15 @@ export default function Home() {
 
   useEffect(() => {
     const root = document.documentElement;
-    const lang_knb = document.querySelector(".lang-toggle-knob")!;
+    const lang_knb = document.querySelectorAll(".lang-toggle-knob")!;
     if (isDayMode) {
       root.classList.remove("dark");
-      lang_knb.classList.remove("dark");
-      lang_knb.classList.add("light");
+      lang_knb.forEach((el) => el.classList.remove("dark"));
+      lang_knb.forEach((el) => el.classList.add("light"));
     } else {
       root.classList.add("dark");
-      lang_knb.classList.add("dark");
-      lang_knb.classList.remove("light");
+      lang_knb.forEach((el) => el.classList.add("dark"));
+      lang_knb.forEach((el) => el.classList.remove("light"));
     }
   }, [isDayMode]);
 
