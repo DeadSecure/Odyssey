@@ -1,6 +1,4 @@
 "use strict";
-// import { curlFormat, SitesTestResponse } from "../../models/interfaces";
-// import { spawn } from "child_process";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -39,119 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.testSite = testSite;
-// export function testSite(
-//   site: string,
-//   port: number
-// ): Promise<SitesTestResponse> {
-//   return new Promise((resolve) => {
-//     console.log(`Testing: ${site}`);
-//     const curlArgs = [
-//       "-o",
-//       "/dev/null",
-//       "-s",
-//       "-w",
-//       curlFormat,
-//       "--socks5-hostname",
-//       `localhost:${port}`,
-//       site,
-//     ];
-//     const child = spawn("curl", curlArgs, { env: process.env });
-//     let stdout = "";
-//     let stderr = "";
-//     child.stdout.on("data", (data) => {
-//       stdout += data.toString();
-//     });
-//     child.stderr.on("data", (data) => {
-//       stderr += data.toString();
-//     });
-//     child.on("close", () => {
-//       if (stderr || !stdout) {
-//         console.error(`Error testing ${site}: ${stderr}`);
-//         return resolve({
-//           namelookup: -1,
-//           connect: -1,
-//           starttransfer: -1,
-//           total: -1,
-//           url: "",
-//           config_name: "",
-//           config_raw: "",
-//           country: "",
-//           ip: "",
-//         });
-//       }
-//     });
-//     // getting ip
-//     const curlIpArgs = ["--socks5-hostname", `localhost:${port}`, "ip-api.com"];
-//     const ipChild = spawn("curl", curlIpArgs, { env: process.env });
-//     let ipStdout = "";
-//     let ipStderr = "";
-//     ipChild.stdout.on("data", (data) => {
-//       ipStdout += data.toString();
-//     });
-//     ipChild.stderr.on("data", (data) => {
-//       ipStderr += data.toString();
-//     });
-//     ipChild.on("close", () => {
-//       if (ipStderr || !ipStdout) {
-//         console.error(`Error testing ip-api.com: ${ipStderr}`);
-//         return resolve({
-//           namelookup: -1,
-//           connect: -1,
-//           starttransfer: -1,
-//           total: -1,
-//           url: "",
-//           config_name: "",
-//           config_raw: "",
-//           country: "",
-//           ip: "",
-//         });
-//       }
-//       try {
-//         let parsed: SitesTestResponse = JSON.parse(stdout.trim());
-//         const ipResParsed = JSON.parse(ipStdout.trim());
-//         console.log(ipResParsed, ipStdout);
-//         if (!ipResParsed.country || !ipResParsed.query) {
-//           return resolve({
-//             namelookup: -1,
-//             connect: -1,
-//             starttransfer: -1,
-//             total: -1,
-//             url: "",
-//             config_name: "",
-//             config_raw: "",
-//             country: "",
-//             ip: "",
-//           });
-//         }
-//         parsed.ip = ipResParsed.query;
-//         parsed.country = ipResParsed.country;
-//         resolve(parsed);
-//       } catch (e) {
-//         console.warn(`Failed to parse response for ${site}:`, e);
-//         resolve({
-//           namelookup: -1,
-//           connect: -1,
-//           starttransfer: -1,
-//           total: -1,
-//           url: "",
-//           config_name: "",
-//           config_raw: "",
-//           country: "",
-//           ip: "",
-//         });
-//       }
-//     });
-//   });
-// }
-// // upload
-// // curl -s -T 2mb.pdf \
-// //   -w "{\"speed_upload\": %{speed_upload}, \"time_total\": %{time_total}}\n" \
-// //   --socks5-hostname localhost:1080 https://httpbin.org/post \
-// //   -o /dev/null
-// // download
-// // curl -o /dev/null -s \
-// // -w '{"speed_download": %{speed_download}, "speed_upload": %{speed_upload}}\n' \
-// //  --socks5-hostname localhost:1080 https://cachefly.cachefly.net/2mb.test
+var flagsMap_1 = require("../../models/sources/flagsMap");
 var interfaces_1 = require("../../models/interfaces");
 var child_process_1 = require("child_process");
 function runCurlCommand(args) {
@@ -201,11 +87,11 @@ function testSite(site, port) {
                 case 2:
                     _a = _b.sent(), curlOutput = _a[0], ipOutput = _a[1];
                     parsedCurl = JSON.parse(curlOutput);
-                    parsedIp = JSON.parse(ipOutput);
+                    parsedIp = typeof ipOutput === "object" ? ipOutput : JSON.parse(ipOutput);
                     if (!parsedIp.query || !parsedIp.country)
                         throw new Error("Bad IP data");
                     parsedCurl.ip = parsedIp.query;
-                    parsedCurl.country = parsedIp.country;
+                    parsedCurl.country = getCountryCode(parsedIp.country);
                     return [2 /*return*/, parsedCurl];
                 case 3:
                     err_1 = _b.sent();
@@ -220,9 +106,14 @@ function testSite(site, port) {
                             config_raw: "",
                             country: "",
                             ip: "",
+                            category: "",
                         }];
                 case 4: return [2 /*return*/];
             }
         });
     });
+}
+function getCountryCode(name) {
+    var _a;
+    return (_a = flagsMap_1.FlagsMap[name]) !== null && _a !== void 0 ? _a : "Unknown";
 }

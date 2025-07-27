@@ -10,6 +10,7 @@ export interface SitesTestResponse {
   config_raw?: string;
   country?: string;
   ip: string;
+  category: Categories;
 }
 
 export enum Categories {

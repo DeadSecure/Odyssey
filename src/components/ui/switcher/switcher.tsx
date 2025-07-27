@@ -78,7 +78,6 @@ export const LanguageToggle = ({
   };
 
   useEffect(() => {
-    console.log(initialLang);
     setLang(initialLang);
   }, [initialLang]);
 

@@ -9,6 +9,7 @@ import {
 import { Categories, SitesTestResponse, Response } from "../models/interfaces";
 import { getPortsByUsername } from "../services/utils/ports";
 import { runWorker } from "../services/utils/workerHandler";
+import { parseStatusBars } from "../services/utils/parseAccess";
 
 export async function handleAccess(
   category: Categories,
@@ -21,7 +22,9 @@ export async function handleAccess(
       ? financeRoutes
       : category === Categories.gaming
       ? gamingRoutes
-      : devRoutes;
+      : category === Categories.dev
+      ? devRoutes
+      : devRoutes.concat(socialRoutes, financeRoutes, gamingRoutes);
 
   const ports = await getPortsByUsername(username);
 
@@ -38,6 +41,11 @@ export async function handleAccess(
 
   const results = (await Promise.all(promises)).flat();
 
+  console.log(
+    "This are are the parsed results",
+    await parseStatusBars(results)
+  );
+  
   return {
     code: 200,
     message: results,

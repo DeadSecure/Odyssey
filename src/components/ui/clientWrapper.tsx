@@ -17,15 +17,15 @@ export default function ClientStatusWrapper({
       <div className="flex flex-col lg:flex-row gap-8 justify-center items-start">
         {/* Left Column */}
         <div className="flex flex-col gap-6 w-full lg:w-1/2 items-center">
-          {leftColumn.map((country, idx) => (
+          {leftColumn.map((item, idx) => (
             <div
               key={`left-${idx}`}
               className="w-full max-w-full lg:max-w-[480px] flex-shrink-0"
             >
               <CountryStatusBar
-                name={country.name}
-                percentage={country.percentage}
-                flagUrl={country.flagUrl}
+                name={item.name}
+                percentage={item.percentage}
+                flagUrl={`https://flagsapi.com/${item.country}/flat/64.png`}
               />
             </div>
           ))}
@@ -33,15 +33,15 @@ export default function ClientStatusWrapper({
 
         {/* Right Column */}
         <div className="flex flex-col gap-6 w-full lg:w-1/2 items-center w-[700px]">
-          {rightColumn.map((country, idx) => (
+          {rightColumn.map((item, idx) => (
             <div
               key={`right-${idx}`}
               className="w-full max-w-full lg:max-w-[480px] flex-shrink-0"
             >
               <CountryStatusBar
-                name={country.name}
-                percentage={country.percentage}
-                flagUrl={country.flagUrl}
+                name={item.name}
+                percentage={item.percentage}
+                flagUrl={`https://flagsapi.com/${item.country}/flat/64.png`}
               />
             </div>
           ))}

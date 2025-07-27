@@ -69,7 +69,7 @@ var ports_1 = require("../utils/ports");
                                     return [4 /*yield*/, (0, ports_1.getConfigLinkByPort)(username_1, port_1)];
                                 case 2:
                                     config = _a.sent();
-                                    return [2 /*return*/, __assign(__assign({}, res), { config_name: config.name, config_raw: config.raw })];
+                                    return [2 /*return*/, __assign(__assign({}, res), { config_name: config.name, config_raw: config.raw, category: site.category })];
                                 case 3:
                                     err_2 = _a.sent();
                                     console.warn("Error testing site ".concat(site.domain, ":"), err_2);

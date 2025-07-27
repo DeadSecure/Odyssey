@@ -39,13 +39,11 @@ export default function ClientLayout({
       lang_knb.forEach((el) => el.classList.remove("dark"));
       lang_knb.forEach((el) => el.classList.add("light"));
       setIsDark(true);
-      console.log("dark mode");
     } else {
       root.classList.add("dark");
       lang_knb.forEach((el) => el.classList.add("dark"));
       lang_knb.forEach((el) => el.classList.remove("light"));
       setIsDark(false);
-      console.log("light mode");
     }
   }, [isDayMode]);
 

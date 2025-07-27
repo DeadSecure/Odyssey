@@ -1,5 +1,7 @@
+import { FlagsMap } from "../../models/sources/flagsMap";
 import { curlFormat, SitesTestResponse } from "../../models/interfaces";
 import { spawn } from "child_process";
+import { t } from "i18next";
 
 function runCurlCommand(args: string[]): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -49,12 +51,13 @@ export async function testSite(
     ]);
 
     const parsedCurl: SitesTestResponse = JSON.parse(curlOutput);
-    const parsedIp = JSON.parse(ipOutput);
+    const parsedIp =
+      typeof ipOutput === "object" ? ipOutput : JSON.parse(ipOutput);
 
     if (!parsedIp.query || !parsedIp.country) throw new Error("Bad IP data");
 
     parsedCurl.ip = parsedIp.query;
-    parsedCurl.country = parsedIp.country;
+    parsedCurl.country = getCountryCode(parsedIp.country);
 
     return parsedCurl;
   } catch (err) {
@@ -69,6 +72,11 @@ export async function testSite(
       config_raw: "",
       country: "",
       ip: "",
+      category: "" as any,
     };
   }
+}
+
+function getCountryCode(name: string): string {
+  return FlagsMap[name as keyof typeof FlagsMap] ?? "Unknown";
 }

@@ -1,4 +1,4 @@
-export const flagsMap = {
+export const FlagsMap = {
   Andorra: "AD",
   "United Arab Emirates": "AE",
   Afghanistan: "AF",
