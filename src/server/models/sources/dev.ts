@@ -59,34 +59,10 @@ export const devRoutes = [
     domain: "https://platform.openai.com",
     category: "dev",
   },
-  {
-    name: "Adobe Flash Tools",
-    domain: "https://www.adobe.com/products/flash.html",
-    category: "dev",
-  },
-  {
-    name: "ClamAV",
-    domain: "https://www.clamav.net",
-    category: "dev",
-  },
-  {
-    name: "SendGrid",
-    domain: "https://sendgrid.com",
-    category: "dev",
-  },
+
   {
     name: "Mailgun",
     domain: "https://www.mailgun.com",
-    category: "dev",
-  },
-  {
-    name: "Envato / CodeCanyon",
-    domain: "https://codecanyon.net",
-    category: "dev",
-  },
-  {
-    name: "Coursera",
-    domain: "https://www.coursera.org",
     category: "dev",
   },
   {
@@ -112,11 +88,6 @@ export const devRoutes = [
   {
     name: "Nvidia Experience",
     domain: "https://www.nvidia.com",
-    category: "dev",
-  },
-  {
-    name: "Spotify Developer Tools",
-    domain: "https://developer.spotify.com",
     category: "dev",
   },
 ];
