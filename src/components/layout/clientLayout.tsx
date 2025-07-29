@@ -49,15 +49,27 @@ export default function ClientLayout({
 
   return (
     <div
-      className={`landing-container w-full min-h-screen relative transition-colors duration-300 p-6 lg:p-12 ${kdamThmorPro.variable}`}
+      className={`landing-container w-full min-h-screen transition-colors duration-300 p-6 lg:p-12 ${kdamThmorPro.variable}`}
     >
       {/* Top row: Language and Day/Night */}
       <div className="flex justify-between items-center w-full max-w-7xl mx-auto">
         <LanguageToggle initialLang={isRTL ? "fa" : "en"} />
+        
+        <img
+          className="w-[60px] h-[60px] lg:w-[80px] lg:h-[80px] rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-md"
+          src="/polnet.jpg"
+          alt="profile"
+        ></img>
+
         <DayNightToggle
           onToggle={() => setIsDayMode(!isDayMode)}
           initialIsDay={false}
         />
+      </div>
+      <div className="w-full text-center mt-2">
+        <span className={`text-gray-600 dark:text-300 text-lg font-semibold ${isDayMode ? "text-black" : "text-white"}`}>
+          polnet Services Monitoring
+        </span>
       </div>
 
       <div className="flex justify-center mt-4 lg:mt-6">

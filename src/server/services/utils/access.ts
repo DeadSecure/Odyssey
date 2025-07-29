@@ -80,3 +80,4 @@ export async function testSite(
 function getCountryCode(name: string): string {
   return FlagsMap[name as keyof typeof FlagsMap] ?? "Unknown";
 }
+

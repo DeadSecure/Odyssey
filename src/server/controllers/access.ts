@@ -41,10 +41,11 @@ export async function handleAccess(
 
   const results = (await Promise.all(promises)).flat();
 
-  console.log(
-    "This are are the parsed results",
-    await parseStatusBars(results)
-  );
+  console.log("This are are the parsed results");
+
+  (await parseStatusBars(results)).forEach((status) => {
+    console.log(status.site);
+  });
   
   return {
     code: 200,

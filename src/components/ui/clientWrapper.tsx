@@ -1,49 +1,28 @@
 "use client";
-
-import CountryStatusBar from "@/components/ui/countryStatusBar";
-import { statusBar } from "@/server/models/client/status";
 import React from "react";
+import StatusAccordion from "./statusAccordion";
+import { statusBar } from "@/server/models/client/status";
 
 export default function ClientStatusWrapper({
   statusBars,
 }: {
   statusBars: statusBar[];
 }) {
-  const leftColumn = statusBars.filter((_, i) => i % 2 === 0);
-  const rightColumn = statusBars.filter((_, i) => i % 2 !== 0);
+  const left = statusBars.filter((_, i) => i % 2 === 0);
+  const right = statusBars.filter((_, i) => i % 2 !== 0);
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 mt-12">
+      <br />
       <div className="flex flex-col lg:flex-row gap-8 justify-center items-start">
-        {/* Left Column */}
         <div className="flex flex-col gap-6 w-full lg:w-1/2 items-center">
-          {leftColumn.map((item, idx) => (
-            <div
-              key={`left-${idx}`}
-              className="w-full max-w-full lg:max-w-[480px] flex-shrink-0"
-            >
-              <CountryStatusBar
-                name={item.name}
-                percentage={item.percentage}
-                flagUrl={`https://flagsapi.com/${item.country}/flat/64.png`}
-              />
-            </div>
+          {left.map((item, i) => (
+            <StatusAccordion key={i} item={item} />
           ))}
         </div>
-
-        {/* Right Column */}
-        <div className="flex flex-col gap-6 w-full lg:w-1/2 items-center w-[700px]">
-          {rightColumn.map((item, idx) => (
-            <div
-              key={`right-${idx}`}
-              className="w-full max-w-full lg:max-w-[480px] flex-shrink-0"
-            >
-              <CountryStatusBar
-                name={item.name}
-                percentage={item.percentage}
-                flagUrl={`https://flagsapi.com/${item.country}/flat/64.png`}
-              />
-            </div>
+        <div className="flex flex-col gap-6 w-full lg:w-1/2 items-center">
+          {right.map((item, i) => (
+            <StatusAccordion key={i} item={item} />
           ))}
         </div>
       </div>
