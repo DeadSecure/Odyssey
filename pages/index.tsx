@@ -5,17 +5,10 @@ import {
 } from "@/components/ui/switcher/switcher";
 import { useEffect, useState } from "react";
 import "../src/app/globals.css";
-import { Kdam_Thmor_Pro } from "next/font/google";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetStaticProps } from "next";
-import { useRouter } from "next/router";
-
-const kdamThmorPro = Kdam_Thmor_Pro({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-kdam",
-});
+import router, { useRouter } from "next/router";
 
 export default function Home() {
   const [isDayMode, setIsDayMode] = useState(false);
@@ -40,7 +33,7 @@ export default function Home() {
 
   return (
     <div
-      className={`landing-container w-full min-h-screen relative transition-colors duration-300 p-6 lg:p-12 ${kdamThmorPro.variable}`}
+      className={`landing-container w-full min-h-screen relative transition-colors duration-300 p-6 lg:p-12`}
     >
       {/* Top Toggles */}
       <div className="flex justify-between items-center w-full max-w-7xl mx-auto ">
@@ -54,8 +47,8 @@ export default function Home() {
       <br />
 
       {/* Title */}
-      <div className="text-center text-4xl lg:text-6xl font-kdam">
-        <h1>Odyssey</h1>
+      <div className="text-center text-4xl lg:text-6xl">
+        <h1 style={{ fontFamily: "var(--font-kdam)" }}>Odyssey</h1>
       </div>
 
       {/* Main Flex Container */}
@@ -68,15 +61,35 @@ export default function Home() {
           <p
             className={`text-lg lg:text-3xl leading-relaxed lg:left-1/2 lg:relative ${
               isRTL ? "text-right" : "text-left"
-            }`}
+            } `}
+            style={{
+              fontFamily: `${isRTL ? "var(--font-vazir)" : "var(--font-kdam)"}`,
+            }}
           >
             {t("description")}
           </p>
           <div className="flex flex-wrap gap-4 lg:left-1/2 lg:relative">
-            <button className="bg-cyan-300 hover:bg-cyan-400 text-black font-medium py-2 px-4 rounded-full transition">
+            <button
+              style={{
+                fontFamily: `${
+                  isRTL ? "var(--font-vazir)" : "var(--font-kdam)"
+                }`,
+              }}
+              className="bg-cyan-300 hover:bg-cyan-400 text-black font-medium py-2 px-4 rounded-full transition"
+            >
               {t("purchase")}
             </button>
-            <button className="bg-cyan-300 hover:bg-cyan-400 text-black font-medium py-2 px-4 rounded-full transition">
+            <button
+              onClick={() =>
+                isRTL ? router.push("/fa/polnet") : router.push("/polnet")
+              }
+              style={{
+                fontFamily: `${
+                  isRTL ? "var(--font-vazir)" : "var(--font-kdam)"
+                }`,
+              }}
+              className="bg-cyan-300 hover:bg-cyan-400 text-black font-medium py-2 px-4 rounded-full transition"
+            >
               {t("watchDemo")}
             </button>
           </div>

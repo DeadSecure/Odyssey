@@ -1,9 +1,24 @@
-/* globals.css */
 @import "tailwindcss";
 
-body {
-  font-family: var(--font-kdam) !important;
+@font-face {
+  font-family: "Kdam Thmor Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/kdamthmorpro/v6/EJRPQgAzVdcI-Qdvt34jzurnGD74hc5q8oWa.woff2")
+    format("woff2");
 }
+
+@font-face {
+  font-family: "Vazirmatn";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/vazirmatn/v15/Dxx78j6PP2D_kU2muijPEe1n2vVbfJRklWgzCR6T7kLA7QdqzYzr.woff2")
+    format("woff2");
+}
+
+
 
 :root {
   --dark-background: #213448;
@@ -59,6 +74,7 @@ body {
 .landing-container {
   background-color: #e8ffff;
   color: #213448;
+  
 }
 
 .dark .landing-container {

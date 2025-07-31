@@ -3,6 +3,7 @@ import React from "react";
 import StatusAccordion from "./statusAccordion";
 import { statusBar } from "@/server/models/client/status";
 
+
 export default function ClientStatusWrapper({
   statusBars,
 }: {
@@ -12,7 +13,9 @@ export default function ClientStatusWrapper({
   const right = statusBars.filter((_, i) => i % 2 !== 0);
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 mt-12">
+    <div
+      className={`w-full max-w-7xl mx-auto px-4 mt-12 `}
+    >
       <br />
       <div className="flex flex-col lg:flex-row gap-8 justify-center items-start">
         <div className="flex flex-col gap-6 w-full lg:w-1/2 items-center">

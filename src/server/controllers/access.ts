@@ -9,7 +9,7 @@ import {
 import { Categories, SitesTestResponse, Response } from "../models/interfaces";
 import { getPortsByUsername } from "../services/utils/ports";
 import { runWorker } from "../services/utils/workerHandler";
-import { parseStatusBars } from "../services/utils/parseAccess";
+import { parseStatusBars } from "../services/utils/parser";
 
 export async function handleAccess(
   category: Categories,

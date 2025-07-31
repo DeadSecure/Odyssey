@@ -3,41 +3,42 @@ import {
   DayNightToggle,
   LanguageToggle,
 } from "@/components/ui/switcher/switcher";
-import { Kdam_Thmor_Pro } from "next/font/google";
 import { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import "../../app/globals.css";
 import TabSwitcher from "@/components/ui/switcher/tabSwitcher"; // adjust import path
-
-const kdamThmorPro = Kdam_Thmor_Pro({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-kdam",
-});
+import { useTranslation } from "next-i18next";
 
 type Props = {
   children: ReactNode;
   activeTab: "status" | "access" | "latency";
   onTabChange: (tab: "status" | "access" | "latency") => void;
+  name: string;
+  logo: string;
 };
 
 export default function ClientLayout({
   children,
   activeTab,
   onTabChange,
+  name,
+  logo,
 }: Props) {
   const [isDayMode, setIsDayMode] = useState(false);
   const { locale } = useRouter();
   const isRTL = locale === "fa";
   const [isDark, setIsDark] = useState(false);
+  const { t } = useTranslation("common");
 
   useEffect(() => {
     const root = document.documentElement;
     const lang_knb = document.querySelectorAll(".lang-toggle-knob")!;
+
     if (isDayMode) {
       root.classList.remove("dark");
       lang_knb.forEach((el) => el.classList.remove("dark"));
       lang_knb.forEach((el) => el.classList.add("light"));
+
       setIsDark(true);
     } else {
       root.classList.add("dark");
@@ -49,15 +50,15 @@ export default function ClientLayout({
 
   return (
     <div
-      className={`landing-container w-full min-h-screen transition-colors duration-300 p-6 lg:p-12 ${kdamThmorPro.variable}`}
+      className={`landing-container w-full min-h-screen transition-colors duration-300 p-6 lg:p-12 `}
     >
       {/* Top row: Language and Day/Night */}
       <div className="flex justify-between items-center w-full max-w-7xl mx-auto">
         <LanguageToggle initialLang={isRTL ? "fa" : "en"} />
-        
+
         <img
-          className="w-[60px] h-[60px] lg:w-[80px] lg:h-[80px] rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-md"
-          src="/polnet.jpg"
+          className="w-[60px] h-[60px] lg:w-[80px] lg:h-[80px] rounded-full overflow-hidden shadow-lg"
+          src={`${logo}`}
           alt="profile"
         ></img>
 
@@ -67,8 +68,15 @@ export default function ClientLayout({
         />
       </div>
       <div className="w-full text-center mt-2">
-        <span className={`text-gray-600 dark:text-300 text-lg font-semibold ${isDayMode ? "text-black" : "text-white"}`}>
-          polnet Services Monitoring
+        <span
+          style={{
+            fontFamily: `${isRTL ? "var(--font-vazir)" : "var(--font-kdam)"}`,
+          }}
+          className={`text-gray-600 dark:text-300 text-lg font-semibold ${
+            isDayMode ? "text-black" : "text-white"
+          }`}
+        >
+          {name} {t("monitoringText")}
         </span>
       </div>
 
@@ -78,6 +86,7 @@ export default function ClientLayout({
             activeTab={activeTab}
             onTabChange={onTabChange}
             isDark={isDark}
+            isRTL={isRTL}
           />
         </div>
       </div>

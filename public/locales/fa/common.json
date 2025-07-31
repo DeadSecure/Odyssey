@@ -5,5 +5,7 @@
   "watchDemo": "مشاهده دمو",
   "access": "دسترسی",
   "latency": "سرعت",
-  "status": "وضعیت"
+  "status": "وضعیت",
+  "monitoringText": "مانیتورینگ سرویس‌های",
+  "nextUpdateIn": "به روز رسانی بعدی در"
 }

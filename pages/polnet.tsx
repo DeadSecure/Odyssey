@@ -6,7 +6,7 @@ import ClientLayout from "@/components/layout/clientLayout";
 import { useEffect, useState } from "react";
 import { statusBar } from "@/server/models/client/status";
 import { Categories, SitesTestResponse } from "@/server/models/interfaces";
-import { parseStatusBars } from "@/server/services/utils/parseAccess";
+import { parseStatusBars } from "@/server/services/utils/parser";
 
 export const mockStatusBars: statusBar[] = [
   {
@@ -57,13 +57,13 @@ export const mockStatusBars: statusBar[] = [
     percentage: 60,
     site: {
       social: {
-        "twitter.com": 0.350,
+        "twitter.com": 0.35,
       },
       finance: {
-        "bankoffrance.fr": 0.220,
+        "bankoffrance.fr": 0.22,
       },
       dev: {
-        "stackoverflow.com": 0.410,
+        "stackoverflow.com": 0.41,
       },
     },
   },
@@ -94,7 +94,12 @@ export default function PolnetPage({ statusBars }: Props) {
   }, []);
 
   return (
-    <ClientLayout activeTab={activeTab} onTabChange={setActiveTab}>
+    <ClientLayout
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
+      name="polnet"
+      logo="/polnet.jpg"
+    >
       <ClientStatusWrapper statusBars={mockStatusBars} />
     </ClientLayout>
   );

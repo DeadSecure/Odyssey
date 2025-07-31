@@ -5,5 +5,7 @@
   "watchDemo": "watch demo",
   "access": "access",
   "latency": "latency",
-  "status": "status"
+  "status": "status",
+  "monitoringText": "Services Monitoring",
+  "nextUpdateIn": "Next update in"
 }
