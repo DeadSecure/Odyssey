@@ -1,14 +1,14 @@
 // pages/polnet.tsx
 import { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import ClientStatusWrapper from "@/components/ui/clientWrapper";
+import ClientBarsWrapper from "@/components/ui/clientWrapper";
 import ClientLayout from "@/components/layout/clientLayout";
 import { useEffect, useState } from "react";
-import { statusBar } from "@/server/models/client/status";
+import { latencyBar, AccessBar } from "@/server/models/client/bars";
 import { Categories, SitesTestResponse } from "@/server/models/interfaces";
-import { parseStatusBars } from "@/server/services/utils/parser";
+import { parseAccessBars } from "@/server/services/utils/parser";
 
-export const mockStatusBars: statusBar[] = [
+export const mockAccessBars: AccessBar[] = [
   {
     name: "DE • Germany Tunnel",
     country: "DE",
@@ -16,7 +16,7 @@ export const mockStatusBars: statusBar[] = [
     site: {
       social: {
         "instagram.com": 1.67,
-        "youtube.com": 0.234,
+        "youtube.com": 0.76,
       },
       gaming: {
         "steamcommunity.com": 3.12,
@@ -69,11 +69,57 @@ export const mockStatusBars: statusBar[] = [
   },
 ];
 
+export const mockLatencyBars: latencyBar[] = [
+  {
+    name: "DE • Germany Tunnel",
+    country: "DE",
+    site: {
+      "google.com": 1.67,
+      "apple.com": 0.76,
+      mfst: 3.12,
+      gstatic: 0.456,
+    },
+    latency: 0.29,
+  },
+  {
+    name: "US • USA Tunnel",
+    country: "US",
+    site: {
+      "google.com": 1.67,
+      "apple.com": 0.76,
+      mfst: 3.12,
+      gstatic: 0.456,
+    },
+    latency: 0.79,
+  },
+  {
+    name: "FI • Finland Tunnel",
+    country: "FI",
+    site: {
+      "google.com": 1.67,
+      "apple.com": 0.76,
+      mfst: 3.12,
+      gstatic: 0.456,
+    },
+    latency: 0.179,
+  },
+  {
+    name: "FR • France Tunnel",
+    country: "FR",
+    site: {
+      "google.com": 1.67,
+      "apple.com": 0.76,
+      mfst: 3.12,
+      gstatic: 0.456,
+    },
+    latency: 1.79,
+  },
+];
 type Props = {
-  statusBars: statusBar[];
+  AccessBars: AccessBar[];
 };
 
-export default function PolnetPage({ statusBars }: Props) {
+export default function PolnetPage({ AccessBars }: Props) {
   const [activeTab, setActiveTab] = useState<"status" | "access" | "latency">(
     "access"
   );
@@ -99,8 +145,9 @@ export default function PolnetPage({ statusBars }: Props) {
       onTabChange={setActiveTab}
       name="polnet"
       logo="/polnet.jpg"
+      bars={{ AccessBars: mockAccessBars, latencyBars: mockLatencyBars }}
     >
-      <ClientStatusWrapper statusBars={mockStatusBars} />
+      <ClientBarsWrapper />
     </ClientLayout>
   );
 }
@@ -123,11 +170,11 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // let res_parse: SitesTestResponse[] = await res.json();
 
   // // ✅ Reuse parsed data
-  // let statusBars: statusBar[] = await parseStatusBars(res_parse);
+  // let AccessBars: AccessBar[] = await parseAccessBars(res_parse);
 
   return {
     props: {
-      mockStatusBars,
+      mockAccessBars,
       ...(await serverSideTranslations(locale ?? "en", ["common"])),
     },
     revalidate: 60, // optional ISR

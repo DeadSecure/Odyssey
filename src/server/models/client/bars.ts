@@ -1,4 +1,4 @@
-export interface statusBar {
+export interface AccessBar {
   name: string;
   percentage: number;
   country: string;

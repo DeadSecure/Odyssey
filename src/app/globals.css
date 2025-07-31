@@ -18,8 +18,6 @@
     format("woff2");
 }
 
-
-
 :root {
   --dark-background: #213448;
   --light-background: #e8ffff;
@@ -74,10 +72,41 @@
 .landing-container {
   background-color: #e8ffff;
   color: #213448;
-  
 }
 
 .dark .landing-container {
   background-color: #213448;
   color: #e8ffff;
+}
+
+.sl-bar {
+  background-color: #213e3b;
+  opacity: 0.84;
+}
+.dark .sl-bar {
+  background-color: #20262d;
+  opacity: 0.84;
+}
+
+.sl-bar-items-bg {
+  background-color: #213E3B;
+  opacity: 1;
+}
+
+.dark .sl-bar-items-bg {
+  background-color: #20262d;
+  opacity: 1;
+}
+.sl-bar-item {
+  background-color: #213E3B;
+  opacity: 1;
+}
+
+.dark .sl-bar-item {
+  background-color: #20262d;
+  opacity: 1;
+}
+
+.sl-bar-item:hover {
+  opacity: 0.5;
 }

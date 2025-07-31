@@ -9,7 +9,7 @@ import {
 import { Categories, SitesTestResponse, Response } from "../models/interfaces";
 import { getPortsByUsername } from "../services/utils/ports";
 import { runWorker } from "../services/utils/workerHandler";
-import { parseStatusBars } from "../services/utils/parser";
+import { parseAccessBars } from "../services/utils/parser";
 
 export async function handleAccess(
   category: Categories,
@@ -43,8 +43,8 @@ export async function handleAccess(
 
   console.log("This are are the parsed results");
 
-  (await parseStatusBars(results)).forEach((status) => {
-    console.log(status.site);
+  (await parseAccessBars(results)).forEach((access) => {
+    console.log(access.site);
   });
   
   return {

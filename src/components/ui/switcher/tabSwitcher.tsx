@@ -105,7 +105,12 @@ const TabSwitcher: React.FC<Props> = ({
       </div>
 
       {/* Countdown */}
-      <div className="mt-4 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+      <div
+        style={{
+          fontFamily: `${isRTL ? "var(--font-vazir)" : "var(--font-kdam)"}`,
+        }}
+        className="mt-4 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300"
+      >
         <span>
           {t("nextUpdateIn", { defaultValue: "Next update in" })} {nextUpdateIn}
         </span>

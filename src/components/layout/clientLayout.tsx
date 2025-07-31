@@ -3,18 +3,33 @@ import {
   DayNightToggle,
   LanguageToggle,
 } from "@/components/ui/switcher/switcher";
-import { ReactNode, useEffect, useState } from "react";
+import {
+  cloneElement,
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import { useRouter } from "next/router";
 import "../../app/globals.css";
 import TabSwitcher from "@/components/ui/switcher/tabSwitcher"; // adjust import path
 import { useTranslation } from "next-i18next";
+import { latencyBar, AccessBar } from "@/server/models/client/bars";
 
 type Props = {
-  children: ReactNode;
+  children: ReactElement<{
+    isRtl: boolean;
+    bars: { AccessBars?: AccessBar[]; latencyBars?: latencyBar[] };
+  }>;
   activeTab: "status" | "access" | "latency";
   onTabChange: (tab: "status" | "access" | "latency") => void;
   name: string;
   logo: string;
+  bars: {
+    AccessBars: AccessBar[];
+    latencyBars: latencyBar[];
+  };
 };
 
 export default function ClientLayout({
@@ -23,6 +38,7 @@ export default function ClientLayout({
   onTabChange,
   name,
   logo,
+  bars,
 }: Props) {
   const [isDayMode, setIsDayMode] = useState(false);
   const { locale } = useRouter();
@@ -33,17 +49,25 @@ export default function ClientLayout({
   useEffect(() => {
     const root = document.documentElement;
     const lang_knb = document.querySelectorAll(".lang-toggle-knob")!;
+    const sl_bar = document.querySelectorAll(".sl-bar")!;
+    const sl_bar_items = document.querySelectorAll(".sl-bar-items-bg")!;
+    const sl_bar_item = document.querySelectorAll(".sl-bar-item")!;
 
     if (isDayMode) {
       root.classList.remove("dark");
       lang_knb.forEach((el) => el.classList.remove("dark"));
       lang_knb.forEach((el) => el.classList.add("light"));
-
+      sl_bar.forEach((el) => el.classList.remove("dark"));
+      sl_bar_items.forEach((el) => el.classList.remove("dark"));
+      sl_bar_item.forEach((el) => el.classList.remove("dark"));
       setIsDark(true);
     } else {
       root.classList.add("dark");
       lang_knb.forEach((el) => el.classList.add("dark"));
       lang_knb.forEach((el) => el.classList.remove("light"));
+      sl_bar.forEach((el) => el.classList.add("dark"));
+      sl_bar_items.forEach((el) => el.classList.add("dark"));
+      sl_bar_item.forEach((el) => el.classList.add("dark"));
       setIsDark(false);
     }
   }, [isDayMode]);
@@ -92,7 +116,17 @@ export default function ClientLayout({
       </div>
 
       {/* Children (your page content) */}
-      <div className="mt-6">{children}</div>
+      <div className="mt-6">
+        {cloneElement(children, {
+          isRtl: isRTL,
+          bars: {
+            AccessBars:
+              activeTab.toLowerCase() === "access" ? bars.AccessBars : [],
+            latencyBars:
+              activeTab.toLowerCase() === "latency" ? bars.latencyBars : [],
+          },
+        })}
+      </div>
     </div>
   );
 }

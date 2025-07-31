@@ -1,10 +1,10 @@
-import { latencyBar, statusBar } from "@/server/models/client/status";
+import { latencyBar, AccessBar } from "@/server/models/client/bars";
 import { Categories, SitesTestResponse } from "@/server/models/interfaces";
 
-export async function parseStatusBars(
+export async function parseAccessBars(
   site_res: SitesTestResponse[]
-): Promise<statusBar[]> {
-  const statusMap: Record<
+): Promise<AccessBar[]> {
+  const accessMap: Record<
     string,
     {
       name: string;
@@ -23,8 +23,8 @@ export async function parseStatusBars(
     const url = item.url;
 
     // Create entry if not exist
-    if (!statusMap[name]) {
-      statusMap[name] = {
+    if (!accessMap[name]) {
+      accessMap[name] = {
         name,
         country,
         site: {},
@@ -33,7 +33,7 @@ export async function parseStatusBars(
       };
     }
 
-    const entry = statusMap[name];
+    const entry = accessMap[name];
 
     // Add latency under category/url
     if (!entry.site[category]) {
@@ -48,8 +48,8 @@ export async function parseStatusBars(
     }
   }
 
-  // Convert map to array of statusBar with final percentage
-  return Object.values(statusMap).map((entry) => ({
+  // Convert map to array of AccessBar with final percentage
+  return Object.values(accessMap).map((entry) => ({
     name: entry.name,
     country: entry.country,
     site: entry.site,
@@ -99,7 +99,7 @@ async function parseLatencyBars(
 
   console.log(latencyMap);
 
-  // Convert map to array of statusBar with final percentage
+  // Convert map to array of AccessBar with final percentage
   return Object.values(latencyMap).map((entry) => ({
     name: entry.name,
     country: entry.country,
