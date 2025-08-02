@@ -7,5 +7,9 @@
   "latency": "latency",
   "status": "status",
   "monitoringText": "Services Monitoring",
+  "finance": "Finance",
+  "dev": "Dev",
+  "gaming": "Gaming",
+  "social": "Social",
   "nextUpdateIn": "Next update in"
 }

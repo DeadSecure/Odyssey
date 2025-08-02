@@ -15,38 +15,51 @@ import { useRouter } from "next/router";
 import "../../app/globals.css";
 import TabSwitcher from "@/components/ui/switcher/tabSwitcher"; // adjust import path
 import { useTranslation } from "next-i18next";
-import { latencyBar, AccessBar } from "@/server/models/client/bars";
+import { latencyBar, AccessBar, statusBar } from "@/server/models/client/bars";
+import { Tab } from "../ui/switcher/statusTabSwitcher";
 
 type Props = {
   children: ReactElement<{
     isRtl: boolean;
-    bars: { AccessBars?: AccessBar[]; latencyBars?: latencyBar[] };
+    bars: {
+      AccessBars?: AccessBar[];
+      latencyBars?: latencyBar[];
+      statusBars?: statusBar;
+    };
+    onStatusTabChange: (tab: Tab) => void;
+    statusTab: Tab;
+    isDark: boolean;
   }>;
-  activeTab: "status" | "access" | "latency";
-  onTabChange: (tab: "status" | "access" | "latency") => void;
+
   name: string;
   logo: string;
   bars: {
     AccessBars: AccessBar[];
     latencyBars: latencyBar[];
+    statusBars: statusBar;
   };
 };
 
-export default function ClientLayout({
-  children,
-  activeTab,
-  onTabChange,
-  name,
-  logo,
-  bars,
-}: Props) {
+export default function ClientLayout({ children, name, logo, bars }: Props) {
   const [isDayMode, setIsDayMode] = useState(false);
+  const [activeTab, setActiveTab] = useState<"status" | "access" | "latency">(
+    "access"
+  );
+  const [statusTab, onStatusTabChange] = useState<Tab>("finance");
+
   const { locale } = useRouter();
-  const isRTL = locale === "fa";
+  const isRtl = locale === "fa";
   const [isDark, setIsDark] = useState(false);
   const { t } = useTranslation("common");
 
+  const handleTabChange = (tab: "status" | "access" | "latency") => {
+    setActiveTab(tab);
+    // if (tab === "status") {
+    onStatusTabChange("social");
+    // }
+  };
   useEffect(() => {
+    console.log("useEffect in layout", isRtl);
     const root = document.documentElement;
     const lang_knb = document.querySelectorAll(".lang-toggle-knob")!;
     const sl_bar = document.querySelectorAll(".sl-bar")!;
@@ -70,7 +83,7 @@ export default function ClientLayout({
       sl_bar_item.forEach((el) => el.classList.add("dark"));
       setIsDark(false);
     }
-  }, [isDayMode]);
+  }, [isDayMode, statusTab, activeTab]);
 
   return (
     <div
@@ -78,7 +91,7 @@ export default function ClientLayout({
     >
       {/* Top row: Language and Day/Night */}
       <div className="flex justify-between items-center w-full max-w-7xl mx-auto">
-        <LanguageToggle initialLang={isRTL ? "fa" : "en"} />
+        <LanguageToggle initialLang={isRtl ? "fa" : "en"} />
 
         <img
           className="w-[60px] h-[60px] lg:w-[80px] lg:h-[80px] rounded-full overflow-hidden shadow-lg"
@@ -94,7 +107,7 @@ export default function ClientLayout({
       <div className="w-full text-center mt-2">
         <span
           style={{
-            fontFamily: `${isRTL ? "var(--font-vazir)" : "var(--font-kdam)"}`,
+            fontFamily: `${isRtl ? "var(--font-vazir)" : "var(--font-kdam)"}`,
           }}
           className={`text-gray-600 dark:text-300 text-lg font-semibold ${
             isDayMode ? "text-black" : "text-white"
@@ -108,23 +121,30 @@ export default function ClientLayout({
         <div className="w-[180px] h-[60px] lg:w-[200px] lg:h-[80px]">
           <TabSwitcher
             activeTab={activeTab}
-            onTabChange={onTabChange}
+            onTabChange={handleTabChange}
             isDark={isDark}
-            isRTL={isRTL}
+            isRtl={isRtl}
           />
         </div>
       </div>
-
+            
       {/* Children (your page content) */}
       <div className="mt-6">
         {cloneElement(children, {
-          isRtl: isRTL,
+          isRtl: isRtl,
           bars: {
             AccessBars:
               activeTab.toLowerCase() === "access" ? bars.AccessBars : [],
             latencyBars:
               activeTab.toLowerCase() === "latency" ? bars.latencyBars : [],
+            statusBars:
+              activeTab.toLowerCase() === "status"
+                ? bars.statusBars
+                : undefined,
           },
+          onStatusTabChange,
+          statusTab,
+          isDark,
         })}
       </div>
     </div>

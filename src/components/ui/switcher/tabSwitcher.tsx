@@ -11,14 +11,14 @@ type Props = {
   activeTab: Tab;
   onTabChange: (tab: Tab) => void;
   isDark: boolean;
-  isRTL: boolean;
+  isRtl: boolean;
 };
 
 const TabSwitcher: React.FC<Props> = ({
   activeTab,
   onTabChange,
   isDark,
-  isRTL,
+  isRtl,
 }) => {
   const tabs: Tab[] = ["status", "access", "latency"];
   const containerWidthMobile = 360;
@@ -59,7 +59,7 @@ const TabSwitcher: React.FC<Props> = ({
   }, []);
 
   return (
-    <div className={`flex flex-col items-center w-full`}>
+    <div className={`w-full flex flex-col items-center`}>
       <div className="toggle-button relative h-[60px] w-[360px] lg:h-[80px] lg:w-[400px] rounded-full bg-sky-400/60 overflow-hidden flex">
         {/* Knob */}
         <div
@@ -83,7 +83,7 @@ const TabSwitcher: React.FC<Props> = ({
             <button
               style={{
                 fontFamily: `${
-                  isRTL ? "var(--font-vazir)" : "var(--font-kdam)"
+                  isRtl ? "var(--font-vazir)" : "var(--font-kdam)"
                 }`,
               }}
               key={tab}
@@ -107,11 +107,16 @@ const TabSwitcher: React.FC<Props> = ({
       {/* Countdown */}
       <div
         style={{
-          fontFamily: `${isRTL ? "var(--font-vazir)" : "var(--font-kdam)"}`,
+          fontFamily: `${isRtl ? "var(--font-vazir)" : "var(--font-kdam)"}`,
         }}
         className="mt-4 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300"
       >
-        <span>
+        <span
+          style={{
+            fontFamily: `${isRtl ? "var(--font-vazir)" : "var(--font-kdam)"}`,
+            color : !isDark ? "#e8ffff" : "#213448",
+          }}
+        >
           {t("nextUpdateIn", { defaultValue: "Next update in" })} {nextUpdateIn}
         </span>
         <ClientOnly>

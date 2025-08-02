@@ -4,126 +4,20 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ClientBarsWrapper from "@/components/ui/clientWrapper";
 import ClientLayout from "@/components/layout/clientLayout";
 import { useEffect, useState } from "react";
-import { latencyBar, AccessBar } from "@/server/models/client/bars";
+import { latencyBar, AccessBar, statusBar } from "@/server/models/client/bars";
 import { Categories, SitesTestResponse } from "@/server/models/interfaces";
 import { parseAccessBars } from "@/server/services/utils/parser";
+import {
+  mockAccessBars,
+  mockLatencyBars,
+  mockStatusBars,
+} from "@/server/models/client/mocks";
 
-export const mockAccessBars: AccessBar[] = [
-  {
-    name: "DE • Germany Tunnel",
-    country: "DE",
-    percentage: 75,
-    site: {
-      social: {
-        "instagram.com": 1.67,
-        "youtube.com": 0.76,
-      },
-      gaming: {
-        "steamcommunity.com": 3.12,
-      },
-    },
-  },
-  {
-    name: "US • USA Tunnel",
-    country: "US",
-    percentage: 50,
-    site: {
-      social: {
-        "facebook.com": 0.456,
-      },
-      finance: {
-        "paypal.com": 0.289,
-        "coinbase.com": 5.12,
-      },
-    },
-  },
-  {
-    name: "FI • Finland Tunnel",
-    country: "FI",
-    percentage: 100,
-    site: {
-      dev: {
-        "github.com": 1.45,
-        "gitlab.com": 0.52,
-      },
-      gaming: {
-        "epicgames.com": 0.98,
-      },
-    },
-  },
-  {
-    name: "FR • France Tunnel",
-    country: "FR",
-    percentage: 60,
-    site: {
-      social: {
-        "twitter.com": 0.35,
-      },
-      finance: {
-        "bankoffrance.fr": 0.22,
-      },
-      dev: {
-        "stackoverflow.com": 0.41,
-      },
-    },
-  },
-];
-
-export const mockLatencyBars: latencyBar[] = [
-  {
-    name: "DE • Germany Tunnel",
-    country: "DE",
-    site: {
-      "google.com": 1.67,
-      "apple.com": 0.76,
-      mfst: 3.12,
-      gstatic: 0.456,
-    },
-    latency: 0.29,
-  },
-  {
-    name: "US • USA Tunnel",
-    country: "US",
-    site: {
-      "google.com": 1.67,
-      "apple.com": 0.76,
-      mfst: 3.12,
-      gstatic: 0.456,
-    },
-    latency: 0.79,
-  },
-  {
-    name: "FI • Finland Tunnel",
-    country: "FI",
-    site: {
-      "google.com": 1.67,
-      "apple.com": 0.76,
-      mfst: 3.12,
-      gstatic: 0.456,
-    },
-    latency: 0.179,
-  },
-  {
-    name: "FR • France Tunnel",
-    country: "FR",
-    site: {
-      "google.com": 1.67,
-      "apple.com": 0.76,
-      mfst: 3.12,
-      gstatic: 0.456,
-    },
-    latency: 1.79,
-  },
-];
 type Props = {
   AccessBars: AccessBar[];
 };
 
 export default function PolnetPage({ AccessBars }: Props) {
-  const [activeTab, setActiveTab] = useState<"status" | "access" | "latency">(
-    "access"
-  );
-
   useEffect(() => {
     const tab_knob = document.querySelector(".tab-knob");
     const mode = document.querySelector(".toggle-knob")?.classList;
@@ -141,11 +35,13 @@ export default function PolnetPage({ AccessBars }: Props) {
 
   return (
     <ClientLayout
-      activeTab={activeTab}
-      onTabChange={setActiveTab}
       name="polnet"
       logo="/polnet.jpg"
-      bars={{ AccessBars: mockAccessBars, latencyBars: mockLatencyBars }}
+      bars={{
+        AccessBars: mockAccessBars,
+        latencyBars: mockLatencyBars,
+        statusBars: mockStatusBars,
+      }}
     >
       <ClientBarsWrapper />
     </ClientLayout>

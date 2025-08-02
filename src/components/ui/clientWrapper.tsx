@@ -1,16 +1,41 @@
 "use client";
 import React from "react";
-import AccessAccordion from "./accessAccordion";       
+import AccessAccordion from "./accessAccordion";
 import LatencyAccordion from "./latencyAccordion";
-import { latencyBar, AccessBar } from "@/server/models/client/bars";
+import { latencyBar, AccessBar, statusBar } from "@/server/models/client/bars";
+import StatusAccordion from "./statusAccordion";
+import { Tab } from "./switcher/statusTabSwitcher";
 
 export default function ClientBarsWrapper({
   bars,
-  isRTL,
+  isRtl,
+  isDark,
+  onStatusTabChange,
+  statusTab,
 }: {
-  bars?: { AccessBars?: AccessBar[]; latencyBars?: latencyBar[] };
-  isRTL?: boolean;
+  bars?: {
+    AccessBars?: AccessBar[];
+    latencyBars?: latencyBar[];
+    statusBars?: statusBar;
+  };
+  isRtl?: boolean;
+  isDark?: boolean;
+  onStatusTabChange?: (tab: Tab) => void;
+  statusTab?: Tab;
 }) {
+  console.log("render client layout", isRtl);
+  if (bars?.statusBars) {
+    return (
+      <StatusAccordion
+        item={bars.statusBars}
+        isRtl={isRtl}
+        isDark={isDark}
+        onStatusTabChange={onStatusTabChange}
+        statusTab={statusTab}
+      />
+    );
+  }
+
   if (bars?.AccessBars?.length) {
     const left = bars.AccessBars.filter((_, i) => i % 2 === 0);
     const right = bars.AccessBars.filter((_, i) => i % 2 !== 0);
@@ -21,12 +46,22 @@ export default function ClientBarsWrapper({
         <div className="flex flex-col lg:flex-row gap-8 justify-center items-start">
           <div className="flex flex-col gap-6 w-full lg:w-1/2 items-center">
             {left.map((item, i) => (
-              <AccessAccordion key={i} item={item} isRtl={isRTL} />
+              <AccessAccordion
+                key={i}
+                item={item}
+                isRtl={isRtl}
+                isDark={isDark}
+              />
             ))}
           </div>
           <div className="flex flex-col gap-6 w-full lg:w-1/2 items-center">
             {right.map((item, i) => (
-              <AccessAccordion key={i} item={item} isRtl={isRTL} />
+              <AccessAccordion
+                key={i}
+                item={item}
+                isRtl={isRtl}
+                isDark={isDark}
+              />
             ))}
           </div>
         </div>
@@ -44,12 +79,22 @@ export default function ClientBarsWrapper({
         <div className="flex flex-col lg:flex-row gap-8 justify-center items-start">
           <div className="flex flex-col gap-6 w-full lg:w-1/2 items-center">
             {left.map((item, i) => (
-              <LatencyAccordion key={i} item={item} isRtl={isRTL} />
+              <LatencyAccordion
+                key={i}
+                item={item}
+                isRtl={isRtl}
+                isDark={isDark}
+              />
             ))}
           </div>
           <div className="flex flex-col gap-6 w-full lg:w-1/2 items-center">
             {right.map((item, i) => (
-              <LatencyAccordion key={i} item={item} isRtl={isRTL} />
+              <LatencyAccordion
+                key={i}
+                item={item}
+                isRtl={isRtl}
+                isDark={isDark}
+              />
             ))}
           </div>
         </div>

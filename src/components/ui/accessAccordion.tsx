@@ -5,10 +5,10 @@ import { AccessBar } from "@/server/models/client/bars";
 type Props = {
   item: AccessBar;
   isRtl?: boolean;
-
+  isDark?: boolean;
 };
 
-export default function AccessAccordion({ item, isRtl }: Props) {
+export default function AccessAccordion({ item, isRtl, isDark }: Props) {
   const [open, setOpen] = useState(false);
   const [border, setBorder] = useState("rounded-xl");
 

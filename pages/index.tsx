@@ -15,7 +15,7 @@ export default function Home() {
   const { t } = useTranslation("common");
   const { locale } = useRouter();
 
-  const isRTL = locale === "fa";
+  const isRtl = locale === "fa";
 
   useEffect(() => {
     const root = document.documentElement;
@@ -37,7 +37,7 @@ export default function Home() {
     >
       {/* Top Toggles */}
       <div className="flex justify-between items-center w-full max-w-7xl mx-auto ">
-        <LanguageToggle initialLang={`${isRTL ? "fa" : "en"}`} />
+        <LanguageToggle initialLang={`${isRtl ? "fa" : "en"}`} />
         <DayNightToggle
           onToggle={() => setIsDayMode(!isDayMode)}
           initialIsDay={false}
@@ -55,15 +55,15 @@ export default function Home() {
       <div className="flex flex-col flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-0">
         {/* Left Section: Text + Buttons */}
         <div
-          dir={isRTL ? "rtl" : "ltr"} // 👈 only this part becomes RTL
+          dir={isRtl ? "rtl" : "ltr"} // 👈 only this part becomes RTL
           className="flex flex-col items-center lg:items-start text-center lg:text-left max-w-xl space-y-6"
         >
           <p
             className={`text-lg lg:text-3xl leading-relaxed lg:left-1/2 lg:relative ${
-              isRTL ? "text-right" : "text-left"
+              isRtl ? "text-right" : "text-left"
             } `}
             style={{
-              fontFamily: `${isRTL ? "var(--font-vazir)" : "var(--font-kdam)"}`,
+              fontFamily: `${isRtl ? "var(--font-vazir)" : "var(--font-kdam)"}`,
             }}
           >
             {t("description")}
@@ -72,7 +72,7 @@ export default function Home() {
             <button
               style={{
                 fontFamily: `${
-                  isRTL ? "var(--font-vazir)" : "var(--font-kdam)"
+                  isRtl ? "var(--font-vazir)" : "var(--font-kdam)"
                 }`,
               }}
               className="bg-cyan-300 hover:bg-cyan-400 text-black font-medium py-2 px-4 rounded-full transition"
@@ -81,11 +81,11 @@ export default function Home() {
             </button>
             <button
               onClick={() =>
-                isRTL ? router.push("/fa/polnet") : router.push("/polnet")
+                isRtl ? router.push("/fa/polnet") : router.push("/polnet")
               }
               style={{
                 fontFamily: `${
-                  isRTL ? "var(--font-vazir)" : "var(--font-kdam)"
+                  isRtl ? "var(--font-vazir)" : "var(--font-kdam)"
                 }`,
               }}
               className="bg-cyan-300 hover:bg-cyan-400 text-black font-medium py-2 px-4 rounded-full transition"

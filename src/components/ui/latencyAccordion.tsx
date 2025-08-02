@@ -5,6 +5,7 @@ import { latencyBar, AccessBar } from "@/server/models/client/bars";
 type Props = {
   item: latencyBar;
   isRtl?: boolean;
+  isDark?: boolean;
 };
 
 export default function LatencyAccordion({ item, isRtl }: Props) {
@@ -31,7 +32,7 @@ export default function LatencyAccordion({ item, isRtl }: Props) {
     >
       {/* Header */}
       <div
-        className={`flex items-center justify-between gap-3 bg-[red] text-white px-4 py-2 ${border} shadow-md w-full cursor-pointer h-[50px]`}
+        className={`flex items-center justify-between gap-3 sl-bar dark text-white px-4 py-2 ${border} shadow-md w-full cursor-pointer h-[50px]`}
         onClick={() => latencyClickHandler()}
       >
         <span className="font-medium text-sm flex-1 truncate">{item.name}</span>
@@ -54,12 +55,12 @@ export default function LatencyAccordion({ item, isRtl }: Props) {
 
       {/* Body */}
       {open && (
-        <div className="bg-[#1b2631] rounded-b-xl shadow-inner p-4 space-y-4">
+        <div className="sl-bar-items-bg dark rounded-b-xl shadow-inner p-4 space-y-4">
           {Object.entries(item.site).map(([siteName, latency]) => (
             <div key={siteName} className="space-y-1">
               {/* siteName header */}
               <div
-                className="flex justify-between items-center text-white font-medium cursor-pointer border-b border-gray-700 py-2 px-4 hover:bg-[#2e3b49]"
+                className="flex justify-between items-center text-white font-medium cursor-pointer border-b border-gray-700 py-2 px-4 sl-bar-items-bg dark"
                 onClick={() =>
                   setOpenSiteName(opensiteName === siteName ? null : siteName)
                 }
