@@ -12,12 +12,28 @@ import {
   mockLatencyBars,
   mockStatusBars,
 } from "@/server/models/client/mocks";
+import {
+  fetchAccessAndStatusBars,
+  fetchLatencyBars,
+} from "@/server/services/utils/bridge";
 
 type Props = {
   AccessBars: AccessBar[];
+  LatencyBars: latencyBar[];
+  StatusBars: statusBar;
+  breathDelay: number;
 };
 
-export default function PolnetPage({ AccessBars }: Props) {
+export default function PolnetPage({
+  AccessBars,
+  StatusBars,
+  LatencyBars,
+  breathDelay,
+}: Props) {
+  const [accessBars, setAccessBars] = useState<AccessBar[]>(AccessBars);
+  const [latencyBars, setLatencyBars] = useState<latencyBar[]>(LatencyBars);
+  const [statusBars, setStatusBars] = useState<statusBar>(StatusBars);
+
   useEffect(() => {
     const tab_knob = document.querySelector(".tab-knob");
     const mode = document.querySelector(".toggle-knob")?.classList;
@@ -31,16 +47,25 @@ export default function PolnetPage({ AccessBars }: Props) {
         tab_knob.classList.remove("dark");
       }
     }
-  }, []);
+
+    setTimeout(async () => {
+      let access_and_status = await fetchAccessAndStatusBars("polnet");
+      let latency = await fetchLatencyBars("polnet");
+      setAccessBars(access_and_status.access);
+      setLatencyBars(latency);
+      setStatusBars(access_and_status.status);
+    }, breathDelay);
+    
+  }, [accessBars, latencyBars, statusBars]);
 
   return (
     <ClientLayout
       name="polnet"
       logo="/polnet.jpg"
       bars={{
-        AccessBars: mockAccessBars,
-        latencyBars: mockLatencyBars,
-        statusBars: mockStatusBars,
+        AccessBars: accessBars,
+        latencyBars: latencyBars,
+        statusBars: statusBars,
       }}
     >
       <ClientBarsWrapper />
@@ -49,28 +74,14 @@ export default function PolnetPage({ AccessBars }: Props) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  // const params = new URLSearchParams({
-  //   category: "all",
-  //   username: "polnet",
-  // });
-
-  // const res = await fetch(
-  //   `http://localhost:3000/api/access?${params.toString()}`,
-  //   {
-  //     method: "GET",
-  //     headers: { "Content-Type": "application/json" },
-  //   }
-  // );
-
-  // // ✅ Parse once
-  // let res_parse: SitesTestResponse[] = await res.json();
-
-  // // ✅ Reuse parsed data
-  // let AccessBars: AccessBar[] = await parseAccessBars(res_parse);
-
+  let access_and_status = await fetchAccessAndStatusBars("polnet");
+  let latency = await fetchLatencyBars("polnet");
   return {
     props: {
-      mockAccessBars,
+      AccessBars: access_and_status.access,
+      StatusBars: access_and_status.status,
+      LatencyBars: latency,
+      breathDelay: 15000,
       ...(await serverSideTranslations(locale ?? "en", ["common"])),
     },
     revalidate: 60, // optional ISR

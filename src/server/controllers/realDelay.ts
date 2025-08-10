@@ -13,10 +13,12 @@ import {
 } from "../services/utils/ports";
 import { runWorker } from "../services/utils/workerHandler";
 import path from "path";
+import { latencyBar } from "../models/client/bars";
+import { parseLatencyBars } from "../services/utils/parser";
 
 export async function handleRealDelay(
   username: string
-): Response<SitesTestResponse[]> {
+): Response<latencyBar[]> {
   let sites = realDelayRoutes;
 
   const ports = await getPortsByUsername(username);
@@ -32,10 +34,12 @@ export async function handleRealDelay(
     )
   );
 
-  const results = (await Promise.all(promises)).flat();
+  let results = (await Promise.all(promises)).flat();
+
+  let parsed_results: latencyBar[] = parseLatencyBars(results);
 
   return {
     code: 200,
-    message: results,
+    message: parsed_results,
   };
 }

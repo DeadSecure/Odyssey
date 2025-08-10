@@ -11,7 +11,7 @@ import { getPortsByUsername } from "../services/utils/ports";
 import { runWorker } from "../services/utils/workerHandler";
 import { parseAccessBars } from "../services/utils/parser";
 import { convertSitesTestResponseToConfigInput } from "../services/utils/barGenerator";
-import { SiteMetadata, statusBar } from "../models/client/bars";
+import { AccessBar, SiteMetadata, statusBar } from "../models/client/bars";
 import {
   addChartsWithSlotsBatch,
   getGroupedCharts,
@@ -23,7 +23,7 @@ import Database from "better-sqlite3";
 export async function handleAccess(
   category: Categories,
   username: string
-): Response<{ res: SitesTestResponse[]; charts: statusBar }> {
+): Response<{ res: AccessBar[]; charts: statusBar }> {
   const sites: SiteMetadata[] =
     category === Categories.social
       ? socialRoutes
@@ -66,15 +66,15 @@ export async function handleAccess(
   console.log("done");
   console.log("setting the access result in the db ...");
 
-  setGroupedCharts(db, results);
+  // setGroupedCharts(db, results);
   console.log("done");
 
   let accessResult = getLast60ChartsGroupedByCategory(db);
 
-  let accessWitLatencyResult = getGroupedCharts(db);
+  // let accessWitLatencyResult = getGroupedCharts(db);
 
   console.log("here are the access bars", accessResult);
-  console.log("here are the latency bars", accessWitLatencyResult);
+  // console.log("here are the latency bars", accessWitLatencyResult);
   db.close();
 
   accessResult.social.forEach((s) => {
@@ -96,6 +96,6 @@ export async function handleAccess(
 
   return {
     code: 200,
-    message: { res: accessWitLatencyResult, charts: accessResult },
+    message: { res: parseAccessBars(results), charts: accessResult },
   };
 }

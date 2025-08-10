@@ -1,9 +1,7 @@
 import { latencyBar, AccessBar } from "@/server/models/client/bars";
 import { Categories, SitesTestResponse } from "@/server/models/interfaces";
 
-export async function parseAccessBars(
-  site_res: SitesTestResponse[]
-): Promise<AccessBar[]> {
+export function parseAccessBars(site_res: SitesTestResponse[]): AccessBar[] {
   const accessMap: Record<
     string,
     {
@@ -57,9 +55,7 @@ export async function parseAccessBars(
   }));
 }
 
-async function parseLatencyBars(
-  site_res: SitesTestResponse[]
-): Promise<latencyBar[]> {
+export function parseLatencyBars(site_res: SitesTestResponse[]): latencyBar[] {
   const latencyMap: Record<
     string,
     {
@@ -89,7 +85,7 @@ async function parseLatencyBars(
     }
 
     const entry = latencyMap[name];
- 
+
     // Count total and successful tests
     entry.totalTests++;
     if (latency > 0) {
