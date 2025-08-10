@@ -1,16 +1,77 @@
-export const financeRoutes = [
-  { name: "Binance", type: "CEX", domain: "https://www.binance.com", category: "finance" },
-  { name: "Coinbase", type: "CEX", domain: "https://www.coinbase.com", category: "finance" },
-  { name: "Kraken", type: "CEX", domain: "https://www.kraken.com", category: "finance" },
-  { name: "Bitfinex", type: "CEX", domain: "https://www.bitfinex.com", category: "finance" },
-  { name: "Huobi (HTX)", type: "CEX", domain: "https://www.htx.com", category: "finance" },
-  { name: "KuCoin", type: "CEX", domain: "https://www.kucoin.com", category: "finance" },
-  { name: "OKX (OKEx)", type: "CEX", domain: "https://www.okx.com", category: "finance" },
-  { name: "Gate.io", type: "CEX", domain: "https://www.gate.io", category: "finance" },
-  { name: "Bybit", type: "CEX", domain: "https://www.bybit.com", category: "finance" },
-  { name: "Crypto.com", type: "CEX", domain: "https://crypto.com", category: "finance" },
-  { name: "PancakeSwap", type: "DEX", domain: "https://pancakeswap.finance", category: "finance" },
-  { name: "Uniswap", type: "DEX", domain: "https://app.uniswap.org", category: "finance" },
-  { name: "1inch", type: "DEX", domain: "https://app.1inch.io", category: "finance" },
-  { name: "BingX", type: "CEX", domain: "https://bingx.com", category: "finance" },
+import { SiteMetadata } from "../client/bars";
+
+export const financeRoutes: SiteMetadata[] = [
+  {
+    name: "Binance",
+
+    domain: "https://www.binance.com",
+    category: "finance",
+    color: "red",
+  },
+  {
+    name: "Coinbase",
+
+    domain: "https://www.coinbase.com",
+    category: "finance",
+    color: "orange",
+  },
+
+  {
+    name: "Huobi (HTX)",
+
+    domain: "https://www.htx.com",
+    category: "finance",
+    color: "blue",
+  },
+  {
+    name: "KuCoin",
+
+    domain: "https://www.kucoin.com",
+    category: "finance",
+    color: "purple",
+  },
+  {
+    name: "OKX (OKEx)",
+
+    domain: "https://www.okx.com",
+    category: "finance",
+    color: "green",
+  },
+
+  {
+    name: "Bybit",
+
+    domain: "https://www.bybit.com",
+    category: "finance",
+    color: "khaki",
+  },
+
+  {
+    name: "PancakeSwap",
+
+    domain: "https://pancakeswap.finance",
+    category: "finance",
+    color: "lime",
+  },
+  {
+    name: "Uniswap",
+
+    domain: "https://app.uniswap.org",
+    category: "finance",
+    color: "violet",
+  },
+  {
+    name: "1inch",
+
+    domain: "https://app.1inch.io",
+    category: "finance",
+    color: "red",
+  },
+  {
+    name: "BingX",
+
+    domain: "https://bingx.com",
+    category: "finance",
+    color: "cyan",
+  },
 ];

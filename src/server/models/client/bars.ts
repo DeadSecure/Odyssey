@@ -29,6 +29,13 @@ export type StatusTab = {
 };
 export type statusBarSlot = {
   site_name: string;
-  up: boolean;
+  up: number;
+  color: string;
+};
+
+export type SiteMetadata = {
+  name: string;
+  domain: string;
+  category: string;
   color: string;
 };

@@ -1,93 +1,67 @@
-export const devRoutes = [
+import { SiteMetadata } from "../client/bars";
+
+export const devRoutes: SiteMetadata[] = [
   {
     name: "GitHub",
     domain: "https://github.com",
     category: "dev",
+    color: "red",
   },
   {
     name: "GitLab",
     domain: "https://gitlab.com",
     category: "dev",
-  },
-  {
-    name: "Google Developers",
-    domain: "https://developers.google.com",
-    category: "dev",
+    color: "orange",
   },
   {
     name: "Android Studio & Google Play Console",
     domain: "https://developer.android.com",
     category: "dev",
+    color: "blue",
   },
   {
     name: "Firebase",
     domain: "https://firebase.google.com",
     category: "dev",
+    color: "purple",
   },
-  {
-    name: "Google Cloud Platform",
-    domain: "https://cloud.google.com",
-    category: "dev",
-  },
+
   {
     name: "Docker Hub",
     domain: "https://hub.docker.com",
     category: "dev",
+    color: "green",
   },
-  {
-    name: "Oracle Developer Tools",
-    domain: "https://developer.oracle.com",
-    category: "dev",
-  },
-  {
-    name: "Adobe Developer Tools",
-    domain: "https://developer.adobe.com",
-    category: "dev",
-  },
+
   {
     name: "Microsoft Azure",
     domain: "https://azure.microsoft.com",
     category: "dev",
+    color: "khaki",
   },
   {
     name: "Figma",
     domain: "https://www.figma.com",
     category: "dev",
+    color: "lime",
   },
   {
     name: "OpenAI API / ChatGPT",
     domain: "https://platform.openai.com",
     category: "dev",
+    color: "violet",
   },
 
-  {
-    name: "Mailgun",
-    domain: "https://www.mailgun.com",
-    category: "dev",
-  },
-  {
-    name: "JetBrains",
-    domain: "https://www.jetbrains.com",
-    category: "dev",
-  },
-  {
-    name: "Microsoft Visual Studio",
-    domain: "https://visualstudio.microsoft.com",
-    category: "dev",
-  },
   {
     name: "Google Analytics",
     domain: "https://analytics.google.com",
     category: "dev",
+    color: "red",
   },
   {
     name: "CentOS Repositories",
     domain: "https://centos.org",
     category: "dev",
-  },
-  {
-    name: "Nvidia Experience",
-    domain: "https://www.nvidia.com",
-    category: "dev",
+    color: "cyan",
   },
 ];

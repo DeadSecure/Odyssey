@@ -12,6 +12,7 @@ import {
   generateV2rayConfigFromLink,
 } from "../services/utils/generateV2rayJson";
 import { findMultipleFreePorts } from "../services/utils/ports";
+import { setupDb } from "../services/utils/setupDb";
 
 export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
   try {
@@ -72,7 +73,13 @@ export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
     // save the ports.json file
     fs.writeFileSync(portsDir, JSON.stringify(combinedConfig[1]), "utf-8");
 
+
+    // initiating the db for the config if doesn't exists already
+    await setupDb(exclusiveDir); 
+
     console.log(`✅ Configs saved to "${outputPath}" and "${jsonDir}"`);
+
+
 
     return {
       code: 200,

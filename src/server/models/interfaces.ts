@@ -55,3 +55,10 @@ export interface CoreStartResponse {
   port: number;
   name: string;
 }
+
+export type SrcInput = {
+  name: string;
+  domain: string;
+  category: string;
+  color: string;
+};
