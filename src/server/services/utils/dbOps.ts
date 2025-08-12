@@ -9,71 +9,13 @@ import { Categories, SitesTestResponse } from "@/server/models/interfaces";
 
 type Slot = { site_name: string; up: number; color: string };
 
-// export function addChartWithSlots(
-//   category: string,
-//   config_name: string,
-//   timestamp: string,
-//   slots: Slot[]
-// ) {
-//   if (slots.length > 60) throw new Error("Cannot insert more than 60 slots");
-
-//   const insertConfig = db.prepare(`
-//     INSERT INTO configs (category, config_name)
-//     VALUES (?, ?)
-//     ON CONFLICT(category, config_name) DO NOTHING
-//   `);
-//   insertConfig.run(category, config_name);
-
-//   const config = db
-//     .prepare(`SELECT id FROM configs WHERE category = ? AND config_name = ?`)
-//     .get(category, config_name);
-
-//   const insertChart = db.prepare(`
-//     INSERT INTO charts (config_id, timestamp)
-//     VALUES (?, ?)
-//   `);
-//   const chartResult = insertChart.run(config.id, timestamp);
-
-//   const chartId = chartResult.lastInsertRowid as number;
-
-//   const insertSlot = db.prepare(`
-//     INSERT INTO slots (chart_id, site_name, up, color)
-//     VALUES (?, ?, ?, ?)
-//   `);
-
-//   const insertMany = db.transaction((slots: Slot[]) => {
-//     for (const s of slots) {
-//       insertSlot.run(chartId, s.site_name, s.up ? 1 : 0, s.color);
-//     }
-//   });
-
-//   insertMany(slots);
-// }
-
-// getLast60ChartsForConfig.ts
-
 export function getLast60ChartsGroupedByCategory(db: any): statusBar {
   // Get all configs
   const configs = db
     .prepare(`SELECT id, category, config_name FROM configs`)
     .all();
 
-  const output: statusBar =
-    //  Record<
-    //   string,
-    //   {
-    //     config_name: string;
-    //     charts: {
-    //       timestamp: string;
-    //       slots: {
-    //         site_name: string;
-    //         up: boolean;
-    //         color: string;
-    //       }[];
-    //     }[];
-    //   }[]
-    // >
-    { finance: [], gaming: [], dev: [], social: [] };
+  const output: statusBar = { finance: [], gaming: [], dev: [], social: [] };
 
   for (const config of configs) {
     const charts = db
@@ -91,7 +33,7 @@ export function getLast60ChartsGroupedByCategory(db: any): statusBar {
         .all(chart.id)
         .map((s: any) => ({
           site_name: s.site_name,
-          up: !!s.up,
+          up: s.up == 1 ? true : false,
           color: s.color,
         }));
 
@@ -159,91 +101,37 @@ export function addChartsWithSlotsBatch(data: ConfigInput[], db: any) {
   runBatch(data);
 }
 
-// export function getLatestSlotForEachConfigInAllCategories() {
-//   const configs = db
-//     .prepare(
-//       `
-//       SELECT cfg.id as config_id, cfg.category, cfg.config_name,
-//              c.id as chart_id, c.timestamp
-//       FROM configs cfg
-//       JOIN charts c ON cfg.id = c.config_id
-//       WHERE c.id = (
-//         SELECT id FROM charts
-//         WHERE config_id = cfg.id
-//         ORDER BY timestamp DESC
-//         LIMIT 1
-//       )
-//     `
-//     )
-//     .all() as any;
+// export function setGroupedCharts(db: any, items: SitesTestResponse[]) {
+//   // Clear old data
+//   db.prepare(`DELETE FROM sites_test_responses`).run();
 
-//   const getSlots = db.prepare(`
-//     SELECT chart_id, site_name, up, color FROM slots
-//     WHERE chart_id IN (${configs.map(() => "?").join(",")})
+//   const insert = db.prepare(`
+//     INSERT INTO sites_test_responses (
+//       namelookup, connect, starttransfer, total,
+//       url, config_name, config_raw, country, ip, category
+//     )
+//     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 //   `);
 
-//   const allSlots = getSlots.all(...configs.map((c: any) => c.chart_id)) as any;
+//   const insertMany = db.transaction((responses: SitesTestResponse[]) => {
+//     for (const r of responses) {
+//       insert.run(
+//         r.namelookup,
+//         r.connect,
+//         r.starttransfer,
+//         r.total,
+//         r.url,
+//         r.config_name ?? null,
+//         r.config_raw ?? null,
+//         r.country ?? null,
+//         r.ip,
+//         r.category
+//       );
+//     }
+//   });
 
-//   const slotsMap = new Map<number, Slot[]>();
-
-//   for (const slot of allSlots) {
-//     if (!slotsMap.has(slot.chart_id)) slotsMap.set(slot.chart_id, []);
-//     slotsMap.get(slot.chart_id)!.push({
-//       site_name: slot.site_name,
-//       up: slot.up,
-//       color: slot.color,
-//     });
-//   }
-
-//   const result: Record<string, any[]> = {};
-
-//   for (const cfg of configs) {
-//     const entry = {
-//       config_name: cfg.config_name,
-//       chart: {
-//         timestamp: cfg.timestamp,
-//         slots: slotsMap.get(cfg.chart_id) || [],
-//       },
-//     };
-
-//     if (!result[cfg.category]) result[cfg.category] = [];
-//     result[cfg.category].push(entry);
-//   }
-
-//   return result;
+//   insertMany(items);
 // }
-
-export function setGroupedCharts(db: any, items: SitesTestResponse[]) {
-  // Clear old data
-  db.prepare(`DELETE FROM sites_test_responses`).run();
-
-  const insert = db.prepare(`
-    INSERT INTO sites_test_responses (
-      namelookup, connect, starttransfer, total,
-      url, config_name, config_raw, country, ip, category
-    )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `);
-
-  const insertMany = db.transaction((responses: SitesTestResponse[]) => {
-    for (const r of responses) {
-      insert.run(
-        r.namelookup,
-        r.connect,
-        r.starttransfer,
-        r.total,
-        r.url,
-        r.config_name ?? null,
-        r.config_raw ?? null,
-        r.country ?? null,
-        r.ip,
-        r.category
-      );
-    }
-  });
-
-  insertMany(items);
-}
 
 export function getGroupedCharts(db: any): SitesTestResponse[] {
   return db.prepare(`SELECT * FROM sites_test_responses`).all();

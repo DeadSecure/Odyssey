@@ -6,7 +6,7 @@ import {
 import React from "react";
 
 // Reuse your types
-type BarSegment = { color: string };
+type BarSegment = { color: string; up: boolean };
 type ChartData = Record<string, BarSegment[]>;
 
 type StatusChartProps = {
@@ -19,7 +19,10 @@ function transformToChartData(chart: StatusTab[]): ChartData {
   const result: ChartData = {};
 
   chart.forEach(({ timestamp, slots }) => {
-    result[timestamp] = slots.map((slot) => ({ color: slot.color }));
+    result[timestamp] = slots.map((slot) => ({
+      color: slot.color,
+      up: slot.up,
+    }));
   });
 
   return result;
@@ -41,10 +44,15 @@ const StatusChart: React.FC<StatusChartProps> = ({ configName, chartData }) => {
       <div className="flex space-x-1 overflow-x-auto">
         {timeKeys.map((time, idx) => (
           <div key={idx} className="flex flex-col items-center space-y-1">
-            <span className="text-[10px] text-gray-300">{time}</span>
+            <span className="text-[10px] text-gray-300">{parseTime(time)}</span>
             <div className="w-4 h-24 flex flex-col-reverse items-center">
               {chartData[time].map((seg, i) => (
-                <div key={i} className={`${seg.color} h-3 w-full rounded-sm`} />
+                <div
+                  key={i}
+                  className={`${
+                    seg.up ? seg.color : "bg-[transparent]"
+                  } h-3 w-full rounded-sm`}
+                />
               ))}
             </div>
           </div>
@@ -88,6 +96,7 @@ type FlatStatus = {
   name: string;
   time: string;
   color: string;
+  up: boolean;
   site_name: string;
 };
 
@@ -101,6 +110,7 @@ export function flattenCharts(wrapper: StatusTabWrapper): FlatStatus[] {
           name: config.config_name,
           time: chart.timestamp,
           color: slot.color,
+          up: slot.up,
           site_name: slot.site_name,
         });
       }
@@ -110,14 +120,14 @@ export function flattenCharts(wrapper: StatusTabWrapper): FlatStatus[] {
   return flattened;
 }
 
-type Grouped = Record<string, Record<string, [string, string][]>>;
+type Grouped = Record<string, Record<string, [string, string, boolean][]>>;
 
 function groupFlattened(data: FlatStatus[]): Grouped {
   const result: Grouped = {};
-  data.forEach(({ name, time, color, site_name }) => {
+  data.forEach(({ name, time, color, site_name, up }) => {
     if (!result[name]) result[name] = {};
     if (!result[name][time]) result[name][time] = [];
-    result[name][time].push([color, site_name]);
+    result[name][time].push([color, site_name, up]);
   });
   return result;
 }
@@ -148,12 +158,12 @@ export const StatusChartsWrapper = ({ input }: { input: FlatStatus[] }) => {
                 className="flex flex-col items-center text-white text-[10px] space-y-1 border-r border-gray-600 pr-[3px]"
               >
                 <br />
-                <span>{time}</span>
+                <span>{parseTime(time)}</span>
                 <div className="w-4 h-24 flex flex-col-reverse gap-[2px] ">
                   {colors.map((c, i) => (
                     <div
                       key={i}
-                      style={{ backgroundColor: c[0] }}
+                      style={{ backgroundColor: !c[2] ? c[0] : "transparent" }}
                       className={`w-full h-3 ${c[1]}`}
                     ></div>
                   ))}
@@ -165,4 +175,14 @@ export const StatusChartsWrapper = ({ input }: { input: FlatStatus[] }) => {
       ))}
     </div>
   );
+};
+
+const parseTime = (raw_time: string): String => {
+  const date = new Date(raw_time);
+
+  // Get hour and minute in UTC
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
+
+  return `${hours}:${minutes}`;
 };

@@ -16,14 +16,13 @@ import {
   addChartsWithSlotsBatch,
   getGroupedCharts,
   getLast60ChartsGroupedByCategory,
-  setGroupedCharts,
 } from "../services/utils/dbOps";
 import Database from "better-sqlite3";
 
 export async function handleAccess(
   category: Categories,
   username: string
-): Response<{ res: AccessBar[]; charts: statusBar }> {
+): Response<{ access: AccessBar[]; status: statusBar }> {
   const sites: SiteMetadata[] =
     category === Categories.social
       ? socialRoutes
@@ -96,6 +95,6 @@ export async function handleAccess(
 
   return {
     code: 200,
-    message: { res: parseAccessBars(results), charts: accessResult },
+    message: { access: parseAccessBars(results), status: accessResult },
   };
 }

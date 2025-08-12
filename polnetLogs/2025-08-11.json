@@ -1,0 +1,635 @@
+{
+  "timestamp": "2025-08-11T12:57:44.053Z",
+  "access": [
+    {
+      "name": "  🇩🇪 GERMANY 🍺  SKY 🏙  TUNNEL ⛏️",
+      "country": "",
+      "site": {
+        "dev": {
+          "https://github.com": -1,
+          "https://gitlab.com": 0.472183,
+          "https://developer.android.com": 1.902818,
+          "https://firebase.google.com": 0.689521,
+          "https://hub.docker.com": 1.064704,
+          "https://azure.microsoft.com": 1.2980304999999999,
+          "https://www.figma.com": 0.7090000000000001,
+          "https://platform.openai.com": 0.3486445,
+          "https://analytics.google.com": 0.3134465,
+          "https://centos.org": 0.5262640000000001
+        },
+        "social": {
+          "https://www.youtube.com": 0.5848869999999999,
+          "https://www.spotify.com": 0.3540065,
+          "https://www.soundcloud.com": 0.42406699999999997,
+          "https://www.instagram.com": 0.6120680000000001,
+          "https://www.telegram.org": 0.3585165,
+          "https://www.whatsapp.com": 1.081289,
+          "https://www.x.com": 0.41132199999999997,
+          "https://www.linkedin.com": 0.6192595000000001,
+          "https://www.discord.com": 0.305477,
+          "https://www.reddit.com": 0.719427
+        },
+        "finance": {
+          "https://www.binance.com": 0.2950925,
+          "https://www.coinbase.com": 0.31970149999999997,
+          "https://www.htx.com": 0.6501295,
+          "https://www.kucoin.com": 0.2875945,
+          "https://www.okx.com": 0.39271500000000004,
+          "https://www.bybit.com": 0.3251345,
+          "https://pancakeswap.finance": 0.37697749999999997,
+          "https://app.uniswap.org": 0.391089,
+          "https://app.1inch.io": 0.3439605,
+          "https://bingx.com": 0.3108525
+        },
+        "gaming": {
+          "https://www.playstation.com": 0.4447685,
+          "https://www.xbox.com": 0.295573,
+          "https://www.microsoft.com": 0.40158099999999997,
+          "https://www.twitch.tv": 0.365804,
+          "https://store.steampowered.com": 1.104899,
+          "https://www.epicgames.com": 0.34449949999999996,
+          "https://www.ea.com": 0.3798505,
+          "https://www.blizzard.com": 0.4084985,
+          "https://supercell.com": 0.335213,
+          "https://www.activision.com": 7.4596375
+        }
+      },
+      "percentage": 98
+    },
+    {
+      "name": "🇫🇮  FINLAND ❄️ TUNNEL ⛏️",
+      "country": "FI",
+      "site": {
+        "dev": {
+          "https://github.com": 0.470187,
+          "https://gitlab.com": 0.5730435,
+          "https://developer.android.com": 1.0663085,
+          "https://firebase.google.com": 1.481139,
+          "https://hub.docker.com": 0.950709,
+          "https://azure.microsoft.com": 1.3742135,
+          "https://www.figma.com": 0.7072965,
+          "https://platform.openai.com": 0.8849750000000001,
+          "https://analytics.google.com": 0.5818295,
+          "https://centos.org": 0.7697375
+        },
+        "social": {
+          "https://www.youtube.com": 0.535009,
+          "https://www.spotify.com": 1.5896835,
+          "https://www.soundcloud.com": 0.4853645,
+          "https://www.instagram.com": 0.801744,
+          "https://www.telegram.org": 0.5643495000000001,
+          "https://www.whatsapp.com": 0.8973154999999999,
+          "https://www.x.com": 0.5161910000000001,
+          "https://www.linkedin.com": 0.8108835000000001,
+          "https://www.discord.com": 0.40215449999999997,
+          "https://www.reddit.com": 0.4522355
+        },
+        "finance": {
+          "https://www.binance.com": 0.416177,
+          "https://www.coinbase.com": 0.403412,
+          "https://www.htx.com": 0.8511505,
+          "https://www.kucoin.com": 0.405958,
+          "https://www.okx.com": 0.6435519999999999,
+          "https://www.bybit.com": 0.395636,
+          "https://pancakeswap.finance": 0.408028,
+          "https://app.uniswap.org": 0.5058644999999999,
+          "https://app.1inch.io": 0.526686,
+          "https://bingx.com": 0.403786
+        },
+        "gaming": {
+          "https://www.playstation.com": -1,
+          "https://www.xbox.com": -1,
+          "https://www.microsoft.com": -1,
+          "https://www.twitch.tv": -1,
+          "https://store.steampowered.com": -1,
+          "https://www.epicgames.com": -1,
+          "https://www.ea.com": -1,
+          "https://www.blizzard.com": -1,
+          "https://supercell.com": -1,
+          "https://www.activision.com": -1
+        }
+      },
+      "percentage": 75
+    },
+    {
+      "name": "🇸🇪  SWEEDEN 👑 TUNNEL ⛏️",
+      "country": "SE",
+      "site": {
+        "dev": {
+          "https://github.com": 0.5500595,
+          "https://gitlab.com": 0.8142885,
+          "https://developer.android.com": 1.7879535,
+          "https://firebase.google.com": 0.9052965,
+          "https://hub.docker.com": 1.083751,
+          "https://azure.microsoft.com": 2.3480119999999998,
+          "https://www.figma.com": 0.506643,
+          "https://platform.openai.com": 0.419032,
+          "https://analytics.google.com": 0.4362245,
+          "https://centos.org": 0.534859
+        },
+        "social": {
+          "https://www.youtube.com": 0.6462595,
+          "https://www.spotify.com": 0.583806,
+          "https://www.soundcloud.com": 0.4917615,
+          "https://www.instagram.com": 0.6064215,
+          "https://www.telegram.org": 0.543656,
+          "https://www.whatsapp.com": 0.8863595,
+          "https://www.x.com": 0.4641845,
+          "https://www.linkedin.com": 0.7727705,
+          "https://www.discord.com": 0.363245,
+          "https://www.reddit.com": 0.41746300000000003
+        },
+        "finance": {
+          "https://www.binance.com": 0.37679799999999997,
+          "https://www.coinbase.com": 1.047827,
+          "https://www.htx.com": 1.8147915000000001,
+          "https://www.kucoin.com": 0.47455650000000005,
+          "https://www.okx.com": 0.757863,
+          "https://www.bybit.com": 0.390737,
+          "https://pancakeswap.finance": 0.474312,
+          "https://app.uniswap.org": 0.3897405,
+          "https://app.1inch.io": 0.56631,
+          "https://bingx.com": 0.5126555
+        },
+        "gaming": {
+          "https://www.playstation.com": -1,
+          "https://www.xbox.com": -1,
+          "https://www.microsoft.com": -1,
+          "https://www.twitch.tv": -1,
+          "https://store.steampowered.com": -1,
+          "https://www.epicgames.com": -1,
+          "https://www.ea.com": -1,
+          "https://www.blizzard.com": -1,
+          "https://supercell.com": -1,
+          "https://www.activision.com": -1
+        }
+      },
+      "percentage": 75
+    },
+    {
+      "name": "🇺🇸  USA 🚀  TUNNEL ⛏️",
+      "country": "",
+      "site": {
+        "dev": {
+          "https://github.com": -1,
+          "https://gitlab.com": -1,
+          "https://developer.android.com": -1,
+          "https://firebase.google.com": -1,
+          "https://hub.docker.com": -1,
+          "https://azure.microsoft.com": -1,
+          "https://www.figma.com": -1,
+          "https://platform.openai.com": -1,
+          "https://analytics.google.com": -1,
+          "https://centos.org": -1
+        },
+        "social": {
+          "https://www.youtube.com": -1,
+          "https://www.spotify.com": -1,
+          "https://www.soundcloud.com": -1,
+          "https://www.instagram.com": -1,
+          "https://www.telegram.org": -1,
+          "https://www.whatsapp.com": -1,
+          "https://www.x.com": -1,
+          "https://www.linkedin.com": -1,
+          "https://www.discord.com": -1,
+          "https://www.reddit.com": -1
+        },
+        "finance": {
+          "https://www.binance.com": -1,
+          "https://www.coinbase.com": -1,
+          "https://www.htx.com": -1,
+          "https://www.kucoin.com": -1,
+          "https://www.okx.com": -1,
+          "https://www.bybit.com": -1,
+          "https://pancakeswap.finance": -1,
+          "https://app.uniswap.org": -1,
+          "https://app.1inch.io": -1,
+          "https://bingx.com": -1
+        },
+        "gaming": {
+          "https://www.playstation.com": -1,
+          "https://www.xbox.com": -1,
+          "https://www.microsoft.com": -1,
+          "https://www.twitch.tv": -1,
+          "https://store.steampowered.com": -1,
+          "https://www.epicgames.com": -1,
+          "https://www.ea.com": -1,
+          "https://www.blizzard.com": -1,
+          "https://supercell.com": -1,
+          "https://www.activision.com": -1
+        }
+      },
+      "percentage": 0
+    }
+  ],
+  "status": {
+    "finance": [
+      {
+        "config_name": "  🇩🇪 GERMANY 🍺  SKY 🏙  TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              { "site_name": "Binance", "up": true, "color": "red" },
+              { "site_name": "Coinbase", "up": true, "color": "orange" },
+              { "site_name": "Huobi (HTX)", "up": true, "color": "blue" },
+              { "site_name": "KuCoin", "up": true, "color": "purple" },
+              { "site_name": "OKX (OKEx)", "up": true, "color": "green" },
+              { "site_name": "Bybit", "up": true, "color": "khaki" },
+              { "site_name": "PancakeSwap", "up": true, "color": "lime" },
+              { "site_name": "Uniswap", "up": true, "color": "violet" },
+              { "site_name": "1inch", "up": true, "color": "red" },
+              { "site_name": "BingX", "up": true, "color": "cyan" }
+            ]
+          }
+        ]
+      },
+      {
+        "config_name": "🇫🇮  FINLAND ❄️ TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              { "site_name": "Binance", "up": true, "color": "red" },
+              { "site_name": "Coinbase", "up": true, "color": "orange" },
+              { "site_name": "Huobi (HTX)", "up": true, "color": "blue" },
+              { "site_name": "KuCoin", "up": true, "color": "purple" },
+              { "site_name": "OKX (OKEx)", "up": true, "color": "green" },
+              { "site_name": "Bybit", "up": true, "color": "khaki" },
+              { "site_name": "PancakeSwap", "up": true, "color": "lime" },
+              { "site_name": "Uniswap", "up": true, "color": "violet" },
+              { "site_name": "1inch", "up": true, "color": "red" },
+              { "site_name": "BingX", "up": true, "color": "cyan" }
+            ]
+          }
+        ]
+      },
+      {
+        "config_name": "🇸🇪  SWEEDEN 👑 TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              { "site_name": "Binance", "up": true, "color": "red" },
+              { "site_name": "Coinbase", "up": true, "color": "orange" },
+              { "site_name": "Huobi (HTX)", "up": true, "color": "blue" },
+              { "site_name": "KuCoin", "up": true, "color": "purple" },
+              { "site_name": "OKX (OKEx)", "up": true, "color": "green" },
+              { "site_name": "Bybit", "up": true, "color": "khaki" },
+              { "site_name": "PancakeSwap", "up": true, "color": "lime" },
+              { "site_name": "Uniswap", "up": true, "color": "violet" },
+              { "site_name": "1inch", "up": true, "color": "red" },
+              { "site_name": "BingX", "up": true, "color": "cyan" }
+            ]
+          }
+        ]
+      },
+      {
+        "config_name": "🇺🇸  USA 🚀  TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              { "site_name": "Binance", "up": true, "color": "red" },
+              { "site_name": "Coinbase", "up": true, "color": "orange" },
+              { "site_name": "Huobi (HTX)", "up": true, "color": "blue" },
+              { "site_name": "KuCoin", "up": true, "color": "purple" },
+              { "site_name": "OKX (OKEx)", "up": true, "color": "green" },
+              { "site_name": "Bybit", "up": true, "color": "khaki" },
+              { "site_name": "PancakeSwap", "up": true, "color": "lime" },
+              { "site_name": "Uniswap", "up": true, "color": "violet" },
+              { "site_name": "1inch", "up": true, "color": "red" },
+              { "site_name": "BingX", "up": true, "color": "cyan" }
+            ]
+          }
+        ]
+      }
+    ],
+    "gaming": [
+      {
+        "config_name": "  🇩🇪 GERMANY 🍺  SKY 🏙  TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              {
+                "site_name": "PlayStation Network (PSN)",
+                "up": true,
+                "color": "red"
+              },
+              { "site_name": "Xbox", "up": true, "color": "orange" },
+              {
+                "site_name": "Microsoft (Gaming Services)",
+                "up": true,
+                "color": "blue"
+              },
+              { "site_name": "Twitch", "up": true, "color": "purple" },
+              { "site_name": "Steam", "up": true, "color": "green" },
+              { "site_name": "Epic Games", "up": true, "color": "khaki" },
+              { "site_name": "EA Games (Origin)", "up": true, "color": "lime" },
+              { "site_name": "Blizzard", "up": true, "color": "violet" },
+              { "site_name": "Supercell", "up": true, "color": "red" },
+              { "site_name": "Activision", "up": true, "color": "cyan" }
+            ]
+          }
+        ]
+      },
+      {
+        "config_name": "🇫🇮  FINLAND ❄️ TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              {
+                "site_name": "PlayStation Network (PSN)",
+                "up": true,
+                "color": "red"
+              },
+              { "site_name": "Xbox", "up": true, "color": "orange" },
+              {
+                "site_name": "Microsoft (Gaming Services)",
+                "up": true,
+                "color": "blue"
+              },
+              { "site_name": "Twitch", "up": true, "color": "purple" },
+              { "site_name": "Steam", "up": true, "color": "green" },
+              { "site_name": "Epic Games", "up": true, "color": "khaki" },
+              { "site_name": "EA Games (Origin)", "up": true, "color": "lime" },
+              { "site_name": "Blizzard", "up": true, "color": "violet" },
+              { "site_name": "Supercell", "up": true, "color": "red" },
+              { "site_name": "Activision", "up": true, "color": "cyan" }
+            ]
+          }
+        ]
+      },
+      {
+        "config_name": "🇸🇪  SWEEDEN 👑 TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              {
+                "site_name": "PlayStation Network (PSN)",
+                "up": true,
+                "color": "red"
+              },
+              { "site_name": "Xbox", "up": true, "color": "orange" },
+              {
+                "site_name": "Microsoft (Gaming Services)",
+                "up": true,
+                "color": "blue"
+              },
+              { "site_name": "Twitch", "up": true, "color": "purple" },
+              { "site_name": "Steam", "up": true, "color": "green" },
+              { "site_name": "Epic Games", "up": true, "color": "khaki" },
+              { "site_name": "EA Games (Origin)", "up": true, "color": "lime" },
+              { "site_name": "Blizzard", "up": true, "color": "violet" },
+              { "site_name": "Supercell", "up": true, "color": "red" },
+              { "site_name": "Activision", "up": true, "color": "cyan" }
+            ]
+          }
+        ]
+      },
+      {
+        "config_name": "🇺🇸  USA 🚀  TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              {
+                "site_name": "PlayStation Network (PSN)",
+                "up": true,
+                "color": "red"
+              },
+              { "site_name": "Xbox", "up": true, "color": "orange" },
+              {
+                "site_name": "Microsoft (Gaming Services)",
+                "up": true,
+                "color": "blue"
+              },
+              { "site_name": "Twitch", "up": true, "color": "purple" },
+              { "site_name": "Steam", "up": true, "color": "green" },
+              { "site_name": "Epic Games", "up": true, "color": "khaki" },
+              { "site_name": "EA Games (Origin)", "up": true, "color": "lime" },
+              { "site_name": "Blizzard", "up": true, "color": "violet" },
+              { "site_name": "Supercell", "up": true, "color": "red" },
+              { "site_name": "Activision", "up": true, "color": "cyan" }
+            ]
+          }
+        ]
+      }
+    ],
+    "dev": [
+      {
+        "config_name": "  🇩🇪 GERMANY 🍺  SKY 🏙  TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              { "site_name": "GitHub", "up": true, "color": "red" },
+              { "site_name": "GitLab", "up": true, "color": "orange" },
+              {
+                "site_name": "Android Studio & Google Play Console",
+                "up": true,
+                "color": "blue"
+              },
+              { "site_name": "Firebase", "up": true, "color": "purple" },
+              { "site_name": "Docker Hub", "up": true, "color": "green" },
+              { "site_name": "Microsoft Azure", "up": true, "color": "khaki" },
+              { "site_name": "Figma", "up": true, "color": "lime" },
+              {
+                "site_name": "OpenAI API / ChatGPT",
+                "up": true,
+                "color": "violet"
+              },
+              { "site_name": "Google Analytics", "up": true, "color": "red" },
+              {
+                "site_name": "CentOS Repositories",
+                "up": true,
+                "color": "cyan"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "config_name": "🇫🇮  FINLAND ❄️ TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              { "site_name": "GitHub", "up": true, "color": "red" },
+              { "site_name": "GitLab", "up": true, "color": "orange" },
+              {
+                "site_name": "Android Studio & Google Play Console",
+                "up": true,
+                "color": "blue"
+              },
+              { "site_name": "Firebase", "up": true, "color": "purple" },
+              { "site_name": "Docker Hub", "up": true, "color": "green" },
+              { "site_name": "Microsoft Azure", "up": true, "color": "khaki" },
+              { "site_name": "Figma", "up": true, "color": "lime" },
+              {
+                "site_name": "OpenAI API / ChatGPT",
+                "up": true,
+                "color": "violet"
+              },
+              { "site_name": "Google Analytics", "up": true, "color": "red" },
+              {
+                "site_name": "CentOS Repositories",
+                "up": true,
+                "color": "cyan"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "config_name": "🇸🇪  SWEEDEN 👑 TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              { "site_name": "GitHub", "up": true, "color": "red" },
+              { "site_name": "GitLab", "up": true, "color": "orange" },
+              {
+                "site_name": "Android Studio & Google Play Console",
+                "up": true,
+                "color": "blue"
+              },
+              { "site_name": "Firebase", "up": true, "color": "purple" },
+              { "site_name": "Docker Hub", "up": true, "color": "green" },
+              { "site_name": "Microsoft Azure", "up": true, "color": "khaki" },
+              { "site_name": "Figma", "up": true, "color": "lime" },
+              {
+                "site_name": "OpenAI API / ChatGPT",
+                "up": true,
+                "color": "violet"
+              },
+              { "site_name": "Google Analytics", "up": true, "color": "red" },
+              {
+                "site_name": "CentOS Repositories",
+                "up": true,
+                "color": "cyan"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "config_name": "🇺🇸  USA 🚀  TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              { "site_name": "GitHub", "up": true, "color": "red" },
+              { "site_name": "GitLab", "up": true, "color": "orange" },
+              {
+                "site_name": "Android Studio & Google Play Console",
+                "up": true,
+                "color": "blue"
+              },
+              { "site_name": "Firebase", "up": true, "color": "purple" },
+              { "site_name": "Docker Hub", "up": true, "color": "green" },
+              { "site_name": "Microsoft Azure", "up": true, "color": "khaki" },
+              { "site_name": "Figma", "up": true, "color": "lime" },
+              {
+                "site_name": "OpenAI API / ChatGPT",
+                "up": true,
+                "color": "violet"
+              },
+              { "site_name": "Google Analytics", "up": true, "color": "red" },
+              {
+                "site_name": "CentOS Repositories",
+                "up": true,
+                "color": "cyan"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "social": [
+      {
+        "config_name": "  🇩🇪 GERMANY 🍺  SKY 🏙  TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              { "site_name": "YouTube", "up": true, "color": "red" },
+              { "site_name": "Spotify", "up": true, "color": "orange" },
+              { "site_name": "SoundCloud", "up": true, "color": "blue" },
+              { "site_name": "Instagram", "up": true, "color": "purple" },
+              { "site_name": "Telegram", "up": true, "color": "green" },
+              { "site_name": "WhatsApp", "up": true, "color": "khaki" },
+              { "site_name": "X (Twitter)", "up": true, "color": "lime" },
+              { "site_name": "LinkedIn", "up": true, "color": "violet" },
+              { "site_name": "Discord", "up": true, "color": "red" },
+              { "site_name": "Reddit", "up": true, "color": "cyan" }
+            ]
+          }
+        ]
+      },
+      {
+        "config_name": "🇫🇮  FINLAND ❄️ TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              { "site_name": "YouTube", "up": true, "color": "red" },
+              { "site_name": "Spotify", "up": true, "color": "orange" },
+              { "site_name": "SoundCloud", "up": true, "color": "blue" },
+              { "site_name": "Instagram", "up": true, "color": "purple" },
+              { "site_name": "Telegram", "up": true, "color": "green" },
+              { "site_name": "WhatsApp", "up": true, "color": "khaki" },
+              { "site_name": "X (Twitter)", "up": true, "color": "lime" },
+              { "site_name": "LinkedIn", "up": true, "color": "violet" },
+              { "site_name": "Discord", "up": true, "color": "red" },
+              { "site_name": "Reddit", "up": true, "color": "cyan" }
+            ]
+          }
+        ]
+      },
+      {
+        "config_name": "🇸🇪  SWEEDEN 👑 TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              { "site_name": "YouTube", "up": true, "color": "red" },
+              { "site_name": "Spotify", "up": true, "color": "orange" },
+              { "site_name": "SoundCloud", "up": true, "color": "blue" },
+              { "site_name": "Instagram", "up": true, "color": "purple" },
+              { "site_name": "Telegram", "up": true, "color": "green" },
+              { "site_name": "WhatsApp", "up": true, "color": "khaki" },
+              { "site_name": "X (Twitter)", "up": true, "color": "lime" },
+              { "site_name": "LinkedIn", "up": true, "color": "violet" },
+              { "site_name": "Discord", "up": true, "color": "red" },
+              { "site_name": "Reddit", "up": true, "color": "cyan" }
+            ]
+          }
+        ]
+      },
+      {
+        "config_name": "🇺🇸  USA 🚀  TUNNEL ⛏️",
+        "chart": [
+          {
+            "timestamp": "2025-08-11T12:57:44.031Z",
+            "slots": [
+              { "site_name": "YouTube", "up": true, "color": "red" },
+              { "site_name": "Spotify", "up": true, "color": "orange" },
+              { "site_name": "SoundCloud", "up": true, "color": "blue" },
+              { "site_name": "Instagram", "up": true, "color": "purple" },
+              { "site_name": "Telegram", "up": true, "color": "green" },
+              { "site_name": "WhatsApp", "up": true, "color": "khaki" },
+              { "site_name": "X (Twitter)", "up": true, "color": "lime" },
+              { "site_name": "LinkedIn", "up": true, "color": "violet" },
+              { "site_name": "Discord", "up": true, "color": "red" },
+              { "site_name": "Reddit", "up": true, "color": "cyan" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

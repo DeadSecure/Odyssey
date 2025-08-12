@@ -29,7 +29,7 @@ export function convertSitesTestResponseToConfigInput(
 
     const slot: Slot = {
       site_name: meta.name,
-      up: res.total + res.starttransfer / 2, // example threshold
+      up: 0 < Number((res.total + res.starttransfer) / 2) ? true : false,
       color: meta.color,
     };
 

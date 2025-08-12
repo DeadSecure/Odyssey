@@ -1,6 +1,6 @@
 export type Slot = {
   site_name: string;
-  up: number;
+  up: boolean;
   color: string;
 };
 

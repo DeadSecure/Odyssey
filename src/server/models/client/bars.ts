@@ -29,7 +29,7 @@ export type StatusTab = {
 };
 export type statusBarSlot = {
   site_name: string;
-  up: number;
+  up: boolean;
   color: string;
 };
 

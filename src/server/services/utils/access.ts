@@ -41,7 +41,7 @@ export async function testSite(
     "-s",
     "--socks5-hostname",
     `localhost:${port}`,
-    "http://ip-api.com/json",
+    "http://www.geoplugin.net/json.gp?ip=IP_ADDRESS",
   ];
 
   try {
@@ -49,15 +49,14 @@ export async function testSite(
       runCurlCommand(curlArgs),
       runCurlCommand(ipArgs),
     ]);
-
     const parsedCurl: SitesTestResponse = JSON.parse(curlOutput);
     const parsedIp =
       typeof ipOutput === "object" ? ipOutput : JSON.parse(ipOutput);
 
-    if (!parsedIp.query || !parsedIp.country) throw new Error("Bad IP data");
+    if (!parsedIp.geoplugin_request || !parsedIp.geoplugin_countryName) throw new Error("Bad IP data");
 
-    parsedCurl.ip = parsedIp.query;
-    parsedCurl.country = getCountryCode(parsedIp.country);
+    parsedCurl.ip = parsedIp.geoplugin_request;
+    parsedCurl.country = getCountryCode(parsedIp.geoplugin_countryName);
 
     return parsedCurl;
   } catch (err) {
@@ -80,4 +79,3 @@ export async function testSite(
 function getCountryCode(name: string): string {
   return FlagsMap[name as keyof typeof FlagsMap] ?? "Unknown";
 }
-

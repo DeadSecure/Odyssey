@@ -62,44 +62,40 @@ export function parseLatencyBars(site_res: SitesTestResponse[]): latencyBar[] {
       name: string;
       country: string;
       site: Record<string, number>;
-      totalTests: number;
-      successCount: number;
+      totalPings: number[];
     }
   > = {};
 
   for (const item of site_res) {
     const name = item.config_name ?? "Unknown";
     const country = item.country ?? "Unknown";
-    const latency = (item.starttransfer + item.total) / 2;
+    const latency = [(item.starttransfer + item.total) / 2];
     const url = item.url;
 
     // Create entry if not exist
-    if (!latencyMap[name]) {
-      latencyMap[name] = {
-        name,
-        country,
-        site: { [url]: latency },
-        totalTests: 0,
-        successCount: 0,
-      };
-    }
-
-    const entry = latencyMap[name];
-
-    // Count total and successful tests
-    entry.totalTests++;
-    if (latency > 0) {
-      entry.successCount++;
-    }
+    const existingSites = latencyMap[name]?.site ?? {};
+    latencyMap[name] = {
+      name,
+      country,
+      site: { ...existingSites, [url]: latency[0] },
+      totalPings: latencyMap[name]?.totalPings
+        ? latencyMap[name]?.totalPings.concat(latency)
+        : latency,
+    };
   }
 
-  console.log(latencyMap);
+  let bars: latencyBar[] = [];
 
-  // Convert map to array of AccessBar with final percentage
-  return Object.values(latencyMap).map((entry) => ({
-    name: entry.name,
-    country: entry.country,
-    site: entry.site,
-    latency: Math.round(entry.successCount / entry.totalTests),
-  }));
+  Object.keys(latencyMap).forEach((key) => {
+    bars.push({
+      name: latencyMap[key].name,
+      latency:
+        latencyMap[key].totalPings.reduce((a, b) => a + b, 0) /
+        latencyMap[key].totalPings.length,
+      country: latencyMap[key].country,
+      site: latencyMap[key].site,
+    });
+  });
+
+  return bars;
 }

@@ -7,11 +7,8 @@ import { useEffect, useState } from "react";
 import { latencyBar, AccessBar, statusBar } from "@/server/models/client/bars";
 import { Categories, SitesTestResponse } from "@/server/models/interfaces";
 import { parseAccessBars } from "@/server/services/utils/parser";
-import {
-  mockAccessBars,
-  mockLatencyBars,
-  mockStatusBars,
-} from "@/server/models/client/mocks";
+import { FSLogger } from "@/server/services/utils/logger";
+
 import {
   fetchAccessAndStatusBars,
   fetchLatencyBars,
@@ -55,7 +52,6 @@ export default function PolnetPage({
       setLatencyBars(latency);
       setStatusBars(access_and_status.status);
     }, breathDelay);
-    
   }, [accessBars, latencyBars, statusBars]);
 
   return (
@@ -75,13 +71,20 @@ export default function PolnetPage({
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   let access_and_status = await fetchAccessAndStatusBars("polnet");
+  const logger = new FSLogger("polnetLogs");
+
+  logger.log({
+    access: access_and_status.access,
+    status: access_and_status.status,
+  });
+
   let latency = await fetchLatencyBars("polnet");
   return {
     props: {
       AccessBars: access_and_status.access,
       StatusBars: access_and_status.status,
       LatencyBars: latency,
-      breathDelay: 15000,
+      breathDelay: 60000,
       ...(await serverSideTranslations(locale ?? "en", ["common"])),
     },
     revalidate: 60, // optional ISR

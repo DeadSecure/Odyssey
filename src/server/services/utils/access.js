@@ -75,7 +75,7 @@ function testSite(site, port) {
                         "-s",
                         "--socks5-hostname",
                         "localhost:".concat(port),
-                        "http://ip-api.com/json",
+                        "http://www.geoplugin.net/json.gp?ip=IP_ADDRESS",
                     ];
                     _b.label = 1;
                 case 1:
@@ -86,12 +86,13 @@ function testSite(site, port) {
                         ])];
                 case 2:
                     _a = _b.sent(), curlOutput = _a[0], ipOutput = _a[1];
+                    console.log("this is the ip output", ipOutput);
                     parsedCurl = JSON.parse(curlOutput);
                     parsedIp = typeof ipOutput === "object" ? ipOutput : JSON.parse(ipOutput);
-                    if (!parsedIp.query || !parsedIp.country)
+                    if (!parsedIp.geoplugin_request || !parsedIp.geoplugin_countryName)
                         throw new Error("Bad IP data");
-                    parsedCurl.ip = parsedIp.query;
-                    parsedCurl.country = getCountryCode(parsedIp.country);
+                    parsedCurl.ip = parsedIp.geoplugin_request;
+                    parsedCurl.country = getCountryCode(parsedIp.geoplugin_countryName);
                     return [2 /*return*/, parsedCurl];
                 case 3:
                     err_1 = _b.sent();
