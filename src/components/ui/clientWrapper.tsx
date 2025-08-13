@@ -23,7 +23,6 @@ export default function ClientBarsWrapper({
   onStatusTabChange?: (tab: Tab) => void;
   statusTab?: Tab;
 }) {
-  console.log("render client layout", isRtl);
   if (bars?.statusBars) {
     return (
       <StatusAccordion

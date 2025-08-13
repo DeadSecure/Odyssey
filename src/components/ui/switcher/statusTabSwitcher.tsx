@@ -27,7 +27,6 @@ const CategoriesTabSwitcher: React.FC<Props> = ({
   const [nextUpdateIn, setNextUpdateIn] = useState<number>(30);
 
   useEffect(() => {
-    console.log("useEffect in four switcher", isRtl);
     const interval = setInterval(() => {
       setNextUpdateIn((prev) => (prev > 0 ? prev - 1 : 60));
       const script = document.createElement("script");

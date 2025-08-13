@@ -1,12 +1,6 @@
 import { Worker } from "worker_threads";
-import path from "path";
-import {
-  socialRoutes,
-  financeRoutes,
-  gamingRoutes,
-  devRoutes,
-} from "@/server/models/sources/sources";
-import { SitesTestResponse } from "@/server/models/interfaces";
+
+import { SitesTestResponse } from "../../../server/models/interfaces";
 
 export function runWorker(
   workerPath: string,

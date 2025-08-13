@@ -42,7 +42,6 @@ export default function StatusAccordion({
   };
 
   useEffect(() => {
-    console.log("useEffect in status accordion", isRtl);
   }, [isRtl]);
   return (
     <div className={`${isDark ? "text-black" : "text-wite"}`}>

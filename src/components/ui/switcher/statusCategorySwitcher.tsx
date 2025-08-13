@@ -18,13 +18,11 @@ export const CategorySwitch: React.FC<CategorySwitchProps> = ({
   const [enabled, setEnabled] = useState(initialState);
 
   const toggle = () => {
-    console.log("toggle", label);
     const newState = !enabled;
     setEnabled(newState);
     // onToggle?.(newState);
 
     let elements = document.querySelectorAll(`.${label}`);
-    console.log(elements);
     elements.forEach((el) => {
       if (!enabled) {
         el.classList.remove("switch-transparent");

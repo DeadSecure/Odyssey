@@ -1,9 +1,11 @@
 // db.ts
-import path from "path";
-import Database from "better-sqlite3";
-import { ConfigInput } from "@/server/models/client/db";
-import { statusBar } from "@/server/models/client/bars";
-import { Categories, SitesTestResponse } from "@/server/models/interfaces";
+
+import { ConfigInput } from "../../../server/models/client/db";
+import { statusBar } from "../../../server/models/client/bars";
+import {
+  Categories,
+  SitesTestResponse,
+} from "../../../server/models/interfaces";
 
 // addChartWithSlots.ts
 
@@ -101,37 +103,37 @@ export function addChartsWithSlotsBatch(data: ConfigInput[], db: any) {
   runBatch(data);
 }
 
-// export function setGroupedCharts(db: any, items: SitesTestResponse[]) {
-//   // Clear old data
-//   db.prepare(`DELETE FROM sites_test_responses`).run();
+export function setGroupedCharts(db: any, items: SitesTestResponse[]) {
+  // Clear old data
+  db.prepare(`DELETE FROM sites_test_responses`).run();
 
-//   const insert = db.prepare(`
-//     INSERT INTO sites_test_responses (
-//       namelookup, connect, starttransfer, total,
-//       url, config_name, config_raw, country, ip, category
-//     )
-//     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-//   `);
+  const insert = db.prepare(`
+    INSERT INTO sites_test_responses (
+      namelookup, connect, starttransfer, total,
+      url, config_name, config_raw, country, ip, category
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
 
-//   const insertMany = db.transaction((responses: SitesTestResponse[]) => {
-//     for (const r of responses) {
-//       insert.run(
-//         r.namelookup,
-//         r.connect,
-//         r.starttransfer,
-//         r.total,
-//         r.url,
-//         r.config_name ?? null,
-//         r.config_raw ?? null,
-//         r.country ?? null,
-//         r.ip,
-//         r.category
-//       );
-//     }
-//   });
+  const insertMany = db.transaction((responses: SitesTestResponse[]) => {
+    for (const r of responses) {
+      insert.run(
+        r.namelookup,
+        r.connect,
+        r.starttransfer,
+        r.total,
+        r.url,
+        r.config_name ?? null,
+        r.config_raw ?? null,
+        r.country ?? null,
+        r.ip,
+        r.category
+      );
+    }
+  });
 
-//   insertMany(items);
-// }
+  insertMany(items);
+}
 
 export function getGroupedCharts(db: any): SitesTestResponse[] {
   return db.prepare(`SELECT * FROM sites_test_responses`).all();

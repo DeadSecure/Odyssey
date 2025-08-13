@@ -1,6 +1,6 @@
-import { SiteMetadata } from "@/server/models/client/bars";
-import { ConfigInput, Slot } from "@/server/models/client/db";
-import { SitesTestResponse } from "@/server/models/interfaces";
+import { SiteMetadata } from "../../../server/models/client/bars";
+import { ConfigInput, Slot } from "../../../server/models/client/db";
+import { SitesTestResponse } from "../../../server/models/interfaces";
 
 export function convertSitesTestResponseToConfigInput(
   responses: SitesTestResponse[],

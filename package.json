@@ -1,9 +1,9 @@
 {
   "name": "odyssey2",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
-    "dev": " rm ./src/server/services/utils/worker.js ./src/server/services/utils/access.js ./src/server/services/utils/ports.js && tsc ./src/server/services/utils/worker.ts && next dev --turbopack",
+    "dev": " rm -f ./src/server/services/utils/worker.js ./src/server/services/utils/access.js ./src/server/services/utils/ports.js ./src/server/services/utils/tester.js && tsc  ./src/server/services/utils/worker.ts ./src/server/services/utils/tester.ts --downlevelIteration --esModuleInterop && next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

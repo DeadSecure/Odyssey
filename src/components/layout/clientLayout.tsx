@@ -59,7 +59,6 @@ export default function ClientLayout({ children, name, logo, bars }: Props) {
     // }
   };
   useEffect(() => {
-    console.log("useEffect in layout", isRtl);
     const root = document.documentElement;
     const lang_knb = document.querySelectorAll(".lang-toggle-knob")!;
     const sl_bar = document.querySelectorAll(".sl-bar")!;

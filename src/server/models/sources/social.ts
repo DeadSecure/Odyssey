@@ -39,7 +39,7 @@ export const socialRoutes: SiteMetadata[] = [
     color: "khaki",
   },
   {
-    name: "X (Twitter)",
+    name: "X",
     domain: "https://www.x.com",
     category: "social",
     color: "lime",

@@ -1,5 +1,3 @@
-import { Tab } from "@/components/ui/switcher/statusTabSwitcher";
-
 export interface AccessBar {
   name: string;
   percentage: number;

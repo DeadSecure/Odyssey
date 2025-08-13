@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.socialRoutes = exports.gamingRoutes = exports.financeRoutes = exports.devRoutes = void 0;
+var dev_1 = require("./dev");
+Object.defineProperty(exports, "devRoutes", { enumerable: true, get: function () { return dev_1.devRoutes; } });
+var finance_1 = require("./finance");
+Object.defineProperty(exports, "financeRoutes", { enumerable: true, get: function () { return finance_1.financeRoutes; } });
+var gaming_1 = require("./gaming");
+Object.defineProperty(exports, "gamingRoutes", { enumerable: true, get: function () { return gaming_1.gamingRoutes; } });
+var social_1 = require("./social");
+Object.defineProperty(exports, "socialRoutes", { enumerable: true, get: function () { return social_1.socialRoutes; } });
