@@ -4,6 +4,8 @@ import "../../../app/globals.css";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import ClientOnly from "../clientOnly";
+import Lottie from "lottie-react";
+import animationData from "../../../../public/traingle.json";
 
 type Tab = "status" | "access" | "latency";
 
@@ -47,14 +49,6 @@ const TabSwitcher: React.FC<Props> = ({
   useEffect(() => {
     const interval = setInterval(() => {
       setNextUpdateIn((prev) => (prev > 0 ? prev - 1 : delay ?? 60)); // reset to 60 after reaching 0
-      const script = document.createElement("script");
-      script.src = "https://tenor.com/embed.js";
-      script.async = true;
-      document.body.appendChild(script);
-
-      return () => {
-        document.body.removeChild(script); // Clean up on unmount
-      };
     }, 1000);
 
     return () => clearInterval(interval);
@@ -121,13 +115,9 @@ const TabSwitcher: React.FC<Props> = ({
         >
           {t("nextUpdateIn", { defaultValue: "Next update in" })} {nextUpdateIn}
         </span>
-        <ClientOnly>
-          <div
-            className="tenor-gif-embed w-10 h-10 rounded-full"
-            data-postid="13818761"
-            data-share-method="host"
-          ></div>
-        </ClientOnly>
+        <div className="w-10 h-10">
+          <Lottie animationData={animationData} loop={true} autoplay={true} />
+        </div>
       </div>
     </div>
   );

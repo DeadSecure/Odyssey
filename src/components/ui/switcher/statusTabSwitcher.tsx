@@ -25,25 +25,6 @@ const CategoriesTabSwitcher: React.FC<Props> = ({
   const { t } = useTranslation("common");
   const { locale } = useRouter();
 
-  // Countdown state
-  const [nextUpdateIn, setNextUpdateIn] = useState<number>(delay ?? 60);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setNextUpdateIn((prev) => (prev > 0 ? prev - 1 : delay ?? 60));
-      const script = document.createElement("script");
-      script.src = "https://tenor.com/embed.js";
-      script.async = true;
-      document.body.appendChild(script);
-
-      return () => {
-        document.body.removeChild(script);
-      };
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [isRtl]);
-
   const activeIndex = tabs.indexOf(activeTab);
   const knobTranslate = `${activeIndex * 100}%`;
   const knobWidth = `${100 / tabs.length}%`; // 25% for 4 tabs
