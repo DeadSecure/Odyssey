@@ -60,23 +60,23 @@ export default function LatencyAccordion({ item, isRtl }: Props) {
             <div key={siteName} className="space-y-1">
               {/* siteName header */}
               <div
-                className="flex justify-between items-center text-white font-medium cursor-pointer border-b border-gray-700 py-2 px-4 sl-bar-items-bg dark"
+                className="flex flex-wrap justify-between items-center text-white font-medium cursor-pointer border-b border-gray-700 py-2 px-4 sl-bar-items-bg dark "
                 onClick={() =>
                   setOpenSiteName(opensiteName === siteName ? null : siteName)
                 }
               >
-                <span>{siteName}</span>
+                <span className="truncate">
+                  {siteName}
+                </span>
+
                 <span
                   className={`${msColorClass(
                     Math.round(latency * 1000)
-                  )}  text-sm`}
+                  )} text-sm`}
                 >
-                  {" "}
                   {Math.round(latency * 1000)}ms
                 </span>
               </div>
-
-              {/* Sites list */}
             </div>
           ))}
         </div>

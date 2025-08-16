@@ -123,6 +123,7 @@ function testSite(site, port) {
                             country: "",
                             ip: "",
                             category: "",
+                            src_name: "",
                         }];
                 case 4: return [2 /*return*/];
             }

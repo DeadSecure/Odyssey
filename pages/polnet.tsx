@@ -13,6 +13,7 @@ import {
   fetchAccessAndStatusBars,
   fetchLatencyBars,
 } from "@/server/services/utils/bridge";
+import { time } from "console";
 
 type Props = {
   AccessBars: AccessBar[];
@@ -30,7 +31,18 @@ export default function PolnetPage({
   const [accessBars, setAccessBars] = useState<AccessBar[]>(AccessBars);
   const [latencyBars, setLatencyBars] = useState<latencyBar[]>(LatencyBars);
   const [statusBars, setStatusBars] = useState<statusBar>(StatusBars);
+  // Previous round state (stored for next render)
+  const [previousBars, setPreviousBars] = useState<{
+    AccessBars: AccessBar[];
+    LatencyBars: latencyBar[];
+    StatusBars: statusBar;
+  }>({
+    AccessBars,
+    LatencyBars,
+    StatusBars,
+  });
 
+  const [timeToRender, setTimeToRender] = useState<boolean>(true);
   useEffect(() => {
     const tab_knob = document.querySelector(".tab-knob");
     const mode = document.querySelector(".toggle-knob")?.classList;
@@ -44,15 +56,32 @@ export default function PolnetPage({
         tab_knob.classList.remove("dark");
       }
     }
+    console.log("");
+    if (!timeToRender) return;
 
-    setTimeout(async () => {
-      let access_and_status = await fetchAccessAndStatusBars("polnet");
-      let latency = await fetchLatencyBars("polnet");
-      setAccessBars(access_and_status.access);
-      setLatencyBars(latency);
-      setStatusBars(access_and_status.status);
-    }, breathDelay);
-  }, [accessBars, latencyBars, statusBars]);
+    const fetchData = async () => {
+      // Step 1 — instantly show last round
+      setAccessBars(previousBars.AccessBars);
+      setLatencyBars(previousBars.LatencyBars);
+      setStatusBars(previousBars.StatusBars);
+
+      // Step 2 — fetch new data for the next round
+      const access_and_status = await fetchAccessAndStatusBars("polnet");
+      const latency = await fetchLatencyBars("polnet");
+
+      setPreviousBars({
+        AccessBars: access_and_status.access,
+        LatencyBars: latency,
+        StatusBars: access_and_status.status,
+      });
+
+      // Step 3 — lock until next cycle
+      setTimeToRender(false);
+      setTimeout(() => setTimeToRender(true), breathDelay * 1000);
+    };
+
+    fetchData();
+  }, [timeToRender, breathDelay]);
 
   return (
     <ClientLayout
@@ -63,6 +92,7 @@ export default function PolnetPage({
         latencyBars: latencyBars,
         statusBars: statusBars,
       }}
+      delay={breathDelay}
     >
       <ClientBarsWrapper />
     </ClientLayout>
@@ -84,7 +114,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       AccessBars: access_and_status.access,
       StatusBars: access_and_status.status,
       LatencyBars: latency,
-      breathDelay: 60000,
+      breathDelay: 60,
       ...(await serverSideTranslations(locale ?? "en", ["common"])),
     },
     revalidate: 60, // optional ISR

@@ -6,6 +6,7 @@ export interface SitesTestResponse {
   starttransfer: number;
   total: number;
   url: string;
+  src_name: string;
   config_name?: string;
   config_raw?: string;
   country?: string;

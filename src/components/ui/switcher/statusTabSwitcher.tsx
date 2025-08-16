@@ -11,6 +11,7 @@ type Props = {
   onTabChange: (tab: Tab) => void;
   isDark?: boolean;
   isRtl?: boolean;
+  delay?: number;
 };
 
 const CategoriesTabSwitcher: React.FC<Props> = ({
@@ -18,17 +19,18 @@ const CategoriesTabSwitcher: React.FC<Props> = ({
   onTabChange,
   isDark,
   isRtl,
+  delay,
 }) => {
   const tabs: Tab[] = ["finance", "dev", "gaming", "social"];
   const { t } = useTranslation("common");
   const { locale } = useRouter();
 
   // Countdown state
-  const [nextUpdateIn, setNextUpdateIn] = useState<number>(30);
+  const [nextUpdateIn, setNextUpdateIn] = useState<number>(delay ?? 60);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setNextUpdateIn((prev) => (prev > 0 ? prev - 1 : 60));
+      setNextUpdateIn((prev) => (prev > 0 ? prev - 1 : delay ?? 60));
       const script = document.createElement("script");
       script.src = "https://tenor.com/embed.js";
       script.async = true;

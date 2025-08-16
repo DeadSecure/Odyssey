@@ -31,7 +31,7 @@ exports.convertSitesTestResponseToConfigInput = convertSitesTestResponseToConfig
 function convertSitesTestResponseToConfigInput(responses, siteMetadata, timestamp) {
     var e_1, _a, e_2, _b, e_3, _c;
     var _d;
-    if (timestamp === void 0) { timestamp = new Date().toISOString(); }
+    if (timestamp === void 0) { timestamp = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Tehran" })).toISOString(); }
     // Step 1: Build a map from domain to site metadata
     var metadataMap = new Map();
     try {

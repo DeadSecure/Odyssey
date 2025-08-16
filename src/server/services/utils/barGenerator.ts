@@ -5,7 +5,9 @@ import { SitesTestResponse } from "../../../server/models/interfaces";
 export function convertSitesTestResponseToConfigInput(
   responses: SitesTestResponse[],
   siteMetadata: SiteMetadata[],
-  timestamp: string = new Date().toISOString()
+  timestamp: string = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "Asia/Tehran" })
+  ).toISOString()
 ): ConfigInput[] {
   // Step 1: Build a map from domain to site metadata
   const metadataMap = new Map<string, SiteMetadata>();

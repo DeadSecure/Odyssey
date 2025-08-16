@@ -21,6 +21,7 @@ type Props = {
   isDark?: boolean;
   onStatusTabChange?: (tab: Tab) => void;
   statusTab?: Tab;
+  delay?: number;
 };
 
 export default function StatusAccordion({
@@ -29,6 +30,7 @@ export default function StatusAccordion({
   isDark,
   onStatusTabChange,
   statusTab,
+  delay,
 }: Props) {
   const [open, setOpen] = useState(false);
   const [border, setBorder] = useState("rounded-xl");
@@ -41,8 +43,7 @@ export default function StatusAccordion({
     setCurrentStatusTab(item[tab]);
   };
 
-  useEffect(() => {
-  }, [isRtl]);
+  useEffect(() => {}, [isRtl]);
   return (
     <div className={`${isDark ? "text-black" : "text-wite"}`}>
       <br />
@@ -52,6 +53,7 @@ export default function StatusAccordion({
         onTabChange={handleTabChange}
         isDark={isDark}
         isRtl={isRtl}
+        delay={delay}
       />
       <br />
       <div className="flex flex-wrap justify-center gap-y-4">

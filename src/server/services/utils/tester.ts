@@ -66,7 +66,7 @@ async function doCycle() {
   console.log("Setting the access result in the DB ...");
 
   setGroupedCharts(db, results);
-
+  console.log("Done")
   parentPort?.postMessage({
     type: "tick:done",
     stats: { ports: ports.length, results: results.length, at: Date.now() },

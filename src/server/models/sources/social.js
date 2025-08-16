@@ -39,7 +39,7 @@ exports.socialRoutes = [
         color: "khaki",
     },
     {
-        name: "X (Twitter)",
+        name: "X",
         domain: "https://www.x.com",
         category: "social",
         color: "lime",

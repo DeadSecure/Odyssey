@@ -90,6 +90,7 @@ function doCycle() {
                     console.log("Done");
                     console.log("Setting the access result in the DB ...");
                     (0, dbOps_1.setGroupedCharts)(db, results);
+                    console.log("Done");
                     worker_threads_1.parentPort === null || worker_threads_1.parentPort === void 0 ? void 0 : worker_threads_1.parentPort.postMessage({
                         type: "tick:done",
                         stats: { ports: ports.length, results: results.length, at: Date.now() },

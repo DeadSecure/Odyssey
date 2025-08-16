@@ -29,6 +29,7 @@ type Props = {
     onStatusTabChange: (tab: Tab) => void;
     statusTab: Tab;
     isDark: boolean;
+    delay: number;
   }>;
 
   name: string;
@@ -38,9 +39,10 @@ type Props = {
     latencyBars: latencyBar[];
     statusBars: statusBar;
   };
+  delay: number;
 };
 
-export default function ClientLayout({ children, name, logo, bars }: Props) {
+export default function ClientLayout({ children, name, logo, bars, delay }: Props) {
   const [isDayMode, setIsDayMode] = useState(false);
   const [activeTab, setActiveTab] = useState<"status" | "access" | "latency">(
     "access"
@@ -123,6 +125,7 @@ export default function ClientLayout({ children, name, logo, bars }: Props) {
             onTabChange={handleTabChange}
             isDark={isDark}
             isRtl={isRtl}
+            delay={delay}
           />
         </div>
       </div>
@@ -144,6 +147,7 @@ export default function ClientLayout({ children, name, logo, bars }: Props) {
           onStatusTabChange,
           statusTab,
           isDark,
+          delay,
         })}
       </div>
     </div>

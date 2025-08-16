@@ -12,6 +12,7 @@ export default function ClientBarsWrapper({
   isDark,
   onStatusTabChange,
   statusTab,
+  delay,
 }: {
   bars?: {
     AccessBars?: AccessBar[];
@@ -22,6 +23,7 @@ export default function ClientBarsWrapper({
   isDark?: boolean;
   onStatusTabChange?: (tab: Tab) => void;
   statusTab?: Tab;
+  delay?: number;
 }) {
   if (bars?.statusBars) {
     return (
@@ -31,6 +33,7 @@ export default function ClientBarsWrapper({
         isDark={isDark}
         onStatusTabChange={onStatusTabChange}
         statusTab={statusTab}
+        delay={delay}
       />
     );
   }

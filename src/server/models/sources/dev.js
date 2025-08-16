@@ -15,25 +15,19 @@ exports.devRoutes = [
         color: "orange",
     },
     {
-        name: "Android Studio & Google Play Console",
+        name: "Android_Studio",
         domain: "https://developer.android.com",
         category: "dev",
         color: "blue",
     },
     {
-        name: "Firebase",
-        domain: "https://firebase.google.com",
-        category: "dev",
-        color: "purple",
-    },
-    {
-        name: "Docker Hub",
+        name: "DockerHub",
         domain: "https://hub.docker.com",
         category: "dev",
         color: "green",
     },
     {
-        name: "Microsoft Azure",
+        name: "Microsoft_Azure",
         domain: "https://azure.microsoft.com",
         category: "dev",
         color: "khaki",
@@ -45,21 +39,15 @@ exports.devRoutes = [
         color: "lime",
     },
     {
-        name: "OpenAI API / ChatGPT",
+        name: "OpenAI_API_ChatGPT",
         domain: "https://platform.openai.com",
         category: "dev",
         color: "violet",
     },
     {
-        name: "Google Analytics",
+        name: "Google_Analytics",
         domain: "https://analytics.google.com",
         category: "dev",
         color: "red",
-    },
-    {
-        name: "CentOS Repositories",
-        domain: "https://centos.org",
-        category: "dev",
-        color: "cyan",
     },
 ];

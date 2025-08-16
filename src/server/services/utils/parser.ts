@@ -1,5 +1,6 @@
 import { latencyBar, AccessBar } from "@/server/models/client/bars";
 import { Categories, SitesTestResponse } from "@/server/models/interfaces";
+import { realDelayRoutes } from "@/server/models/sources/realDelay";
 
 export function parseAccessBars(site_res: SitesTestResponse[]): AccessBar[] {
   const accessMap: Record<
@@ -70,7 +71,7 @@ export function parseLatencyBars(site_res: SitesTestResponse[]): latencyBar[] {
     const name = item.config_name ?? "Unknown";
     const country = item.country ?? "Unknown";
     const latency = [(item.starttransfer + item.total) / 2];
-    const url = item.url;
+    const url = item.src_name;
 
     // Create entry if not exist
     const existingSites = latencyMap[name]?.site ?? {};

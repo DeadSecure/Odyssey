@@ -12,6 +12,7 @@ type Props = {
   onTabChange: (tab: Tab) => void;
   isDark: boolean;
   isRtl: boolean;
+  delay: number;
 };
 
 const TabSwitcher: React.FC<Props> = ({
@@ -19,6 +20,7 @@ const TabSwitcher: React.FC<Props> = ({
   onTabChange,
   isDark,
   isRtl,
+  delay,
 }) => {
   const tabs: Tab[] = ["status", "access", "latency"];
   const containerWidthMobile = 360;
@@ -40,11 +42,11 @@ const TabSwitcher: React.FC<Props> = ({
   const { locale } = useRouter();
 
   // 🔥 Countdown state
-  const [nextUpdateIn, setNextUpdateIn] = useState<number>(30);
+  const [nextUpdateIn, setNextUpdateIn] = useState<number>(delay);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setNextUpdateIn((prev) => (prev > 0 ? prev - 1 : 60)); // reset to 60 after reaching 0
+      setNextUpdateIn((prev) => (prev > 0 ? prev - 1 : delay ?? 60)); // reset to 60 after reaching 0
       const script = document.createElement("script");
       script.src = "https://tenor.com/embed.js";
       script.async = true;
@@ -114,7 +116,7 @@ const TabSwitcher: React.FC<Props> = ({
         <span
           style={{
             fontFamily: `${isRtl ? "var(--font-vazir)" : "var(--font-kdam)"}`,
-            color : !isDark ? "#e8ffff" : "#213448",
+            color: !isDark ? "#e8ffff" : "#213448",
           }}
         >
           {t("nextUpdateIn", { defaultValue: "Next update in" })} {nextUpdateIn}

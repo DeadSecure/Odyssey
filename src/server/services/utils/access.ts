@@ -72,6 +72,7 @@ export async function testSite(
       country: "",
       ip: "",
       category: "" as any,
+      src_name: "",
     };
   }
 }

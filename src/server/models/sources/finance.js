@@ -15,28 +15,16 @@ exports.financeRoutes = [
         color: "orange",
     },
     {
-        name: "Huobi (HTX)",
-        domain: "https://www.htx.com",
-        category: "finance",
-        color: "blue",
-    },
-    {
         name: "KuCoin",
         domain: "https://www.kucoin.com",
         category: "finance",
         color: "purple",
     },
     {
-        name: "OKX (OKEx)",
-        domain: "https://www.okx.com",
+        name: "toobit",
+        domain: "https://www.toobit.com",
         category: "finance",
-        color: "green",
-    },
-    {
-        name: "Bybit",
-        domain: "https://www.bybit.com",
-        category: "finance",
-        color: "khaki",
+        color: "blue",
     },
     {
         name: "PancakeSwap",

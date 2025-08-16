@@ -16,6 +16,7 @@ import { getConfigLinkByPort } from "../utils/ports";
               config_name: config.name,
               config_raw: config.raw,
               category: site.category,
+              src_name: site.name,
             };
           } catch (err) {
             console.warn(`Error testing site ${site.domain}:`, err);
