@@ -177,12 +177,13 @@ export const StatusChartsWrapper = ({ input }: { input: FlatStatus[] }) => {
   );
 };
 
-const parseTime = (raw_time: string): String => {
-  const date = new Date(raw_time);
+function parseTime(raw_time: string): string {
+  // handle both "2025-08-16 22:45:12" and "2025-08-16, 22:45:12"
+  const cleaned = raw_time.replace(",", "");
+  const parts = cleaned.split(" ");
+  if (parts.length < 2) return ""; // fallback if format unexpected
 
-  // Get hour and minute in UTC
-  const hours = date.getUTCHours();
-  const minutes = date.getUTCMinutes();
-
-  return `${hours}:${minutes}`;
-};
+  const timePart = parts[1];
+  const [hour, minute] = timePart.split(":");
+  return `${hour}:${minute}`;
+}

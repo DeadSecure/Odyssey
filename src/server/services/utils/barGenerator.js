@@ -31,7 +31,15 @@ exports.convertSitesTestResponseToConfigInput = convertSitesTestResponseToConfig
 function convertSitesTestResponseToConfigInput(responses, siteMetadata, timestamp) {
     var e_1, _a, e_2, _b, e_3, _c;
     var _d;
-    if (timestamp === void 0) { timestamp = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Tehran" })).toISOString(); }
+    if (timestamp === void 0) { timestamp = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Tehran",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+    }).format(new Date()); }
     // Step 1: Build a map from domain to site metadata
     var metadataMap = new Map();
     try {

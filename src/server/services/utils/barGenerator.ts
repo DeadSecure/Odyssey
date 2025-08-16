@@ -5,9 +5,15 @@ import { SitesTestResponse } from "../../../server/models/interfaces";
 export function convertSitesTestResponseToConfigInput(
   responses: SitesTestResponse[],
   siteMetadata: SiteMetadata[],
-  timestamp: string = new Date(
-    new Date().toLocaleString("en-US", { timeZone: "Asia/Tehran" })
-  ).toISOString()
+  timestamp: string = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Tehran",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).format(new Date())
 ): ConfigInput[] {
   // Step 1: Build a map from domain to site metadata
   const metadataMap = new Map<string, SiteMetadata>();
@@ -24,7 +30,7 @@ export function convertSitesTestResponseToConfigInput(
 
     if (!meta) {
       console.warn(`No metadata found for domain: ${hostname}`);
-      continue;
+      continue; 
     }
 
     const key = `${res.category}__${res.config_name ?? "DEFAULT_CONFIG"}`;
