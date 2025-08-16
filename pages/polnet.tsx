@@ -31,6 +31,9 @@ export default function PolnetPage({
   const [accessBars, setAccessBars] = useState<AccessBar[]>(AccessBars);
   const [latencyBars, setLatencyBars] = useState<latencyBar[]>(LatencyBars);
   const [statusBars, setStatusBars] = useState<statusBar>(StatusBars);
+  const [breathDelayToPass, setBreathDelayToPass] =
+    useState<number>(breathDelay);
+
   // Previous round state (stored for next render)
   const [previousBars, setPreviousBars] = useState<{
     AccessBars: AccessBar[];
@@ -77,6 +80,9 @@ export default function PolnetPage({
 
       // Step 3 — lock until next cycle
       setTimeToRender(false);
+      setBreathDelayToPass((prev) =>
+        prev === breathDelay ? prev - 1 : breathDelay
+      );
       setTimeout(() => setTimeToRender(true), breathDelay * 1000);
     };
 
@@ -92,7 +98,7 @@ export default function PolnetPage({
         latencyBars: latencyBars,
         statusBars: statusBars,
       }}
-      delay={breathDelay}
+      delay={breathDelayToPass}
     >
       <ClientBarsWrapper />
     </ClientLayout>

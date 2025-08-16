@@ -45,15 +45,29 @@ const TabSwitcher: React.FC<Props> = ({
 
   // 🔥 Countdown state
   const [nextUpdateIn, setNextUpdateIn] = useState<number>(delay);
+  const [updateText, setUpdateText] = useState<string>("mextUpdateIn");
 
   useEffect(() => {
+    if (!delay) return; // do nothing if delay is null/undefined
+
+    // initialize state when delay changes
+    setNextUpdateIn(delay);
+    setUpdateText("nextUpdateIn");
+
     const interval = setInterval(() => {
-      setNextUpdateIn((prev) => (prev > 0 ? prev - 1 : delay ?? 60)); // reset to 60 after reaching 0
+      setNextUpdateIn((prev) => {
+        if (prev > 1) return prev - 1;
+
+        // when countdown reaches 0 → stop interval
+        clearInterval(interval);
+        setUpdateText("updating");
+        return 0;
+      });
     }, 1000);
 
+    // cleanup on unmount or delay change
     return () => clearInterval(interval);
-  }, []);
-
+  }, [delay]);
   return (
     <div className={`w-full flex flex-col items-center`}>
       <div className="toggle-button relative h-[60px] w-[360px] lg:h-[80px] lg:w-[400px] rounded-full bg-sky-400/60 overflow-hidden flex">
@@ -113,7 +127,7 @@ const TabSwitcher: React.FC<Props> = ({
             color: !isDark ? "#e8ffff" : "#213448",
           }}
         >
-          {t("nextUpdateIn", { defaultValue: "Next update in" })} {nextUpdateIn}
+          {t(updateText, { defaultValue: "Next update in" })} {nextUpdateIn}
         </span>
         <div className="w-10 h-10">
           <Lottie animationData={animationData} loop={true} autoplay={true} />
