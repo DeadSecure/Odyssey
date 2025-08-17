@@ -1,6 +1,6 @@
 {
   "name": "odyssey2",
-  "version": "0.1.2",
+  "version": "0.2.2",
   "private": true,
   "scripts": {
     "dev": " rm -f ./src/server/services/utils/worker.js ./src/server/services/utils/access.js ./src/server/services/utils/ports.js ./src/server/services/utils/tester.js && tsc  ./src/server/services/utils/worker.ts ./src/server/services/utils/tester.ts --downlevelIteration --esModuleInterop && next dev --turbopack",
