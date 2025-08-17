@@ -35,10 +35,7 @@ const StatusChart: React.FC<StatusChartProps> = ({ configName, chartData }) => {
     <div className="bg-[#1e2a38] text-white p-4 rounded-xl shadow-md mb-6 w-full overflow-x-auto">
       <div className="flex items-center justify-between mb-2 px-2">
         <span className="text-sm font-semibold">{configName}</span>
-        <div className="flex items-center space-x-2 text-sm">
-          <span className="w-3 h-3 rounded-full bg-green-500" />
-          <span>ONLINE</span>
-        </div>
+        <div className="flex items-center space-x-2 text-sm"></div>
       </div>
 
       <div className="flex space-x-1 overflow-x-auto">
@@ -147,8 +144,19 @@ export const StatusChartsWrapper = ({ input }: { input: FlatStatus[] }) => {
               {configName}
             </span>
             <div className="flex items-center gap-2 text-sm text-white">
-              <span className="w-3 h-3 bg-green-500 rounded-full"></span>
-              ONLINE
+              {Object.entries(timeline)[0][1]
+                .map((c) => c[2])
+                .filter((item) => item).length > 0 ? (
+                <>
+                  <span className="w-3 h-3 rounded-full bg-green-500" />{" "}
+                  <span>ONLINE</span>{" "}
+                </>
+              ) : (
+                <>
+                  <span className="w-3 h-3 rounded-full bg-red-500" />{" "}
+                  <span>OFFLINE</span>
+                </>
+              )}
             </div>
           </div>
           <div className="flex space-x-2 overflow-x-auto">

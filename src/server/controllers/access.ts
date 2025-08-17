@@ -73,7 +73,7 @@ export async function handleAccess(
 
   let accessWitLatencyResult = getGroupedCharts(db);
 
-  console.log("here are the latency bars", accessWitLatencyResult);
+  // console.log("here are the latency bars", accessWitLatencyResult)
 
   db.close();
 

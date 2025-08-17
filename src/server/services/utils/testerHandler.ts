@@ -23,7 +23,7 @@ export function startTester(opts: {
   // optional: listen to progress
   worker.on("message", (m) => {
     if (m?.type === "tick:done") {
-      console.log("worker tick complete:", m.stats);
+      // console.log("worker tick complete:", m.stats);
     } else if (m?.type === "tick:error") {
       console.error("worker tick error:", m.error);
     } else if (m?.type === "stopped") {

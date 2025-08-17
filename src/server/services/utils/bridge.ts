@@ -20,7 +20,7 @@ export async function fetchAccessAndStatusBars(
 
   // ✅ Parse once
   let res_parse: { access: AccessBar[]; status: statusBar } = await res.json();
-  console.log("this is the res_parse", res_parse);
+  // console.log("this is the res_parse", res_parse);
 
   return res_parse;
 }

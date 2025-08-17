@@ -59,7 +59,6 @@ export default function PolnetPage({
         tab_knob.classList.remove("dark");
       }
     }
-    console.log("");
     if (!timeToRender) return;
 
     const fetchData = async () => {
