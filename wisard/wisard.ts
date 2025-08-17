@@ -35,10 +35,10 @@ async function main() {
     console.log("\n🚀 Welcome to the Odyssey Service Setup Wizard\n");
 
     // Step 1: Ask user
-    const { configLink, name } = await inquirer.prompt([
+    const { subLink, name, tgSupportId } = await inquirer.prompt([
       {
         type: "input",
-        name: "configLink",
+        name: "subLink",
         message: "Enter the config link:",
         validate: (input) =>
           input.trim() !== "" || "Config link cannot be empty",
@@ -48,6 +48,13 @@ async function main() {
         name: "name",
         message: "Enter a name for this service:",
         validate: (input) => input.trim() !== "" || "Name cannot be empty",
+      },
+      {
+        type: "input",
+        name: "tgSupportId",
+        message: "Enter the Telegram support id (eg. @PolNetSupport):",
+        validate: (input) =>
+          input.trim() !== "" || "Telegram support id cannot be empty",
       },
       {
         type: "confirm",
@@ -79,7 +86,7 @@ async function main() {
     // Step 3: API call
     try {
       await axios.post("http://localhost:3000/api/config", {
-        url: configLink,
+        url: subLink,
         name,
       });
     } catch (err: any) {
@@ -104,117 +111,131 @@ async function main() {
     } catch (err: any) {
       console.error("⚠️ Could not calculate BreathDelay:", err.message);
     }
+    let page_content = `import { GetStaticProps } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import ClientBarsWrapper from "@/components/ui/clientWrapper";
+import ClientLayout from "@/components/layout/clientLayout";
+import { useEffect, useState } from "react";
+import { latencyBar, AccessBar, statusBar } from "@/server/models/client/bars";
+import { Categories, SitesTestResponse } from "@/server/models/interfaces";
+import { parseAccessBars } from "@/server/services/utils/parser";
+import { FSLogger } from "@/server/services/utils/logger";
+import {
+  fetchAccessAndStatusBars,
+  fetchLatencyBars,
+} from "@/server/services/utils/bridge";
+type Props = {
+  AccessBars: AccessBar[];
+  LatencyBars: latencyBar[];
+  StatusBars: statusBar;
+  breathDelay: number;
+};
+import raw_config from "./config.json";
+import { ProviderConfig } from "@/server/models/client/provider";
+const config: ProviderConfig = raw_config;
 
-    let content = `
-    import { GetStaticProps } from "next";
-    import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-    import ClientBarsWrapper from "@/components/ui/clientWrapper";
-    import ClientLayout from "@/components/layout/clientLayout";
-    import { useEffect, useState } from "react";
-    import { latencyBar, AccessBar, statusBar } from "@/server/models/client/bars";
-    import { Categories, SitesTestResponse } from "@/server/models/interfaces";
-    import { parseAccessBars } from "@/server/services/utils/parser";
-    import { FSLogger } from "@/server/services/utils/logger";
-    import {
-      fetchAccessAndStatusBars,
-      fetchLatencyBars,
-    } from "@/server/services/utils/bridge";
-    type Props = {
-      AccessBars: AccessBar[];
-      LatencyBars: latencyBar[];
-      StatusBars: statusBar;
-      breathDelay: number;
-    };
-    export default function ${
-      name.charAt(0).toUpperCase() + name.slice(1)
-    }Page({
-      AccessBars,
-      StatusBars,
-      LatencyBars,
-      breathDelay,
-    }: Props) {
-      const [accessBars, setAccessBars] = useState<AccessBar[]>(AccessBars);
-      const [latencyBars, setLatencyBars] = useState<latencyBar[]>(LatencyBars);
-      const [statusBars, setStatusBars] = useState<statusBar>(StatusBars);
-      const [breathDelayToPass, setBreathDelayToPass] =
-        useState<number>(breathDelay);
-      const [previousBars, setPreviousBars] = useState<{
-        AccessBars: AccessBar[];
-        LatencyBars: latencyBar[];
-        StatusBars: statusBar;
-      }>({ AccessBars, LatencyBars, StatusBars });
-      const [timeToRender, setTimeToRender] = useState<boolean>(true);
-      useEffect(() => {
-        const tab_knob = document.querySelector(".tab-knob");
-        const mode = document.querySelector(".toggle-knob")?.classList;
-        if (tab_knob && mode) {
-          if (mode.contains("dark")) {
-            tab_knob.classList.add("dark");
-            tab_knob.classList.remove("light");
-          } else if (mode.contains("light")) {
-            tab_knob.classList.add("light");
-            tab_knob.classList.remove("dark");
-          }
-        }
-        if (!timeToRender) return;
-        const fetchData = async () => {
-          setAccessBars(previousBars.AccessBars);
-          setLatencyBars(previousBars.LatencyBars);
-          setStatusBars(previousBars.StatusBars);
-          const access_and_status = await fetchAccessAndStatusBars("${name}");
-          const latency = await fetchLatencyBars("${name}");
-          setPreviousBars({
-            AccessBars: access_and_status.access,
-            LatencyBars: latency,
-            StatusBars: access_and_status.status,
-          });
-          setTimeToRender(false);
-          setBreathDelayToPass((prev) =>
-            prev === breathDelay ? prev - 1 : breathDelay
-          );
-          setTimeout(() => setTimeToRender(true), breathDelay * 1000);
-        };
-        fetchData();
-      }, [timeToRender, breathDelay]);
-      return (
-        <ClientLayout
-          name="${name}"
-          logo="/profilePic/${name}.png"
-          bars={{
-            AccessBars: accessBars,
-            latencyBars: latencyBars,
-            statusBars: statusBars,
-          }}
-          delay={breathDelayToPass}
-        >
-          <ClientBarsWrapper />
-        </ClientLayout>
-      );
+export default function Page({
+  AccessBars,
+  StatusBars,
+  LatencyBars,
+  breathDelay,
+}: Props) {
+  const [accessBars, setAccessBars] = useState<AccessBar[]>(AccessBars);
+  const [latencyBars, setLatencyBars] = useState<latencyBar[]>(LatencyBars);
+  const [statusBars, setStatusBars] = useState<statusBar>(StatusBars);
+  const [breathDelayToPass, setBreathDelayToPass] =
+    useState<number>(breathDelay);
+  const [previousBars, setPreviousBars] = useState<{
+    AccessBars: AccessBar[];
+    LatencyBars: latencyBar[];
+    StatusBars: statusBar;
+  }>({ AccessBars, LatencyBars, StatusBars });
+  const [timeToRender, setTimeToRender] = useState<boolean>(true);
+  useEffect(() => {
+    const tab_knob = document.querySelector(".tab-knob");
+    const mode = document.querySelector(".toggle-knob")?.classList;
+    if (tab_knob && mode) {
+      if (mode.contains("dark")) {
+        tab_knob.classList.add("dark");
+        tab_knob.classList.remove("light");
+      } else if (mode.contains("light")) {
+        tab_knob.classList.add("light");
+        tab_knob.classList.remove("dark");
+      }
     }
-    export const getStaticProps: GetStaticProps = async ({ locale }) => {
-      let access_and_status = await fetchAccessAndStatusBars("${name}");
-      const logger = new FSLogger("${name}Logs");
-      logger.log({
-        access: access_and_status.access,
-        status: access_and_status.status,
+    if (!timeToRender) return;
+    const fetchData = async () => {
+      setAccessBars(previousBars.AccessBars);
+      setLatencyBars(previousBars.LatencyBars);
+      setStatusBars(previousBars.StatusBars);
+      const access_and_status = await fetchAccessAndStatusBars(config.name);
+      const latency = await fetchLatencyBars(config.name);
+      setPreviousBars({
+        AccessBars: access_and_status.access,
+        LatencyBars: latency,
+        StatusBars: access_and_status.status,
       });
-      let latency = await fetchLatencyBars("${name}");
-      return {
-        props: {
-          AccessBars: access_and_status.access,
-          StatusBars: access_and_status.status,
-          LatencyBars: latency,
-          breathDelay: ${BreathDelay},
-          ...(await serverSideTranslations(locale ?? "en", ["common"])),
-        },
-        revalidate: 60,
-      };
-    };`;
+      setTimeToRender(false);
+      setBreathDelayToPass((prev) =>
+        prev === breathDelay ? prev - 1 : breathDelay
+      );
+      setTimeout(() => setTimeToRender(true), breathDelay * 1000);
+    };
+    fetchData();
+  }, [timeToRender, breathDelay]);
+  return (
+    <ClientLayout
+      name={config.name}
+      logo={\`/profilePic/\${config.name}.png\`}
+      bars={{
+        AccessBars: accessBars,
+        latencyBars: latencyBars,
+        statusBars: statusBars,
+      }}
+      delay={breathDelayToPass}
+      support_link={config.tg_support_link}
+    >
+      <ClientBarsWrapper />
+    </ClientLayout>
+  );
+}
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  let access_and_status = await fetchAccessAndStatusBars(config.name);
+  const logger = new FSLogger("polnetLogs");
+  logger.log({
+    access: access_and_status.access,
+    status: access_and_status.status,
+  });
+  let latency = await fetchLatencyBars(config.name);
+  return {
+    props: {
+      AccessBars: access_and_status.access,
+      StatusBars: access_and_status.status,
+      LatencyBars: latency,
+      breathDelay: 40,
+      ...(await serverSideTranslations(locale ?? "en", ["common"])),
+    },
+    revalidate: 60,
+  };
+};`;
 
+    let config_content = `{
+  "name": "${name}",
+  "subscription_link": "${subLink}",
+  "tg_support_link": "https://t.me/${tgSupportId.replace("@", "")}"
+}`;
     try {
-      const generatedFile = path.join(process.cwd(), `pages/${name}.tsx`);
-      fs.writeFileSync(generatedFile, content);
+      if (!fs.existsSync(path.join(process.cwd(), `pages/${name}`))) {
+        fs.mkdirSync(path.join(process.cwd(), `pages/${name}`), {
+          recursive: true,
+        });
+      }
+      const generatedFile = path.join(process.cwd(), `pages/${name}/index.tsx`);
+      fs.writeFileSync(generatedFile, page_content);
       console.log(`✅ Generated ${name} home page`);
+      const configFile = path.join(process.cwd(), `pages/${name}/config.json`);
+      fs.writeFileSync(configFile, config_content);
+      console.log(`✅ Generated ${name} config file`);
     } catch (err: any) {
       console.error("⚠️ Failed to generate file:", err.message);
     }

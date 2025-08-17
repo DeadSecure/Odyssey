@@ -89,7 +89,7 @@ function waitForServer(url_1) {
 var devProcess = null;
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, configLink, name_1, err_1, BreathDelay_1, dirPath_1, files, count, content, generatedFile, err_2;
+        var _a, subLink, name_1, tgSupportId, err_1, BreathDelay_1, dirPath_1, files, count, page_content, config_content, generatedFile, configFile, err_2;
         var _this = this;
         return __generator(this, function (_b) {
             switch (_b.label) {
@@ -100,7 +100,7 @@ function main() {
                     return [4 /*yield*/, inquirer_1.default.prompt([
                             {
                                 type: "input",
-                                name: "configLink",
+                                name: "subLink",
                                 message: "Enter the config link:",
                                 validate: function (input) {
                                     return input.trim() !== "" || "Config link cannot be empty";
@@ -113,6 +113,14 @@ function main() {
                                 validate: function (input) { return input.trim() !== "" || "Name cannot be empty"; },
                             },
                             {
+                                type: "input",
+                                name: "tgSupportId",
+                                message: "Enter the Telegram support id (eg. @PolNetSupport):",
+                                validate: function (input) {
+                                    return input.trim() !== "" || "Telegram support id cannot be empty";
+                                },
+                            },
+                            {
                                 type: "confirm",
                                 name: "pic",
                                 message: function (answers) {
@@ -121,7 +129,7 @@ function main() {
                             },
                         ])];
                 case 1:
-                    _a = _b.sent(), configLink = _a.configLink, name_1 = _a.name;
+                    _a = _b.sent(), subLink = _a.subLink, name_1 = _a.name, tgSupportId = _a.tgSupportId;
                     // Step 2: Start server
                     console.log("\n▶️ Starting Odyssey server...");
                     devProcess = (0, child_process_1.spawn)("npm", ["run", "dev"], { stdio: "inherit" });
@@ -144,7 +152,7 @@ function main() {
                 case 3:
                     _b.trys.push([3, 5, , 6]);
                     return [4 /*yield*/, axios_1.default.post("http://localhost:3000/api/config", {
-                            url: configLink,
+                            url: subLink,
                             name: name_1,
                         })];
                 case 4:
@@ -172,11 +180,20 @@ function main() {
                     catch (err) {
                         console.error("⚠️ Could not calculate BreathDelay:", err.message);
                     }
-                    content = "\n    import { GetStaticProps } from \"next\";\n    import { serverSideTranslations } from \"next-i18next/serverSideTranslations\";\n    import ClientBarsWrapper from \"@/components/ui/clientWrapper\";\n    import ClientLayout from \"@/components/layout/clientLayout\";\n    import { useEffect, useState } from \"react\";\n    import { latencyBar, AccessBar, statusBar } from \"@/server/models/client/bars\";\n    import { Categories, SitesTestResponse } from \"@/server/models/interfaces\";\n    import { parseAccessBars } from \"@/server/services/utils/parser\";\n    import { FSLogger } from \"@/server/services/utils/logger\";\n    import {\n      fetchAccessAndStatusBars,\n      fetchLatencyBars,\n    } from \"@/server/services/utils/bridge\";\n    import { time } from \"console\";\n    type Props = {\n      AccessBars: AccessBar[];\n      LatencyBars: latencyBar[];\n      StatusBars: statusBar;\n      breathDelay: number;\n    };\n    export default function ".concat(name_1.charAt(0).toUpperCase() + name_1.slice(1), "Page({\n      AccessBars,\n      StatusBars,\n      LatencyBars,\n      breathDelay,\n    }: Props) {\n      const [accessBars, setAccessBars] = useState<AccessBar[]>(AccessBars);\n      const [latencyBars, setLatencyBars] = useState<latencyBar[]>(LatencyBars);\n      const [statusBars, setStatusBars] = useState<statusBar>(StatusBars);\n      const [breathDelayToPass, setBreathDelayToPass] =\n        useState<number>(breathDelay);\n      const [previousBars, setPreviousBars] = useState<{\n        AccessBars: AccessBar[];\n        LatencyBars: latencyBar[];\n        StatusBars: statusBar;\n      }>({ AccessBars, LatencyBars, StatusBars });\n      const [timeToRender, setTimeToRender] = useState<boolean>(true);\n      useEffect(() => {\n        const tab_knob = document.querySelector(\".tab-knob\");\n        const mode = document.querySelector(\".toggle-knob\")?.classList;\n        if (tab_knob && mode) {\n          if (mode.contains(\"dark\")) {\n            tab_knob.classList.add(\"dark\");\n            tab_knob.classList.remove(\"light\");\n          } else if (mode.contains(\"light\")) {\n            tab_knob.classList.add(\"light\");\n            tab_knob.classList.remove(\"dark\");\n          }\n        }\n        if (!timeToRender) return;\n        const fetchData = async () => {\n          setAccessBars(previousBars.AccessBars);\n          setLatencyBars(previousBars.LatencyBars);\n          setStatusBars(previousBars.StatusBars);\n          const access_and_status = await fetchAccessAndStatusBars(\"").concat(name_1, "\");\n          const latency = await fetchLatencyBars(\"").concat(name_1, "\");\n          setPreviousBars({\n            AccessBars: access_and_status.access,\n            LatencyBars: latency,\n            StatusBars: access_and_status.status,\n          });\n          setTimeToRender(false);\n          setBreathDelayToPass((prev) =>\n            prev === breathDelay ? prev - 1 : breathDelay\n          );\n          setTimeout(() => setTimeToRender(true), breathDelay * 1000);\n        };\n        fetchData();\n      }, [timeToRender, breathDelay]);\n      return (\n        <ClientLayout\n          name=\"").concat(name_1, "\"\n          logo=\"/profilePic/").concat(name_1, ".png\"\n          bars={{\n            AccessBars: accessBars,\n            latencyBars: latencyBars,\n            statusBars: statusBars,\n          }}\n          delay={breathDelayToPass}\n        >\n          <ClientBarsWrapper />\n        </ClientLayout>\n      );\n    }\n    export const getStaticProps: GetStaticProps = async ({ locale }) => {\n      let access_and_status = await fetchAccessAndStatusBars(\"").concat(name_1, "\");\n      const logger = new FSLogger(\"").concat(name_1, "Logs\");\n      logger.log({\n        access: access_and_status.access,\n        status: access_and_status.status,\n      });\n      let latency = await fetchLatencyBars(\"").concat(name_1, "\");\n      return {\n        props: {\n          AccessBars: access_and_status.access,\n          StatusBars: access_and_status.status,\n          LatencyBars: latency,\n          breathDelay: ").concat(BreathDelay_1, ",\n          ...(await serverSideTranslations(locale ?? \"en\", [\"common\"])),\n        },\n        revalidate: 60,\n      };\n    };");
+                    page_content = "import { GetStaticProps } from \"next\";\nimport { serverSideTranslations } from \"next-i18next/serverSideTranslations\";\nimport ClientBarsWrapper from \"@/components/ui/clientWrapper\";\nimport ClientLayout from \"@/components/layout/clientLayout\";\nimport { useEffect, useState } from \"react\";\nimport { latencyBar, AccessBar, statusBar } from \"@/server/models/client/bars\";\nimport { Categories, SitesTestResponse } from \"@/server/models/interfaces\";\nimport { parseAccessBars } from \"@/server/services/utils/parser\";\nimport { FSLogger } from \"@/server/services/utils/logger\";\nimport {\n  fetchAccessAndStatusBars,\n  fetchLatencyBars,\n} from \"@/server/services/utils/bridge\";\ntype Props = {\n  AccessBars: AccessBar[];\n  LatencyBars: latencyBar[];\n  StatusBars: statusBar;\n  breathDelay: number;\n};\nimport raw_config from \"./config.json\";\nimport { ProviderConfig } from \"@/server/models/client/provider\";\nconst config: ProviderConfig = raw_config;\n\nexport default function Page({\n  AccessBars,\n  StatusBars,\n  LatencyBars,\n  breathDelay,\n}: Props) {\n  const [accessBars, setAccessBars] = useState<AccessBar[]>(AccessBars);\n  const [latencyBars, setLatencyBars] = useState<latencyBar[]>(LatencyBars);\n  const [statusBars, setStatusBars] = useState<statusBar>(StatusBars);\n  const [breathDelayToPass, setBreathDelayToPass] =\n    useState<number>(breathDelay);\n  const [previousBars, setPreviousBars] = useState<{\n    AccessBars: AccessBar[];\n    LatencyBars: latencyBar[];\n    StatusBars: statusBar;\n  }>({ AccessBars, LatencyBars, StatusBars });\n  const [timeToRender, setTimeToRender] = useState<boolean>(true);\n  useEffect(() => {\n    const tab_knob = document.querySelector(\".tab-knob\");\n    const mode = document.querySelector(\".toggle-knob\")?.classList;\n    if (tab_knob && mode) {\n      if (mode.contains(\"dark\")) {\n        tab_knob.classList.add(\"dark\");\n        tab_knob.classList.remove(\"light\");\n      } else if (mode.contains(\"light\")) {\n        tab_knob.classList.add(\"light\");\n        tab_knob.classList.remove(\"dark\");\n      }\n    }\n    if (!timeToRender) return;\n    const fetchData = async () => {\n      setAccessBars(previousBars.AccessBars);\n      setLatencyBars(previousBars.LatencyBars);\n      setStatusBars(previousBars.StatusBars);\n      const access_and_status = await fetchAccessAndStatusBars(config.name);\n      const latency = await fetchLatencyBars(config.name);\n      setPreviousBars({\n        AccessBars: access_and_status.access,\n        LatencyBars: latency,\n        StatusBars: access_and_status.status,\n      });\n      setTimeToRender(false);\n      setBreathDelayToPass((prev) =>\n        prev === breathDelay ? prev - 1 : breathDelay\n      );\n      setTimeout(() => setTimeToRender(true), breathDelay * 1000);\n    };\n    fetchData();\n  }, [timeToRender, breathDelay]);\n  return (\n    <ClientLayout\n      name={config.name}\n      logo={`/profilePic/${config.name}.png`}\n      bars={{\n        AccessBars: accessBars,\n        latencyBars: latencyBars,\n        statusBars: statusBars,\n      }}\n      delay={breathDelayToPass}\n      support_link={config.tg_support_link}\n    >\n      <ClientBarsWrapper />\n    </ClientLayout>\n  );\n}\nexport const getStaticProps: GetStaticProps = async ({ locale }) => {\n  let access_and_status = await fetchAccessAndStatusBars(config.name);\n  const logger = new FSLogger(\"polnetLogs\");\n  logger.log({\n    access: access_and_status.access,\n    status: access_and_status.status,\n  });\n  let latency = await fetchLatencyBars(config.name);\n  return {\n    props: {\n      AccessBars: access_and_status.access,\n      StatusBars: access_and_status.status,\n      LatencyBars: latency,\n      breathDelay: 40,\n      ...(await serverSideTranslations(locale ?? \"en\", [\"common\"])),\n    },\n    revalidate: 60,\n  };\n};";
+                    config_content = "{\n  \"name\": \"".concat(name_1, "\",\n  \"subscription_link\": \"").concat(subLink, "\",\n  \"tg_support_link\": \"https://t.me/").concat(tgSupportId.replace("@", ""), "\"\n}");
                     try {
-                        generatedFile = path_1.default.join(process.cwd(), "pages/".concat(name_1, ".tsx"));
-                        fs_1.default.writeFileSync(generatedFile, content);
+                        if (!fs_1.default.existsSync(path_1.default.join(process.cwd(), "pages/".concat(name_1)))) {
+                            fs_1.default.mkdirSync(path_1.default.join(process.cwd(), "pages/".concat(name_1)), {
+                                recursive: true,
+                            });
+                        }
+                        generatedFile = path_1.default.join(process.cwd(), "pages/".concat(name_1, "/index.tsx"));
+                        fs_1.default.writeFileSync(generatedFile, page_content);
                         console.log("\u2705 Generated ".concat(name_1, " home page"));
+                        configFile = path_1.default.join(process.cwd(), "pages/".concat(name_1, "/config.json"));
+                        fs_1.default.writeFileSync(configFile, config_content);
+                        console.log("\u2705 Generated ".concat(name_1, " config file"));
                     }
                     catch (err) {
                         console.error("⚠️ Failed to generate file:", err.message);
