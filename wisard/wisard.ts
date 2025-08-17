@@ -29,7 +29,7 @@ async function waitForServer(url: string, retries = 20, delay = 3000) {
 
 let devProcess: ReturnType<typeof spawn> | null = null;
 
-async function main() {
+async function addService() {
   try {
     showLogo();
     console.log("\n🚀 Welcome to the Odyssey Service Setup Wizard\n");
@@ -39,7 +39,7 @@ async function main() {
       {
         type: "input",
         name: "subLink",
-        message: "Enter the config link:",
+        message: "Enter the sub link(unlimited in days and traffic):",
         validate: (input) =>
           input.trim() !== "" || "Config link cannot be empty",
       },
@@ -66,7 +66,7 @@ async function main() {
 
     // Step 2: Start server
     console.log("\n▶️ Starting Odyssey server...");
-    devProcess = spawn("npm", ["run", "dev"], { stdio: "inherit" });
+    devProcess = spawn("npm", ["run", "dev"], { stdio: "ignore" });
 
     devProcess.on("error", (err) => {
       console.error("❌ Failed to start dev server:", err.message);
@@ -275,6 +275,8 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         `\n🎉 Service started successfully! See it at: http://localhost:3000/\n`
       );
     });
+
+    return;
   } catch (err: any) {
     console.error("❌ Fatal error:", err.message);
     process.exit(1);
@@ -304,6 +306,371 @@ function shutdown(signal: string) {
   }, 500);
 }
 
+async function startService() {
+  try {
+    const items = fs.readdirSync(path.join(process.cwd(), "pages"), {
+      withFileTypes: true,
+    });
+    const items_list = items
+      .filter((item) => item.isDirectory())
+      .filter((dir) => dir.name != "api");
+    if (items_list.length === 0) {
+      console.error("❌ No service found, add one first");
+      return;
+    }
+    const { choice } = await inquirer.prompt([
+      {
+        type: "list",
+        name: "choice",
+        message: "Select a Service:",
+        choices: [
+          ...items_list.map((item) => item.name),
+          new inquirer.Separator(),
+          "⬅️ Back",
+        ],
+      },
+    ]);
+
+    if (choice === "⬅️ Back") {
+      return; // just return to mainMenu
+    }
+
+    await waitForServer("http://localhost:3000/api/health").catch((err) => {
+      console.error("❌ Looks like the Base odyssey server is offline");
+    });
+
+    console.log("\n▶️ Starting Odyssey server...");
+    devProcess = spawn("npm", ["run", "dev"], { stdio: "ignore" });
+
+    devProcess.on("error", (err) => {
+      console.error("❌ Failed to start Base odyssey server:", err.message);
+      process.exit(1);
+    });
+    devProcess.on("exit", (code) => {
+      if (code !== 0) {
+        console.error(`❌ Base odyssey server exited with code ${code}`);
+      }
+    });
+
+    await waitForServer("http://localhost:3000/api/health").catch((err) => {
+      console.error(
+        "❌ Base odyssey Server did not respond in time:",
+        err.message
+      );
+      return;
+    });
+
+    console.log("🗿 Odyssey Base server running");
+    // health check the service
+    const res: Record<string, number> = await axios.get(
+      `http://localhost:3000/api/cores`
+    );
+
+    if (res[choice]) {
+      console.error(
+        `❌ Service ${choice} is already running on port ${res[choice]}. stop it first before starting it again.`
+      );
+      return;
+    }
+
+    let BreathDelay = 60; // default
+    const dirPath = `./configs/${choice}/json`;
+    try {
+      if (fs.existsSync(dirPath)) {
+        const files = fs.readdirSync(dirPath);
+        const count = files.filter((f) =>
+          fs.statSync(path.join(dirPath, f)).isFile()
+        ).length;
+        BreathDelay = count * 10 || BreathDelay;
+      } else {
+        console.warn(
+          "⚠️ Config directory not found, using default BreathDelay"
+        );
+      }
+    } catch (err: any) {
+      console.error("⚠️ Could not calculate BreathDelay:", err.message);
+    }
+    // Step 6: Background request
+    setTimeout(async () => {
+      try {
+        console.log(`\n starting ${choice} monitoring services...`);
+        const res = await axios.post(
+          "http://localhost:3000/api/runCore",
+          new URLSearchParams({
+            username: choice,
+          }),
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          }
+        );
+        console.log("✅ Service responded:", res.data);
+      } catch (err: any) {
+        console.error("⚠️ Could not reach service yet:", err.message);
+      } finally {
+        console.log(
+          `⏳ Waiting ${BreathDelay} seconds for server to stabilize...`
+        );
+        await new Promise((r) => setTimeout(r, BreathDelay * 1000));
+
+        console.log(
+          `\n🎉 ${choice} monitoring services started successfully! See it at: http://localhost:3000/${choice}\n`
+        );
+      }
+    }, 5000);
+    await inquirer.prompt([
+      {
+        type: "confirm",
+        name: "back",
+        message: (answers) => `Press enter to back to main menu`,
+      },
+    ]);
+    return;
+  } catch (err: any) {
+    console.error("❌ Fatal error:", err.message);
+    return;
+  }
+}
+
+async function stopService() {
+  await waitForServer("http://localhost:3000/api/health").catch((err) => {
+    console.error(
+      "❌ Base odyssey Server did not respond in time:",
+      err.message,
+      "\n Please add a service first"
+    );
+    return;
+  });
+  const items = fs.readdirSync(path.join(process.cwd(), "pages"), {
+    withFileTypes: true,
+  });
+  const items_list = items
+    .filter((item) => item.isDirectory())
+    .filter((dir) => dir.name != "api");
+  if (items_list.length === 0) {
+    console.error("❌ No service found, add one first");
+    return;
+  }
+  const { choice } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "choice",
+      message: "Select a Service:",
+      choices: [
+        ...items_list.map((item) => item.name),
+        new inquirer.Separator(),
+        "⬅️ Back",
+      ],
+    },
+  ]);
+
+  if (choice === "⬅️ Back") {
+    return; // just return to mainMenu
+  }
+
+  // health check the service
+  const res: Record<string, number> = await axios.get(
+    `http://localhost:3000/api/cores`
+  );
+
+  if (!res[choice]) {
+    console.error(
+      `❌ Service ${choice} is not running, start it before stopping it.`
+    );
+    return;
+  }
+
+  console.log(`\n🛑 Stopping ${choice} monitoring services...`);
+  // Step 3: API call
+  try {
+    await axios.post("http://localhost:3000/api/stopCore", {
+      username: choice,
+    });
+  } catch (err: any) {
+    console.error("⚠️ Failed to send config:", err.message);
+  }
+
+  const res_after: Record<string, number> = await axios.get(
+    `http://localhost:3000/api/cores`
+  );
+
+  if (!res_after[choice]) {
+    console.error(`✅ Service ${choice} is stopped successfully!`);
+    return;
+  }
+}
+
+async function editService() {
+  const items = fs.readdirSync(path.join(process.cwd(), "pages"), {
+    withFileTypes: true,
+  });
+  const items_list = items
+    .filter((item) => item.isDirectory())
+    .filter((dir) => dir.name != "api");
+
+  if (items_list.length === 0) {
+    console.error("❌ No service found, add one first");
+    return;
+  }
+  const { choice } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "choice",
+      message: "Select a Service:",
+      choices: [
+        ...items_list.map((item) => item.name),
+        new inquirer.Separator(),
+        "⬅️ Back",
+      ],
+    },
+  ]);
+
+  if (choice === "⬅️ Back") {
+    return; // just return to mainMenu
+  }
+
+  const { subLink, name, tgSupportId } = await inquirer.prompt([
+    {
+      type: "input",
+      name: "subLink",
+      message: "Enter the sub link(unlimited in days and traffic):",
+      validate: (input) => input.trim() !== "" || "Config link cannot be empty",
+    },
+    {
+      type: "input",
+      name: "name",
+      message: "Enter a name for this service:",
+      validate: (input) => input.trim() !== "" || "Name cannot be empty",
+    },
+    {
+      type: "input",
+      name: "tgSupportId",
+      message: "Enter the Telegram support id (eg. @PolNetSupport):",
+      validate: (input) =>
+        input.trim() !== "" || "Telegram support id cannot be empty",
+    },
+    {
+      type: "confirm",
+      name: "pic",
+      message: (answers) =>
+        `make sure your profile pic is in: public/profilePic/${answers.name}.png then press Enter`,
+    },
+  ]);
+  let config_content = `{
+  "name": "${name}",
+  "subscription_link": "${subLink}",
+  "tg_support_link": "https://t.me/${tgSupportId.replace("@", "")}"
+}`;
+  try {
+    if (fs.existsSync(path.join(process.cwd(), `pages/${name}/config.json`))) {
+      fs.unlinkSync(path.join(process.cwd(), `pages/${name}/config.json`));
+    }
+    // deleting first
+    fs.writeFileSync(
+      path.join(process.cwd(), `pages/${name}/config.json`),
+      config_content
+    );
+
+    console.log(`✅ Generated ${name} config file`);
+    return;
+  } catch (err: any) {
+    console.error("⚠️ Failed to generate config file:", err.message);
+    return;
+  }
+}
+
+async function deleteService() {
+  const items = fs.readdirSync(path.join(process.cwd(), "pages"), {
+    withFileTypes: true,
+  });
+  const items_list = items
+    .filter((item) => item.isDirectory())
+    .filter((dir) => dir.name != "api");
+
+  if (items_list.length === 0) {
+    console.error("❌ No service found, add one first");
+    return;
+  }
+  const { choice } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "choice",
+      message: "Select a Service:",
+      choices: [
+        ...items_list.map((item) => item.name),
+        new inquirer.Separator(),
+        "⬅️ Back",
+      ],
+    },
+  ]);
+
+  if (choice === "⬅️ Back") {
+    return; // just return to mainMenu
+  }
+
+  try {
+    if (fs.existsSync(path.join(process.cwd(), `pages/${choice}`))) {
+      fs.rmdirSync(path.join(process.cwd(), `pages/${choice}`), {
+        recursive: true,
+      });
+      fs.rmdirSync(path.join(process.cwd(), `${choice}Logs`), {
+        recursive: true,
+      });
+      fs.rmdirSync(path.join(process.cwd(), `configs/${choice}`), {
+        recursive: true,
+      });
+    }
+    console.log(`✅ Deleted ${choice} service`);
+    return;
+  } catch (err: any) {
+    console.error("⚠️ Failed to delete service:", err.message);
+    return;
+  }
+}
+async function mainMenu() {
+  while (true) {
+    const { choice } = await inquirer.prompt([
+      {
+        type: "list",
+        name: "choice",
+        message: "Select an option:",
+        choices: [
+          "Start Service",
+          "Stop Service",
+          "Edit Service",
+          "Add Service",
+          "Delete Service",
+          "Exit",
+        ],
+      },
+    ]);
+
+    if (choice === "Exit") {
+      shutdown("manual");
+      break;
+    }
+
+    switch (choice) {
+      case "Start Service":
+        await startService();
+        break;
+      case "Stop Service":
+        await stopService();
+        break;
+      case "Edit Service":
+        await editService();
+        break;
+      case "Add Service":
+        await addService();
+        break;
+      case "Delete Service":
+        await deleteService();
+        break;
+    }
+  }
+}
+
 process.on("SIGINT", () => shutdown("SIGINT")); // ctrl+c
 process.on("SIGTERM", () => shutdown("SIGTERM")); // kill command
 
@@ -315,4 +682,4 @@ process.on("uncaughtException", (err) => {
   console.error("❌ Uncaught exception:", err.message);
 });
 
-main();
+mainMenu();

@@ -101,7 +101,7 @@ function main() {
                             {
                                 type: "input",
                                 name: "subLink",
-                                message: "Enter the config link:",
+                                message: "Enter the sub link(unlimited in days and traffic):",
                                 validate: function (input) {
                                     return input.trim() !== "" || "Config link cannot be empty";
                                 },
