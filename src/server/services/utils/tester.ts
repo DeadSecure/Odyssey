@@ -50,23 +50,18 @@ async function doCycle() {
 
   const results = (await Promise.all(promises)).flat();
 
-  console.log("These are the parsed results");
-  console.log("Converting to access chart ...");
+
 
   const converted = convertSitesTestResponseToConfigInput(results, sites);
 
-  console.log("Adding to DB ...");
 
   const dbPath = path.resolve(process.cwd(), "configs", username, "db.sqlite");
   const db = new Database(dbPath);
 
   addChartsWithSlotsBatch(converted, db);
 
-  console.log("Done");
-  console.log("Setting the access result in the DB ...");
 
   setGroupedCharts(db, results);
-  console.log("Done")
   parentPort?.postMessage({
     type: "tick:done",
     stats: { ports: ports.length, results: results.length, at: Date.now() },

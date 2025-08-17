@@ -76,7 +76,6 @@ function testSite(site, port) {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    console.log("Testing: ".concat(site));
                     curlArgs = [
                         "-o",
                         "/dev/null",
@@ -111,7 +110,6 @@ function testSite(site, port) {
                     return [2 /*return*/, parsedCurl];
                 case 3:
                     err_1 = _b.sent();
-                    console.warn("Failed testing ".concat(site, ":"), err_1);
                     return [2 /*return*/, {
                             namelookup: -1,
                             connect: -1,

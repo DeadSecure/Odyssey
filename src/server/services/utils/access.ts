@@ -24,7 +24,6 @@ export async function testSite(
   site: string,
   port: number
 ): Promise<SitesTestResponse> {
-  console.log(`Testing: ${site}`);
 
   const curlArgs = [
     "-o",
@@ -60,7 +59,6 @@ export async function testSite(
 
     return parsedCurl;
   } catch (err) {
-    console.warn(`Failed testing ${site}:`, err);
     return {
       namelookup: -1,
       connect: -1,

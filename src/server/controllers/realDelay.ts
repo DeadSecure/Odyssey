@@ -36,7 +36,6 @@ export async function handleRealDelay(
 
   let results = (await Promise.all(promises)).flat();
   let parsed_results: latencyBar[] = parseLatencyBars(results);
-  // console.log("these are the results", parsed_results);
 
   return {
     code: 200,

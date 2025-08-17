@@ -80,17 +80,11 @@ function doCycle() {
                     return [4 /*yield*/, Promise.all(promises)];
                 case 2:
                     results = (_a.sent()).flat();
-                    console.log("These are the parsed results");
-                    console.log("Converting to access chart ...");
                     converted = (0, barGenerator_1.convertSitesTestResponseToConfigInput)(results, sites);
-                    console.log("Adding to DB ...");
                     dbPath = path_1.default.resolve(process.cwd(), "configs", username, "db.sqlite");
                     db = new better_sqlite3_1.default(dbPath);
                     (0, dbOps_1.addChartsWithSlotsBatch)(converted, db);
-                    console.log("Done");
-                    console.log("Setting the access result in the DB ...");
                     (0, dbOps_1.setGroupedCharts)(db, results);
-                    console.log("Done");
                     worker_threads_1.parentPort === null || worker_threads_1.parentPort === void 0 ? void 0 : worker_threads_1.parentPort.postMessage({
                         type: "tick:done",
                         stats: { ports: ports.length, results: results.length, at: Date.now() },

@@ -205,6 +205,7 @@ export async function combineConfigs(
     },
   };
 
+  console.log("configs decoded and saved at: \n");
   for (const file of filenames) {
     // Read & parse each config
     const content = await fs.readFile(file, "utf-8");

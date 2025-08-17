@@ -4,7 +4,6 @@ import Database from "better-sqlite3";
 
 export async function setupDb(user_path: string) {
   const dbPath = path.join(user_path, "db.sqlite");
-  console.log(dbPath);
   if (!fs.existsSync(dbPath)) {
     fs.writeFileSync(dbPath, "");
     console.log("✅ Created data directory");

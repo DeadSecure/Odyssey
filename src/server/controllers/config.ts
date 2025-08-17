@@ -44,7 +44,7 @@ export async function handleConfigs(sub_data: ConfigReq): Response<Config[]> {
 
     const configs = extractVlessConfigs(decodedContent);
     configs.push(...extractVmessConfigs(decodedContent));
-    console.log(`✅ Decoded content:\n`, configs);
+    console.log(`✅ Decoded content from sub link:\n`, configs.map(c => `${c.name}\n`));
     let ports = await findMultipleFreePorts(configs.length);
 
     // generating the v2ray full jsons

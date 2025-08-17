@@ -40,9 +40,17 @@ type Props = {
     statusBars: statusBar;
   };
   delay: number;
+  support_link?: string;
 };
 
-export default function ClientLayout({ children, name, logo, bars, delay }: Props) {
+export default function ClientLayout({
+  children,
+  name,
+  logo,
+  bars,
+  delay,
+  support_link,
+}: Props) {
   const [isDayMode, setIsDayMode] = useState(false);
   const [activeTab, setActiveTab] = useState<"status" | "access" | "latency">(
     "access"
@@ -93,13 +101,13 @@ export default function ClientLayout({ children, name, logo, bars, delay }: Prop
       {/* Top row: Language and Day/Night */}
       <div className="flex justify-between items-center w-full max-w-7xl mx-auto">
         <LanguageToggle initialLang={isRtl ? "fa" : "en"} />
-
-        <img
-          className="w-[60px] h-[60px] lg:w-[80px] lg:h-[80px] rounded-full overflow-hidden shadow-lg"
-          src={`${logo}`}
-          alt="profile"
-        ></img>
-
+        <a href={support_link} target="_blank" rel="noopener noreferrer">
+          <img
+            className="w-[60px] h-[60px] lg:w-[80px] lg:h-[80px] rounded-full overflow-hidden shadow-lg"
+            src={`${logo}`}
+            alt="profile"
+          />
+        </a>
         <DayNightToggle
           onToggle={() => setIsDayMode(!isDayMode)}
           initialIsDay={false}
@@ -129,7 +137,7 @@ export default function ClientLayout({ children, name, logo, bars, delay }: Prop
           />
         </div>
       </div>
-            
+
       {/* Children (your page content) */}
       <div className="mt-6">
         {cloneElement(children, {

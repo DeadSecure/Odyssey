@@ -5,21 +5,24 @@
   "scripts": {
     "dev": " rm -f ./src/server/services/utils/worker.js ./src/server/services/utils/access.js ./src/server/services/utils/ports.js ./src/server/services/utils/tester.js && tsc  ./src/server/services/utils/worker.ts ./src/server/services/utils/tester.ts --downlevelIteration --esModuleInterop && next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "tsc wisard/wisard.ts --downlevelIteration --esModuleInterop --outDir wisard && sudo chmod +x wisard/wisard.js && node wisard/wisard.js",
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/figlet": "^1.7.0",
     "axios": "^1.11.0",
     "better-sqlite3": "^12.2.0",
+    "figlet": "^1.8.2",
+    "gradient-string": "^3.0.0",
     "i18next": "^25.3.2",
+    "inquirer": "^12.9.2",
     "lottie-react": "^2.4.1",
     "next": "15.4.2",
     "next-i18next": "^15.4.2",
     "next-intl": "^4.3.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-i18next": "^15.6.1",
-    "ts-node": "^10.9.2"
+    "react-i18next": "^15.6.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -28,6 +31,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "tailwindcss": "^4",
-    "typescript": "^5.8.3"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
   }
 }
