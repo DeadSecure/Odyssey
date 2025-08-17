@@ -55,8 +55,8 @@ export default function Page({
       setAccessBars(previousBars.AccessBars);
       setLatencyBars(previousBars.LatencyBars);
       setStatusBars(previousBars.StatusBars);
-      const access_and_status = await fetchAccessAndStatusBars("polnet");
-      const latency = await fetchLatencyBars("polnet");
+      const access_and_status = await fetchAccessAndStatusBars(config.name);
+      const latency = await fetchLatencyBars(config.name);
       setPreviousBars({
         AccessBars: access_and_status.access,
         LatencyBars: latency,
@@ -80,19 +80,20 @@ export default function Page({
         statusBars: statusBars,
       }}
       delay={breathDelayToPass}
+      support_link={config.tg_support_link}
     >
       <ClientBarsWrapper />
     </ClientLayout>
   );
 }
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  let access_and_status = await fetchAccessAndStatusBars("polnet");
+  let access_and_status = await fetchAccessAndStatusBars(config.name);
   const logger = new FSLogger("polnetLogs");
   logger.log({
     access: access_and_status.access,
     status: access_and_status.status,
   });
-  let latency = await fetchLatencyBars("polnet");
+  let latency = await fetchLatencyBars(config.name);
   return {
     props: {
       AccessBars: access_and_status.access,
