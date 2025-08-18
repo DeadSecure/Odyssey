@@ -679,6 +679,7 @@ function mainMenu() {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
+                    console.clear();
                     showLogo();
                     console.log("\n🚀 Welcome to the Odyssey service management CLI \n");
                     _b.label = 1;

@@ -79,6 +79,7 @@ var fs = __importStar(require("fs"));
 var PortManager = /** @class */ (function () {
     function PortManager() {
         this.processMap = new Map();
+        this.workerMap = new Map();
     }
     PortManager.getInstance = function () {
         if (!this.instance) {
@@ -86,29 +87,22 @@ var PortManager = /** @class */ (function () {
         }
         return this.instance;
     };
-    PortManager.prototype.add = function (name, pid) {
+    PortManager.prototype.add = function (name, pid, tester) {
+        if (tester === void 0) { tester = null; }
         this.processMap.set(name, pid);
+        if (tester) {
+            this.workerMap.set(name, tester);
+        }
     };
     PortManager.prototype.remove = function (name) {
         this.processMap.delete(name);
+        this.workerMap.delete(name);
     };
     PortManager.prototype.get = function (name) {
-        return this.processMap.get(name);
+        return [this.processMap.get(name) || 0, this.workerMap.get(name) || null];
     };
     PortManager.prototype.list = function () {
         return Object.fromEntries(this.processMap);
-    };
-    PortManager.prototype.isAlive = function (name) {
-        var pid = this.get(name);
-        if (!pid)
-            return false;
-        try {
-            process.kill(pid, 0);
-            return true;
-        }
-        catch (_a) {
-            return false;
-        }
     };
     return PortManager;
 }());

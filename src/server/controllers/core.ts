@@ -3,6 +3,7 @@ import { Categories, CoreStartResponse, Response } from "../models/interfaces";
 import { runXrayInThread } from "../services/utils/core";
 import { PortManger } from "../services/utils/ports";
 import { startTester } from "../services/utils/testerHandler";
+import { Worker } from "worker_threads";
 export async function handleCore(username: string): Response<string> {
   if (!username) throw new Error("❌ No username provided.");
   if (!path.join(process.cwd(), "configs", username, "combined.json"))
@@ -37,7 +38,7 @@ export async function stopCore(username: string): Promise<Response<string>> {
   if (!core_pid) throw new Error("❌ No PID provided.");
   let tester_pid = PortManger.get(`${username}_tester`);
   if (!tester_pid) throw new Error("❌ No tester PID found.");
-
+  console.log(tester_pid);
   try {
     if (core_pid[0] != 0) {
       process.kill(core_pid[0]);
