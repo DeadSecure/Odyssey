@@ -35,7 +35,7 @@ export function startTester(opts: {
   worker.on("exit", (code) => {
     if (code !== 0) console.error(`worker exited with code ${code}`);
   });
-
+  
   return {
     worker,
     stop: () => worker.postMessage({ type: "stop" }),

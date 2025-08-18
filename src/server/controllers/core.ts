@@ -18,7 +18,11 @@ export async function handleCore(username: string): Response<string> {
   });
 
   PortManger.add(`${username}_core`, core_pid);
-  PortManger.add(`${username}_tester`, tester_pid.worker.threadId);
+  PortManger.add(
+    `${username}_tester`,
+    tester_pid.worker.threadId,
+    tester_pid.worker
+  );
 
   return {
     code: 200,
@@ -35,8 +39,13 @@ export async function stopCore(username: string): Promise<Response<string>> {
   if (!tester_pid) throw new Error("❌ No tester PID found.");
 
   try {
-    process.kill(core_pid);
-    process.kill(tester_pid);
+    if (core_pid[0] != 0) {
+      process.kill(core_pid[0]);
+    }
+
+    if (tester_pid[1] && tester_pid[1] instanceof Worker) {
+      tester_pid[1].postMessage({ type: "stop" });
+    }
     PortManger.remove(`${username}_core`);
     PortManger.remove(`${username}_tester`);
     return {

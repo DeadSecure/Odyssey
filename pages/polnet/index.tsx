@@ -88,7 +88,7 @@ export default function Page({
 }
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   let access_and_status = await fetchAccessAndStatusBars(config.name);
-  const logger = new FSLogger("polnetLogs");
+  const logger = new FSLogger(`${config.name}Logs`);
   logger.log({
     access: access_and_status.access,
     status: access_and_status.status,

@@ -2,13 +2,15 @@ import * as net from "net";
 import * as path from "path";
 import * as fs from "fs";
 import { Config } from "../../models/interfaces";
-
+import { Worker } from "worker_threads";
 // lib/PortManager.ts
 type ProcessMap = Map<string, number>;
+type WorkerMap = Map<string, Worker>;
 
 class PortManager {
   private static instance: PortManager;
   private processMap: ProcessMap = new Map();
+  private workerMap: WorkerMap = new Map();
 
   private constructor() {}
 
@@ -19,31 +21,24 @@ class PortManager {
     return this.instance;
   }
 
-  add(name: string, pid: number) {
+  add(name: string, pid: number, tester: Worker | null = null) {
     this.processMap.set(name, pid);
+    if (tester) {
+      this.workerMap.set(name, tester);
+    }
   }
 
   remove(name: string) {
     this.processMap.delete(name);
+    this.workerMap.delete(name);
   }
 
-  get(name: string): number | undefined {
-    return this.processMap.get(name);
+  get(name: string): [number, Worker | null] | undefined {
+    return [this.processMap.get(name) || 0, this.workerMap.get(name) || null];
   }
 
   list(): Record<string, number> {
     return Object.fromEntries(this.processMap);
-  }
-
-  isAlive(name: string): boolean {
-    const pid = this.get(name);
-    if (!pid) return false;
-    try {
-      process.kill(pid, 0);
-      return true;
-    } catch {
-      return false;
-    }
   }
 }
 
