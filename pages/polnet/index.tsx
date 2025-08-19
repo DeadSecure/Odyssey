@@ -19,6 +19,8 @@ type Props = {
 };
 import raw_config from "./config.json";
 import { ProviderConfig } from "@/server/models/client/provider";
+import axios from "axios";
+import CoreDownOverlay from "@/components/ui/coreNotRunnings";
 const config: ProviderConfig = raw_config;
 
 export default function Page({
@@ -30,6 +32,7 @@ export default function Page({
   const [accessBars, setAccessBars] = useState<AccessBar[]>(AccessBars);
   const [latencyBars, setLatencyBars] = useState<latencyBar[]>(LatencyBars);
   const [statusBars, setStatusBars] = useState<statusBar>(StatusBars);
+  const [coreStatus, setCoreStatus] = useState<boolean>(true);
   const [breathDelayToPass, setBreathDelayToPass] =
     useState<number>(breathDelay);
   const [previousBars, setPreviousBars] = useState<{
@@ -50,8 +53,21 @@ export default function Page({
         tab_knob.classList.remove("dark");
       }
     }
+
     if (!timeToRender) return;
     const fetchData = async () => {
+      const res: Record<string, number> = (
+        await axios.get(`http://localhost:3000/api/cores`)
+      ).data;
+
+      if (!res[`${config.name}_core`]) {
+        console.error(
+          `❌ Service ${config.name} is not running, start it before stopping it.`
+        );
+        setCoreStatus(false);
+        return;
+      }
+
       setAccessBars(previousBars.AccessBars);
       setLatencyBars(previousBars.LatencyBars);
       setStatusBars(previousBars.StatusBars);
@@ -82,7 +98,11 @@ export default function Page({
       delay={breathDelayToPass}
       support_link={config.tg_support_link}
     >
-      <ClientBarsWrapper />
+      {coreStatus ? (
+        <ClientBarsWrapper />
+      ) : (
+        <CoreDownOverlay link={config.tg_support_link} />
+      )}
     </ClientLayout>
   );
 }
