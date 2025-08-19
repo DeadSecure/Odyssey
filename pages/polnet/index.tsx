@@ -66,6 +66,8 @@ export default function Page({
         );
         setCoreStatus(false);
         return;
+      } else {
+        setCoreStatus(true);
       }
 
       setAccessBars(previousBars.AccessBars);

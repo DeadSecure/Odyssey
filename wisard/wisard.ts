@@ -156,6 +156,8 @@ type Props = {
 };
 import raw_config from "./config.json";
 import { ProviderConfig } from "@/server/models/client/provider";
+import axios from "axios";
+import CoreDownOverlay from "@/components/ui/coreNotRunnings";
 const config: ProviderConfig = raw_config;
 
 export default function Page({
@@ -167,6 +169,8 @@ export default function Page({
   const [accessBars, setAccessBars] = useState<AccessBar[]>(AccessBars);
   const [latencyBars, setLatencyBars] = useState<latencyBar[]>(LatencyBars);
   const [statusBars, setStatusBars] = useState<statusBar>(StatusBars);
+  const [coreStatus, setCoreStatus] = useState<boolean>(true);
+  
   const [breathDelayToPass, setBreathDelayToPass] =
     useState<number>(breathDelay);
   const [previousBars, setPreviousBars] = useState<{
@@ -189,6 +193,20 @@ export default function Page({
     }
     if (!timeToRender) return;
     const fetchData = async () => {
+    const res: Record<string, number> = (
+        await axios.get("http://localhost:3000/api/cores")
+      ).data;
+
+      if (!res[\`\${config.name}_core\`]) {
+        console.error(
+          \`❌ Service \${config.name} is not running, start it before stopping it.\`
+        );
+        setCoreStatus(false);
+        return;
+  } else {
+        setCoreStatus(true);
+  }
+
       setAccessBars(previousBars.AccessBars);
       setLatencyBars(previousBars.LatencyBars);
       setStatusBars(previousBars.StatusBars);
@@ -219,7 +237,11 @@ export default function Page({
       delay={breathDelayToPass}
       support_link={config.tg_support_link}
     >
-      <ClientBarsWrapper />
+      {coreStatus ? (
+              <ClientBarsWrapper />
+            ) : (
+              <CoreDownOverlay link={config.tg_support_link} />
+            )}
     </ClientLayout>
   );
 }
@@ -269,36 +291,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     } catch (err: any) {
       console.error("⚠️ Failed to generate file:", err.message);
     }
-
-    // Step 6: Background request
-    // setTimeout(async () => {
-    //   try {
-    //     console.log(`\n starting ${name} monitoring services...`);
-    //     const res = await axios.post(
-    //       "http://localhost:3000/api/runCore",
-    //       new URLSearchParams({
-    //         username: params.name,
-    //       }),
-    //       {
-    //         headers: {
-    //           "Content-Type": "application/x-www-form-urlencoded",
-    //         },
-    //       }
-    //     );
-    //     console.log("✅ Service responded:", res.data);
-    //   } catch (err: any) {
-    //     console.error("⚠️ Could not reach service yet:", err.message);
-    //   } finally {
-    //     console.log(
-    //       `⏳ Waiting ${BreathDelay} seconds for server to stabilize...`
-    //     );
-    //     await new Promise((r) => setTimeout(r, BreathDelay * 1000));
-
-    //     console.log(
-    //       `\n🎉 ${name} monitoring services started successfully! See it at: http://localhost:3000/${name}\n`
-    //     );
-    //   }
-    // }, 5000);
 
     devProcess.on("spawn", () => {
       console.log(
