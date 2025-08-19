@@ -90,7 +90,7 @@ async function addService() {
 
     // Step 2: Start server
     console.log("\n▶️ Starting Odyssey server...");
-    devProcess = spawn("npm", ["run", "dev"], {
+    devProcess = spawn("npm", ["run", "dev", "-turbopack"], {
       stdio: "ignore",
       detached: true,
     });
@@ -345,7 +345,7 @@ async function startService() {
     });
 
     console.log("\n▶️ Starting Odyssey server...");
-    devProcess = spawn("npm", ["run", "dev"], {
+    devProcess = spawn("npm", ["run", "dev", "-turbopack"], {
       stdio: "ignore",
       detached: true,
     });
