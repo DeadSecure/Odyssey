@@ -33,6 +33,7 @@ export default function Page({
   const [latencyBars, setLatencyBars] = useState<latencyBar[]>(LatencyBars);
   const [statusBars, setStatusBars] = useState<statusBar>(StatusBars);
   const [coreStatus, setCoreStatus] = useState<boolean>(true);
+  
   const [breathDelayToPass, setBreathDelayToPass] =
     useState<number>(breathDelay);
   const [previousBars, setPreviousBars] = useState<{
@@ -53,11 +54,10 @@ export default function Page({
         tab_knob.classList.remove("dark");
       }
     }
-
     if (!timeToRender) return;
     const fetchData = async () => {
-      const res: Record<string, number> = (
-        await axios.get(`http://localhost:3000/api/cores`)
+    const res: Record<string, number> = (
+        await axios.get("http://localhost:3000/api/cores")
       ).data;
 
       if (!res[`${config.name}_core`]) {
@@ -66,9 +66,9 @@ export default function Page({
         );
         setCoreStatus(false);
         return;
-      } else {
+  } else {
         setCoreStatus(true);
-      }
+  }
 
       setAccessBars(previousBars.AccessBars);
       setLatencyBars(previousBars.LatencyBars);
@@ -101,10 +101,10 @@ export default function Page({
       support_link={config.tg_support_link}
     >
       {coreStatus ? (
-        <ClientBarsWrapper />
-      ) : (
-        <CoreDownOverlay link={config.tg_support_link} />
-      )}
+              <ClientBarsWrapper />
+            ) : (
+              <CoreDownOverlay link={config.tg_support_link} />
+            )}
     </ClientLayout>
   );
 }

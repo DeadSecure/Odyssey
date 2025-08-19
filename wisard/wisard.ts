@@ -90,7 +90,10 @@ async function addService() {
 
     // Step 2: Start server
     console.log("\n▶️ Starting Odyssey server...");
-    devProcess = spawn("npm", ["run", "dev"], { stdio: "ignore" });
+    devProcess = spawn("npm", ["run", "dev"], {
+      stdio: "ignore",
+      detached: true,
+    });
 
     devProcess.on("error", (err) => {
       console.error("❌ Failed to start Base odyssey server:", err.message);
@@ -342,7 +345,10 @@ async function startService() {
     });
 
     console.log("\n▶️ Starting Odyssey server...");
-    devProcess = spawn("npm", ["run", "dev"], { stdio: "ignore" });
+    devProcess = spawn("npm", ["run", "dev"], {
+      stdio: "ignore",
+      detached: true,
+    });
 
     devProcess.on("error", (err) => {
       console.error("❌ Failed to start Base odyssey server:", err.message);
@@ -516,85 +522,86 @@ async function stopService() {
     return;
   }
 }
+// to be removed
+// async function editService() {
+//   const items = fs.readdirSync(path.join(process.cwd(), "pages"), {
+//     withFileTypes: true,
+//   });
+//   const items_list = items
+//     .filter((item) => item.isDirectory())
+//     .filter((dir) => dir.name != "api");
 
-async function editService() {
-  const items = fs.readdirSync(path.join(process.cwd(), "pages"), {
-    withFileTypes: true,
-  });
-  const items_list = items
-    .filter((item) => item.isDirectory())
-    .filter((dir) => dir.name != "api");
+//   if (items_list.length === 0) {
+//     console.error("❌ No service found, add one first");
+//     return;
+//   }
+//   const { choice } = await inquirer.prompt([
+//     {
+//       type: "list",
+//       name: "choice",
+//       message: "Select a Service:",
+//       choices: [
+//         ...items_list.map((item) => item.name),
+//         new inquirer.Separator(),
+//         "⬅️ Back",
+//       ],
+//     },
+//   ]);
 
-  if (items_list.length === 0) {
-    console.error("❌ No service found, add one first");
-    return;
-  }
-  const { choice } = await inquirer.prompt([
-    {
-      type: "list",
-      name: "choice",
-      message: "Select a Service:",
-      choices: [
-        ...items_list.map((item) => item.name),
-        new inquirer.Separator(),
-        "⬅️ Back",
-      ],
-    },
-  ]);
+//   if (choice === "⬅️ Back") {
+//     return; // just return to mainMenu
+//   }
 
-  if (choice === "⬅️ Back") {
-    return; // just return to mainMenu
-  }
+//   const { subLink, name, tgSupportId } = await inquirer.prompt([
+//     {
+//       type: "input",
+//       name: "subLink",
+//       message: "Enter the sub link(unlimited in days and traffic):",
+//       validate: (input) => input.trim() !== "" || "Config link cannot be empty",
+//     },
+//     {
+//       type: "input",
+//       name: "name",
+//       message: "Enter a name for this service:",
+//       validate: (input) => input.trim() !== "" || "Name cannot be empty",
+//     },
+//     {
+//       type: "input",
+//       name: "tgSupportId",
+//       message: "Enter the Telegram support id (eg. @PolNetSupport):",
+//       validate: (input) =>
+//         input.trim() !== "" || "Telegram support id cannot be empty",
+//     },
+//     {
+//       type: "confirm",
+//       name: "pic",
+//       message: (answers) =>
+//         `make sure your profile pic is in: public/profilePic/${answers.name}.png then press Enter`,
+//     },
+//   ]);
 
-  const { subLink, name, tgSupportId } = await inquirer.prompt([
-    {
-      type: "input",
-      name: "subLink",
-      message: "Enter the sub link(unlimited in days and traffic):",
-      validate: (input) => input.trim() !== "" || "Config link cannot be empty",
-    },
-    {
-      type: "input",
-      name: "name",
-      message: "Enter a name for this service:",
-      validate: (input) => input.trim() !== "" || "Name cannot be empty",
-    },
-    {
-      type: "input",
-      name: "tgSupportId",
-      message: "Enter the Telegram support id (eg. @PolNetSupport):",
-      validate: (input) =>
-        input.trim() !== "" || "Telegram support id cannot be empty",
-    },
-    {
-      type: "confirm",
-      name: "pic",
-      message: (answers) =>
-        `make sure your profile pic is in: public/profilePic/${answers.name}.png then press Enter`,
-    },
-  ]);
-  let config_content = `{
-  "name": "${name}",
-  "subscription_link": "${subLink}",
-  "tg_support_link": "https://t.me/${tgSupportId.replace("@", "")}"
-}`;
-  try {
-    if (fs.existsSync(path.join(process.cwd(), `pages/${name}/config.json`))) {
-      fs.unlinkSync(path.join(process.cwd(), `pages/${name}/config.json`));
-    }
-    // deleting first
-    fs.writeFileSync(
-      path.join(process.cwd(), `pages/${name}/config.json`),
-      config_content
-    );
+//   let config_content = `{
+//   "name": "${name}",
+//   "subscription_link": "${subLink}",
+//   "tg_support_link": "https://t.me/${tgSupportId.replace("@", "")}"
+// }`;
+//   try {
+//     if (fs.existsSync(path.join(process.cwd(), `pages/${choice}/config.json`))) {
+//       fs.unlinkSync(path.join(process.cwd(), `pages/${choice}/config.json`));
+//     }
+//     // deleting first
+//     fs.writeFileSync(
+//       path.join(process.cwd(), `pages/${name}/config.json`),
+//       config_content
+//     );
 
-    console.log(`✅ Generated ${name} config file`);
-    return;
-  } catch (err: any) {
-    console.error("⚠️ Failed to generate config file:", err.message);
-    return;
-  }
-}
+//     console.log(`✅ Generated ${name} config file`);
+//     return;
+//   } catch (err: any) {
+//     console.error("⚠️ Failed to generate config file:", err.message);
+//     return;
+//   }
+// }
 
 async function deleteService() {
   const items = fs.readdirSync(path.join(process.cwd(), "pages"), {
@@ -671,7 +678,7 @@ async function runningServices() {
 async function mainMenu() {
   console.clear();
   showLogo();
-  console.log("\n🚀 Welcome to the Odyssey service management CLI \n");
+  console.log("\n🚀 Welcome to the Odyssey monitoring service admin wizard \n");
   while (true) {
     const { choice } = await inquirer.prompt([
       {
@@ -682,7 +689,7 @@ async function mainMenu() {
         choices: [
           "Start Service",
           "Stop Service",
-          "Edit Service",
+          // "Edit Service", // to be removed
           "Add Service",
           "Delete Service",
           "Running Services",
@@ -703,9 +710,9 @@ async function mainMenu() {
       case "Stop Service":
         await stopService();
         break;
-      case "Edit Service":
-        await editService();
-        break;
+      // case "Edit Service":
+      //   await editService();
+      //   break; // to be removed
       case "Add Service":
         await addService();
         break;
@@ -722,26 +729,33 @@ async function mainMenu() {
 // global safety nets
 process.on("unhandledRejection", (reason) => {
   console.error("❌ Unhandled promise rejection:", reason);
-});
-process.on("uncaughtException", (err) => {
-  console.error("❌ Uncaught exception:", err.message);
+  shutdown("unhandledRejection");
 });
 
+process.on("uncaughtException", (err) => {
+  console.error("❌ Uncaught exception:", err.message);
+  shutdown("uncaughtException");
+});
+
+process.on("SIGINT", () => shutdown("SIGINT")); // ctrl+c
+process.on("SIGTERM", () => shutdown("SIGTERM")); // kill command
 function shutdown(signal: string) {
   console.log(`\n🛑 Caught ${signal}, shutting down gracefully...`);
 
-  if (devProcess) {
+  if (devProcess && devProcess.pid) {
     console.log("⏹ Stopping Base odyssey server...");
-    devProcess.kill("SIGTERM"); // send TERM to child
+    try {
+      // Kill the entire process group (requires the minus sign!)
+      process.kill(-devProcess.pid, "SIGTERM");
+    } catch (err) {
+      console.warn("⚠️ Failed to kill process group:", (err as Error).message);
+    }
   }
 
-  // Give child a moment to exit, then exit self
   setTimeout(() => {
     console.log("👋 Goodbye!");
-    process.exit(0);
-  }, 500);
+    process.exit(signal === "manual" ? 0 : 1);
+  }, 1000);
 }
-process.on("SIGINT", () => shutdown("SIGINT")); // ctrl+c
-process.on("SIGTERM", () => shutdown("SIGTERM")); // kill command
 
 mainMenu();

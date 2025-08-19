@@ -184,7 +184,10 @@ function addService() {
                     _d.sent();
                     // Step 2: Start server
                     console.log("\n▶️ Starting Odyssey server...");
-                    devProcess = (0, child_process_1.spawn)("npm", ["run", "dev"], { stdio: "ignore" });
+                    devProcess = (0, child_process_1.spawn)("npm", ["run", "dev"], {
+                        stdio: "ignore",
+                        detached: true,
+                    });
                     devProcess.on("error", function (err) {
                         console.error("❌ Failed to start Base odyssey server:", err.message);
                         process.exit(1);
@@ -232,7 +235,7 @@ function addService() {
                     catch (err) {
                         console.error("⚠️ Could not calculate BreathDelay:", err.message);
                     }
-                    page_content = "import { GetStaticProps } from \"next\";\nimport { serverSideTranslations } from \"next-i18next/serverSideTranslations\";\nimport ClientBarsWrapper from \"@/components/ui/clientWrapper\";\nimport ClientLayout from \"@/components/layout/clientLayout\";\nimport { useEffect, useState } from \"react\";\nimport { latencyBar, AccessBar, statusBar } from \"@/server/models/client/bars\";\nimport { Categories, SitesTestResponse } from \"@/server/models/interfaces\";\nimport { parseAccessBars } from \"@/server/services/utils/parser\";\nimport { FSLogger } from \"@/server/services/utils/logger\";\nimport {\n  fetchAccessAndStatusBars,\n  fetchLatencyBars,\n} from \"@/server/services/utils/bridge\";\ntype Props = {\n  AccessBars: AccessBar[];\n  LatencyBars: latencyBar[];\n  StatusBars: statusBar;\n  breathDelay: number;\n};\nimport raw_config from \"./config.json\";\nimport { ProviderConfig } from \"@/server/models/client/provider\";\nconst config: ProviderConfig = raw_config;\n\nexport default function Page({\n  AccessBars,\n  StatusBars,\n  LatencyBars,\n  breathDelay,\n}: Props) {\n  const [accessBars, setAccessBars] = useState<AccessBar[]>(AccessBars);\n  const [latencyBars, setLatencyBars] = useState<latencyBar[]>(LatencyBars);\n  const [statusBars, setStatusBars] = useState<statusBar>(StatusBars);\n  const [breathDelayToPass, setBreathDelayToPass] =\n    useState<number>(breathDelay);\n  const [previousBars, setPreviousBars] = useState<{\n    AccessBars: AccessBar[];\n    LatencyBars: latencyBar[];\n    StatusBars: statusBar;\n  }>({ AccessBars, LatencyBars, StatusBars });\n  const [timeToRender, setTimeToRender] = useState<boolean>(true);\n  useEffect(() => {\n    const tab_knob = document.querySelector(\".tab-knob\");\n    const mode = document.querySelector(\".toggle-knob\")?.classList;\n    if (tab_knob && mode) {\n      if (mode.contains(\"dark\")) {\n        tab_knob.classList.add(\"dark\");\n        tab_knob.classList.remove(\"light\");\n      } else if (mode.contains(\"light\")) {\n        tab_knob.classList.add(\"light\");\n        tab_knob.classList.remove(\"dark\");\n      }\n    }\n    if (!timeToRender) return;\n    const fetchData = async () => {\n      setAccessBars(previousBars.AccessBars);\n      setLatencyBars(previousBars.LatencyBars);\n      setStatusBars(previousBars.StatusBars);\n      const access_and_status = await fetchAccessAndStatusBars(config.name);\n      const latency = await fetchLatencyBars(config.name);\n      setPreviousBars({\n        AccessBars: access_and_status.access,\n        LatencyBars: latency,\n        StatusBars: access_and_status.status,\n      });\n      setTimeToRender(false);\n      setBreathDelayToPass((prev) =>\n        prev === breathDelay ? prev - 1 : breathDelay\n      );\n      setTimeout(() => setTimeToRender(true), breathDelay * 1000);\n    };\n    fetchData();\n  }, [timeToRender, breathDelay]);\n  return (\n    <ClientLayout\n      name={config.name}\n      logo={`/profilePic/${config.name}.png`}\n      bars={{\n        AccessBars: accessBars,\n        latencyBars: latencyBars,\n        statusBars: statusBars,\n      }}\n      delay={breathDelayToPass}\n      support_link={config.tg_support_link}\n    >\n      <ClientBarsWrapper />\n    </ClientLayout>\n  );\n}\nexport const getStaticProps: GetStaticProps = async ({ locale }) => {\n  let access_and_status = await fetchAccessAndStatusBars(config.name);\n  const logger = new FSLogger(`${config.name}Logs`);\n  logger.log({\n    access: access_and_status.access,\n    status: access_and_status.status,\n  });\n  let latency = await fetchLatencyBars(config.name);\n  return {\n    props: {\n      AccessBars: access_and_status.access,\n      StatusBars: access_and_status.status,\n      LatencyBars: latency,\n      breathDelay: 40,\n      ...(await serverSideTranslations(locale ?? \"en\", [\"common\"])),\n    },\n    revalidate: 60,\n  };\n};";
+                    page_content = "import { GetStaticProps } from \"next\";\nimport { serverSideTranslations } from \"next-i18next/serverSideTranslations\";\nimport ClientBarsWrapper from \"@/components/ui/clientWrapper\";\nimport ClientLayout from \"@/components/layout/clientLayout\";\nimport { useEffect, useState } from \"react\";\nimport { latencyBar, AccessBar, statusBar } from \"@/server/models/client/bars\";\nimport { Categories, SitesTestResponse } from \"@/server/models/interfaces\";\nimport { parseAccessBars } from \"@/server/services/utils/parser\";\nimport { FSLogger } from \"@/server/services/utils/logger\";\nimport {\n  fetchAccessAndStatusBars,\n  fetchLatencyBars,\n} from \"@/server/services/utils/bridge\";\ntype Props = {\n  AccessBars: AccessBar[];\n  LatencyBars: latencyBar[];\n  StatusBars: statusBar;\n  breathDelay: number;\n};\nimport raw_config from \"./config.json\";\nimport { ProviderConfig } from \"@/server/models/client/provider\";\nimport axios from \"axios\";\nimport CoreDownOverlay from \"@/components/ui/coreNotRunnings\";\nconst config: ProviderConfig = raw_config;\n\nexport default function Page({\n  AccessBars,\n  StatusBars,\n  LatencyBars,\n  breathDelay,\n}: Props) {\n  const [accessBars, setAccessBars] = useState<AccessBar[]>(AccessBars);\n  const [latencyBars, setLatencyBars] = useState<latencyBar[]>(LatencyBars);\n  const [statusBars, setStatusBars] = useState<statusBar>(StatusBars);\n  const [coreStatus, setCoreStatus] = useState<boolean>(true);\n  \n  const [breathDelayToPass, setBreathDelayToPass] =\n    useState<number>(breathDelay);\n  const [previousBars, setPreviousBars] = useState<{\n    AccessBars: AccessBar[];\n    LatencyBars: latencyBar[];\n    StatusBars: statusBar;\n  }>({ AccessBars, LatencyBars, StatusBars });\n  const [timeToRender, setTimeToRender] = useState<boolean>(true);\n  useEffect(() => {\n    const tab_knob = document.querySelector(\".tab-knob\");\n    const mode = document.querySelector(\".toggle-knob\")?.classList;\n    if (tab_knob && mode) {\n      if (mode.contains(\"dark\")) {\n        tab_knob.classList.add(\"dark\");\n        tab_knob.classList.remove(\"light\");\n      } else if (mode.contains(\"light\")) {\n        tab_knob.classList.add(\"light\");\n        tab_knob.classList.remove(\"dark\");\n      }\n    }\n    if (!timeToRender) return;\n    const fetchData = async () => {\n    const res: Record<string, number> = (\n        await axios.get(\"http://localhost:3000/api/cores\")\n      ).data;\n\n      if (!res[`${config.name}_core`]) {\n        console.error(\n          `\u274C Service ${config.name} is not running, start it before stopping it.`\n        );\n        setCoreStatus(false);\n        return;\n  } else {\n        setCoreStatus(true);\n  }\n\n      setAccessBars(previousBars.AccessBars);\n      setLatencyBars(previousBars.LatencyBars);\n      setStatusBars(previousBars.StatusBars);\n      const access_and_status = await fetchAccessAndStatusBars(config.name);\n      const latency = await fetchLatencyBars(config.name);\n      setPreviousBars({\n        AccessBars: access_and_status.access,\n        LatencyBars: latency,\n        StatusBars: access_and_status.status,\n      });\n      setTimeToRender(false);\n      setBreathDelayToPass((prev) =>\n        prev === breathDelay ? prev - 1 : breathDelay\n      );\n      setTimeout(() => setTimeToRender(true), breathDelay * 1000);\n    };\n    fetchData();\n  }, [timeToRender, breathDelay]);\n  return (\n    <ClientLayout\n      name={config.name}\n      logo={`/profilePic/${config.name}.png`}\n      bars={{\n        AccessBars: accessBars,\n        latencyBars: latencyBars,\n        statusBars: statusBars,\n      }}\n      delay={breathDelayToPass}\n      support_link={config.tg_support_link}\n    >\n      {coreStatus ? (\n              <ClientBarsWrapper />\n            ) : (\n              <CoreDownOverlay link={config.tg_support_link} />\n            )}\n    </ClientLayout>\n  );\n}\nexport const getStaticProps: GetStaticProps = async ({ locale }) => {\n  let access_and_status = await fetchAccessAndStatusBars(config.name);\n  const logger = new FSLogger(`${config.name}Logs`);\n  logger.log({\n    access: access_and_status.access,\n    status: access_and_status.status,\n  });\n  let latency = await fetchLatencyBars(config.name);\n  return {\n    props: {\n      AccessBars: access_and_status.access,\n      StatusBars: access_and_status.status,\n      LatencyBars: latency,\n      breathDelay: 40,\n      ...(await serverSideTranslations(locale ?? \"en\", [\"common\"])),\n    },\n    revalidate: 60,\n  };\n};";
                     config_content = "{\n  \"name\": \"".concat(params_1.name, "\",\n  \"subscription_link\": \"").concat(params_1.subLink, "\",\n  \"tg_support_link\": \"https://t.me/").concat(params_1.tgSupportId.replace("@", ""), "\"\n}");
                     try {
                         if (!fs_1.default.existsSync(path_1.default.join(process.cwd(), "pages/".concat(params_1.name)))) {
@@ -250,34 +253,6 @@ function addService() {
                     catch (err) {
                         console.error("⚠️ Failed to generate file:", err.message);
                     }
-                    // Step 6: Background request
-                    // setTimeout(async () => {
-                    //   try {
-                    //     console.log(`\n starting ${name} monitoring services...`);
-                    //     const res = await axios.post(
-                    //       "http://localhost:3000/api/runCore",
-                    //       new URLSearchParams({
-                    //         username: params.name,
-                    //       }),
-                    //       {
-                    //         headers: {
-                    //           "Content-Type": "application/x-www-form-urlencoded",
-                    //         },
-                    //       }
-                    //     );
-                    //     console.log("✅ Service responded:", res.data);
-                    //   } catch (err: any) {
-                    //     console.error("⚠️ Could not reach service yet:", err.message);
-                    //   } finally {
-                    //     console.log(
-                    //       `⏳ Waiting ${BreathDelay} seconds for server to stabilize...`
-                    //     );
-                    //     await new Promise((r) => setTimeout(r, BreathDelay * 1000));
-                    //     console.log(
-                    //       `\n🎉 ${name} monitoring services started successfully! See it at: http://localhost:3000/${name}\n`
-                    //     );
-                    //   }
-                    // }, 5000);
                     devProcess.on("spawn", function () {
                         console.log("\n \uD83E\uDDDC\u200D\u2642\uFE0F Base odyssey server started successfully! See it at: http://localhost:3000/\n");
                     });
@@ -333,7 +308,10 @@ function startService() {
                 case 2:
                     _a.sent();
                     console.log("\n▶️ Starting Odyssey server...");
-                    devProcess = (0, child_process_1.spawn)("npm", ["run", "dev"], { stdio: "ignore" });
+                    devProcess = (0, child_process_1.spawn)("npm", ["run", "dev"], {
+                        stdio: "ignore",
+                        detached: true,
+                    });
                     devProcess.on("error", function (err) {
                         console.error("❌ Failed to start Base odyssey server:", err.message);
                         return;
@@ -510,88 +488,81 @@ function stopService() {
         });
     });
 }
-function editService() {
-    return __awaiter(this, void 0, void 0, function () {
-        var items, items_list, choice, _a, subLink, name, tgSupportId, config_content;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    items = fs_1.default.readdirSync(path_1.default.join(process.cwd(), "pages"), {
-                        withFileTypes: true,
-                    });
-                    items_list = items
-                        .filter(function (item) { return item.isDirectory(); })
-                        .filter(function (dir) { return dir.name != "api"; });
-                    if (items_list.length === 0) {
-                        console.error("❌ No service found, add one first");
-                        return [2 /*return*/];
-                    }
-                    return [4 /*yield*/, inquirer_1.default.prompt([
-                            {
-                                type: "list",
-                                name: "choice",
-                                message: "Select a Service:",
-                                choices: __spreadArray(__spreadArray([], __read(items_list.map(function (item) { return item.name; })), false), [
-                                    new inquirer_1.default.Separator(),
-                                    "⬅️ Back",
-                                ], false),
-                            },
-                        ])];
-                case 1:
-                    choice = (_b.sent()).choice;
-                    if (choice === "⬅️ Back") {
-                        return [2 /*return*/]; // just return to mainMenu
-                    }
-                    return [4 /*yield*/, inquirer_1.default.prompt([
-                            {
-                                type: "input",
-                                name: "subLink",
-                                message: "Enter the sub link(unlimited in days and traffic):",
-                                validate: function (input) { return input.trim() !== "" || "Config link cannot be empty"; },
-                            },
-                            {
-                                type: "input",
-                                name: "name",
-                                message: "Enter a name for this service:",
-                                validate: function (input) { return input.trim() !== "" || "Name cannot be empty"; },
-                            },
-                            {
-                                type: "input",
-                                name: "tgSupportId",
-                                message: "Enter the Telegram support id (eg. @PolNetSupport):",
-                                validate: function (input) {
-                                    return input.trim() !== "" || "Telegram support id cannot be empty";
-                                },
-                            },
-                            {
-                                type: "confirm",
-                                name: "pic",
-                                message: function (answers) {
-                                    return "make sure your profile pic is in: public/profilePic/".concat(answers.name, ".png then press Enter");
-                                },
-                            },
-                        ])];
-                case 2:
-                    _a = _b.sent(), subLink = _a.subLink, name = _a.name, tgSupportId = _a.tgSupportId;
-                    config_content = "{\n  \"name\": \"".concat(name, "\",\n  \"subscription_link\": \"").concat(subLink, "\",\n  \"tg_support_link\": \"https://t.me/").concat(tgSupportId.replace("@", ""), "\"\n}");
-                    try {
-                        if (fs_1.default.existsSync(path_1.default.join(process.cwd(), "pages/".concat(name, "/config.json")))) {
-                            fs_1.default.unlinkSync(path_1.default.join(process.cwd(), "pages/".concat(name, "/config.json")));
-                        }
-                        // deleting first
-                        fs_1.default.writeFileSync(path_1.default.join(process.cwd(), "pages/".concat(name, "/config.json")), config_content);
-                        console.log("\u2705 Generated ".concat(name, " config file"));
-                        return [2 /*return*/];
-                    }
-                    catch (err) {
-                        console.error("⚠️ Failed to generate config file:", err.message);
-                        return [2 /*return*/];
-                    }
-                    return [2 /*return*/];
-            }
-        });
-    });
-}
+// to be removed
+// async function editService() {
+//   const items = fs.readdirSync(path.join(process.cwd(), "pages"), {
+//     withFileTypes: true,
+//   });
+//   const items_list = items
+//     .filter((item) => item.isDirectory())
+//     .filter((dir) => dir.name != "api");
+//   if (items_list.length === 0) {
+//     console.error("❌ No service found, add one first");
+//     return;
+//   }
+//   const { choice } = await inquirer.prompt([
+//     {
+//       type: "list",
+//       name: "choice",
+//       message: "Select a Service:",
+//       choices: [
+//         ...items_list.map((item) => item.name),
+//         new inquirer.Separator(),
+//         "⬅️ Back",
+//       ],
+//     },
+//   ]);
+//   if (choice === "⬅️ Back") {
+//     return; // just return to mainMenu
+//   }
+//   const { subLink, name, tgSupportId } = await inquirer.prompt([
+//     {
+//       type: "input",
+//       name: "subLink",
+//       message: "Enter the sub link(unlimited in days and traffic):",
+//       validate: (input) => input.trim() !== "" || "Config link cannot be empty",
+//     },
+//     {
+//       type: "input",
+//       name: "name",
+//       message: "Enter a name for this service:",
+//       validate: (input) => input.trim() !== "" || "Name cannot be empty",
+//     },
+//     {
+//       type: "input",
+//       name: "tgSupportId",
+//       message: "Enter the Telegram support id (eg. @PolNetSupport):",
+//       validate: (input) =>
+//         input.trim() !== "" || "Telegram support id cannot be empty",
+//     },
+//     {
+//       type: "confirm",
+//       name: "pic",
+//       message: (answers) =>
+//         `make sure your profile pic is in: public/profilePic/${answers.name}.png then press Enter`,
+//     },
+//   ]);
+//   let config_content = `{
+//   "name": "${name}",
+//   "subscription_link": "${subLink}",
+//   "tg_support_link": "https://t.me/${tgSupportId.replace("@", "")}"
+// }`;
+//   try {
+//     if (fs.existsSync(path.join(process.cwd(), `pages/${choice}/config.json`))) {
+//       fs.unlinkSync(path.join(process.cwd(), `pages/${choice}/config.json`));
+//     }
+//     // deleting first
+//     fs.writeFileSync(
+//       path.join(process.cwd(), `pages/${name}/config.json`),
+//       config_content
+//     );
+//     console.log(`✅ Generated ${name} config file`);
+//     return;
+//   } catch (err: any) {
+//     console.error("⚠️ Failed to generate config file:", err.message);
+//     return;
+//   }
+// }
 function deleteService() {
     return __awaiter(this, void 0, void 0, function () {
         var items, items_list, choice;
@@ -684,7 +655,7 @@ function mainMenu() {
                     console.log("\n🚀 Welcome to the Odyssey service management CLI \n");
                     _b.label = 1;
                 case 1:
-                    if (!true) return [3 /*break*/, 16];
+                    if (!true) return [3 /*break*/, 14];
                     return [4 /*yield*/, inquirer_1.default.prompt([
                             {
                                 type: "list",
@@ -693,7 +664,7 @@ function mainMenu() {
                                 choices: [
                                     "Start Service",
                                     "Stop Service",
-                                    "Edit Service",
+                                    // "Edit Service", // to be removed
                                     "Add Service",
                                     "Delete Service",
                                     "Running Services",
@@ -705,44 +676,39 @@ function mainMenu() {
                     choice = (_b.sent()).choice;
                     if (choice === "Exit") {
                         shutdown("manual");
-                        return [3 /*break*/, 16];
+                        return [3 /*break*/, 14];
                     }
                     _a = choice;
                     switch (_a) {
                         case "Start Service": return [3 /*break*/, 3];
                         case "Stop Service": return [3 /*break*/, 5];
-                        case "Edit Service": return [3 /*break*/, 7];
-                        case "Add Service": return [3 /*break*/, 9];
-                        case "Delete Service": return [3 /*break*/, 11];
-                        case "Running Services": return [3 /*break*/, 13];
+                        case "Add Service": return [3 /*break*/, 7];
+                        case "Delete Service": return [3 /*break*/, 9];
+                        case "Running Services": return [3 /*break*/, 11];
                     }
-                    return [3 /*break*/, 15];
+                    return [3 /*break*/, 13];
                 case 3: return [4 /*yield*/, startService()];
                 case 4:
                     _b.sent();
-                    return [3 /*break*/, 15];
+                    return [3 /*break*/, 13];
                 case 5: return [4 /*yield*/, stopService()];
                 case 6:
                     _b.sent();
-                    return [3 /*break*/, 15];
-                case 7: return [4 /*yield*/, editService()];
+                    return [3 /*break*/, 13];
+                case 7: return [4 /*yield*/, addService()];
                 case 8:
                     _b.sent();
-                    return [3 /*break*/, 15];
-                case 9: return [4 /*yield*/, addService()];
+                    return [3 /*break*/, 13];
+                case 9: return [4 /*yield*/, deleteService()];
                 case 10:
                     _b.sent();
-                    return [3 /*break*/, 15];
-                case 11: return [4 /*yield*/, deleteService()];
+                    return [3 /*break*/, 13];
+                case 11: return [4 /*yield*/, runningServices()];
                 case 12:
                     _b.sent();
-                    return [3 /*break*/, 15];
-                case 13: return [4 /*yield*/, runningServices()];
-                case 14:
-                    _b.sent();
-                    return [3 /*break*/, 15];
-                case 15: return [3 /*break*/, 1];
-                case 16: return [2 /*return*/];
+                    return [3 /*break*/, 13];
+                case 13: return [3 /*break*/, 1];
+                case 14: return [2 /*return*/];
             }
         });
     });
@@ -750,22 +716,29 @@ function mainMenu() {
 // global safety nets
 process.on("unhandledRejection", function (reason) {
     console.error("❌ Unhandled promise rejection:", reason);
+    shutdown("unhandledRejection");
 });
 process.on("uncaughtException", function (err) {
     console.error("❌ Uncaught exception:", err.message);
+    shutdown("uncaughtException");
 });
-function shutdown(signal) {
-    console.log("\n\uD83D\uDED1 Caught ".concat(signal, ", shutting down gracefully..."));
-    if (devProcess) {
-        console.log("⏹ Stopping Base odyssey server...");
-        devProcess.kill("SIGTERM"); // send TERM to child
-    }
-    // Give child a moment to exit, then exit self
-    setTimeout(function () {
-        console.log("👋 Goodbye!");
-        process.exit(0);
-    }, 500);
-}
 process.on("SIGINT", function () { return shutdown("SIGINT"); }); // ctrl+c
 process.on("SIGTERM", function () { return shutdown("SIGTERM"); }); // kill command
+function shutdown(signal) {
+    console.log("\n\uD83D\uDED1 Caught ".concat(signal, ", shutting down gracefully..."));
+    if (devProcess && devProcess.pid) {
+        console.log("⏹ Stopping Base odyssey server...");
+        try {
+            // Kill the entire process group (requires the minus sign!)
+            process.kill(-devProcess.pid, "SIGTERM");
+        }
+        catch (err) {
+            console.warn("⚠️ Failed to kill process group:", err.message);
+        }
+    }
+    setTimeout(function () {
+        console.log("👋 Goodbye!");
+        process.exit(signal === "manual" ? 0 : 1);
+    }, 1000);
+}
 mainMenu();
