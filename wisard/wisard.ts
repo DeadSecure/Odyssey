@@ -197,7 +197,7 @@ export default function Page({
     if (!timeToRender) return;
     const fetchData = async () => {
     const res: Record<string, number> = (
-        await axios.get("http://localhost:3000/api/cores")
+        await axios.get("/api/cores")
       ).data;
 
       if (!res[\`\${config.name}_core\`]) {
