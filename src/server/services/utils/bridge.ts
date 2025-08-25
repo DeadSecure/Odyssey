@@ -1,5 +1,4 @@
-import { SitesTestResponse } from "@/server/models/interfaces";
-import { parseAccessBars } from "./parser";
+
 import { AccessBar, latencyBar, statusBar } from "@/server/models/client/bars";
 
 export async function fetchAccessAndStatusBars(
@@ -11,7 +10,7 @@ export async function fetchAccessAndStatusBars(
   });
 
   const res = await fetch(
-    `http://localhost:3000/api/access?${params.toString()}`,
+    `${process.env.NEXT_PUBLIC_DOMAIN}/api/access?${params.toString()}`,
     {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -32,7 +31,7 @@ export async function fetchLatencyBars(
   });
 
   const res = await fetch(
-    `http://localhost:3000/api/realDelay?${params.toString()}`,
+    `${process.env.NEXT_PUBLIC_DOMAIN}/api/realDelay?${params.toString()}`,
     {
       method: "GET",
       headers: { "Content-Type": "application/json" },

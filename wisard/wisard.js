@@ -184,7 +184,7 @@ function addService() {
                     _d.sent();
                     // Step 2: Start server
                     console.log("\n▶️ Starting Odyssey server...");
-                    devProcess = (0, child_process_1.spawn)("npm", ["run", "dev"], {
+                    devProcess = (0, child_process_1.spawn)("npm", ["run", "dev", "-turbopack"], {
                         stdio: "ignore",
                         detached: true,
                     });
@@ -308,7 +308,7 @@ function startService() {
                 case 2:
                     _a.sent();
                     console.log("\n▶️ Starting Odyssey server...");
-                    devProcess = (0, child_process_1.spawn)("npm", ["run", "dev"], {
+                    devProcess = (0, child_process_1.spawn)("npm", ["run", "dev", "-turbopack"], {
                         stdio: "ignore",
                         detached: true,
                     });
@@ -652,7 +652,7 @@ function mainMenu() {
                 case 0:
                     console.clear();
                     showLogo();
-                    console.log("\n🚀 Welcome to the Odyssey service management CLI \n");
+                    console.log("\n🚀 Welcome to the Odyssey monitoring service admin wizard \n");
                     _b.label = 1;
                 case 1:
                     if (!true) return [3 /*break*/, 14];
