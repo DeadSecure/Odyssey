@@ -1,0 +1,3 @@
+[submodule "src/server/services/core/xrayCore"]
+	path = src/server/services/core/xrayCore
+	url = https://github.com/XTLS/Xray-core.git
