@@ -414,7 +414,7 @@ async function startService() {
     return await new Promise((resolve) => {
       setTimeout(async () => {
         try {
-          console.log(`\n starting ${choice} monitoring services...`);
+          console.log(`\n🍪 starting ${choice} monitoring services...`);
           const res = await axios.post(
             "http://localhost:3000/api/runCore",
             new URLSearchParams({
