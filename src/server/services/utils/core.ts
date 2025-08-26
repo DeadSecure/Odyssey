@@ -9,7 +9,7 @@ export function runXrayInThread(configPath: string): number {
   const fullPath = path.resolve(configPath);
 
   const child = spawn(
-    "./src/server/services/core/Xray-core/xray",
+    "./src/server/services/core/xrayCore/xray",
     ["run", "-config", fullPath],
     {
       stdio: "inherit", // Inherit stdout/stderr so you can see output
