@@ -16,15 +16,20 @@ function showLogo() {
   console.log(gradient.pastel.multiline(text));
 }
 
-async function waitForServer(url: string, retries = 20, delay = 3000) {
+async function waitForServer(
+  url: string,
+  retries = 20,
+  delay = 3000
+): Promise<boolean> {
   for (let i = 0; i < retries; i++) {
     try {
       let response = await axios.get(url, { timeout: 3000 }); // HEAD request with timeout
       console.log("✅ Server is up!");
-      return;
+      return true;
     } catch {
       console.log(`⏳ Waiting for server... (${i + 1}/${retries})`);
       await new Promise((res) => setTimeout(res, delay));
+      return false;
     }
   }
   throw new Error("Server did not start in time");
@@ -92,27 +97,31 @@ async function addService() {
       },
     ]);
 
-    // Step 2: Start server
-    console.log("\n▶️ Starting Odyssey server...");
-    devProcess = spawn("npm", ["run", "dev", "-turbopack"], {
-      stdio: "ignore",
-      detached: true,
-    });
+    let res = await waitForServer("http://localhost:3000/api/health");
 
-    devProcess.on("error", (err) => {
-      console.error("❌ Failed to start Base odyssey server:", err.message);
-      shutdown("manual");
-    });
-    devProcess.on("exit", (code) => {
-      if (code !== 0) {
-        console.error(`❌ Base odyssey server exited with code ${code}`);
-      }
-    });
+    if (!res) {
+      // Step 2: Start server
+      console.log("\n▶️ Starting Odyssey server...");
+      devProcess = spawn("npm", ["run", "dev", "-turbopack"], {
+        stdio: "ignore",
+        detached: true,
+      });
 
-    await waitForServer("http://localhost:3000/api/health").catch((err) => {
-      console.error("❌ Server did not respond in time:", err.message);
-      shutdown("manual");
-    });
+      devProcess.on("error", (err) => {
+        console.error("❌ Failed to start Base odyssey server:", err.message);
+        shutdown("manual");
+      });
+      devProcess.on("exit", (code) => {
+        if (code !== 0) {
+          console.error(`❌ Base odyssey server exited with code ${code}`);
+        }
+      });
+
+      await waitForServer("http://localhost:3000/api/health").catch((err) => {
+        console.error("❌ Server did not respond in time:", err.message);
+        shutdown("manual");
+      });
+    }
 
     // Step 3: API call
     try {
@@ -299,7 +308,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       console.error("⚠️ Failed to generate file:", err.message);
     }
 
-    devProcess.on("spawn", () => {
+    devProcess?.on("spawn", () => {
       console.log(
         `\n 🧜‍♂️ Base odyssey server started successfully! See it at: http://localhost:3000/\n`
       );
@@ -344,33 +353,33 @@ async function startService() {
       return; // just return to mainMenu
     }
 
-    await waitForServer("http://localhost:3000/api/health", 3).catch((err) => {
-      console.error("❌ Looks like the Base odyssey server is offline");
-    });
+    let server_res = await waitForServer("http://localhost:3000/api/health");
 
-    console.log("\n▶️ Starting Odyssey server...");
-    devProcess = spawn("npm", ["run", "dev", "-turbopack"], {
-      stdio: "ignore",
-      detached: true,
-    });
+    if (!server_res) {
+      console.log("\n▶️ Starting Odyssey server...");
+      devProcess = spawn("npm", ["run", "dev", "-turbopack"], {
+        stdio: "ignore",
+        detached: true,
+      });
 
-    devProcess.on("error", (err) => {
-      console.error("❌ Failed to start Base odyssey server:", err.message);
-      return;
-    });
-    devProcess.on("exit", (code) => {
-      if (code !== 0) {
-        console.error(`❌ Base odyssey server exited with code ${code}`);
-      }
-    });
+      devProcess.on("error", (err) => {
+        console.error("❌ Failed to start Base odyssey server:", err.message);
+        return;
+      });
+      devProcess.on("exit", (code) => {
+        if (code !== 0) {
+          console.error(`❌ Base odyssey server exited with code ${code}`);
+        }
+      });
 
-    await waitForServer("http://localhost:3000/api/health").catch((err) => {
-      console.error(
-        "❌ Base odyssey Server did not respond in time:",
-        err.message
-      );
-      return;
-    });
+      await waitForServer("http://localhost:3000/api/health").catch((err) => {
+        console.error(
+          "❌ Base odyssey Server did not respond in time:",
+          err.message
+        );
+        return;
+      });
+    }
 
     console.log("🗿 Odyssey Base server running");
     // health check the service
