@@ -50,7 +50,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ```bash
 
-sudo bash -c "$(curl -sL https://raw.githubusercontent.com/javadyakuza/odyssey/feat/automation/install.sh)"
+sudo bash -c "$(curl -sL https://raw.githubusercontent.com/javadyakuza/odyssey/main/install.sh)"
 
 ```
 
@@ -58,7 +58,7 @@ sudo bash -c "$(curl -sL https://raw.githubusercontent.com/javadyakuza/odyssey/f
 
 ```bash
 
-sudo bash -c "$(curl -sL https://raw.githubusercontent.com/javadyakuza/odyssey/feat/automation/uninstall.sh)"
+sudo bash -c "$(curl -sL https://raw.githubusercontent.com/javadyakuza/odyssey/main/uninstall.sh)"
 
 ```
 
