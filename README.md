@@ -1,16 +1,35 @@
 # Odyssey
 
-![Odyssey Logo](public/odyssey.png)
+<p align="center">
+  <img src="public/odyssey.png" alt="Odyssey Logo" width="300"/>
+</p>
 
-[![Build](https://img.shields.io/github/actions/workflow/status/Javadyakuza/Odyssey/ci.yml?branch=main&style=plastic)](https://github.com/Javadyakuza/Odyssey/actions)
-[![License](https://img.shields.io/github/license/Javadyakuza/Odyssey?style=plastic)](https://github.com/Javadyakuza/Odyssey/blob/main/LICENSE)
-[![Version](https://img.shields.io/github/package-json/v/Javadyakuza/Odyssey?style=plastic)](https://github.com/Javadyakuza/Odyssey/blob/main/package.json)
-[![NPM Downloads](https://img.shields.io/npm/dt/odyssey?style=plastic)](https://www.npmjs.com/package/odyssey)
-[![Issues](https://img.shields.io/github/issues/Javadyakuza/Odyssey?style=plastic)](https://github.com/Javadyakuza/Odyssey/issues)
-[![Pull Requests](https://img.shields.io/github/issues-pr/Javadyakuza/Odyssey?style=plastic)](https://github.com/Javadyakuza/Odyssey/pulls)
-[![Stars](https://img.shields.io/github/stars/Javadyakuza/Odyssey?style=plastic)](https://github.com/Javadyakuza/Odyssey/stargazers)
-[![Forks](https://img.shields.io/github/forks/Javadyakuza/Odyssey?style=plastic)](https://github.com/Javadyakuza/Odyssey/network/members)
-[![Last Commit](https://img.shields.io/github/last-commit/Javadyakuza/Odyssey?style=plastic)](https://github.com/Javadyakuza/Odyssey/commits/main)
+<p align="center">
+  <a href="https://github.com/Javadyakuza/Odyssey/actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/Javadyakuza/Odyssey/ci.yml?branch=main&style=plastic" alt="Build"/>
+  </a>
+  <a href="https://github.com/Javadyakuza/Odyssey/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/Javadyakuza/Odyssey?style=plastic" alt="License"/>
+  </a>
+  <a href="https://github.com/Javadyakuza/Odyssey/blob/main/package.json">
+    <img src="https://img.shields.io/github/package-json/v/Javadyakuza/Odyssey?style=plastic" alt="Version"/>
+  </a>
+  <a href="https://github.com/Javadyakuza/Odyssey/issues">
+    <img src="https://img.shields.io/github/issues/Javadyakuza/Odyssey?style=plastic" alt="Issues"/>
+  </a>
+  <a href="https://github.com/Javadyakuza/Odyssey/pulls">
+    <img src="https://img.shields.io/github/issues-pr/Javadyakuza/Odyssey?style=plastic" alt="Pull Requests"/>
+  </a>
+  <a href="https://github.com/Javadyakuza/Odyssey/stargazers">
+    <img src="https://img.shields.io/github/stars/Javadyakuza/Odyssey?style=plastic" alt="Stars"/>
+  </a>
+  <a href="https://github.com/Javadyakuza/Odyssey/network/members">
+    <img src="https://img.shields.io/github/forks/Javadyakuza/Odyssey?style=plastic" alt="Forks"/>
+  </a>
+  <a href="https://github.com/Javadyakuza/Odyssey/commits/main">
+    <img src="https://img.shields.io/github/last-commit/Javadyakuza/Odyssey?style=plastic" alt="Last Commit"/>
+  </a>
+</p>
 
 A unified monitoring service built on X-ray Core to fully monitor X-ray based services. Odyssey provides a user-friendly web interface to visualize and manage your X-ray instances.
 
