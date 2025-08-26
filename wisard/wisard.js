@@ -72,6 +72,8 @@ var child_process_1 = require("child_process");
 var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 var axios_1 = __importDefault(require("axios"));
+var child_process_2 = require("child_process");
+var util_1 = require("util");
 function showLogo() {
     var text = figlet_1.default.textSync("ODYSSEY", { font: "Big" });
     console.log(gradient_string_1.default.pastel.multiline(text));
@@ -644,18 +646,69 @@ function runningServices() {
         });
     });
 }
+function CheckAndBuildXrayCore() {
+    return __awaiter(this, void 0, void 0, function () {
+        var execAsync, goProjectDir, outputBinary, buildCmd, _a, stdout, stderr, error_1;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    execAsync = (0, util_1.promisify)(child_process_2.exec);
+                    goProjectDir = path_1.default.resolve(process.cwd(), "src/server/services/core/xrayCore");
+                    outputBinary = path_1.default.resolve(goProjectDir, "xray");
+                    if (!!fs_1.default.existsSync(outputBinary)) return [3 /*break*/, 7];
+                    console.error("❌ Xray Core is not built yet.");
+                    console.log("Building Xray Core...");
+                    buildCmd = "CGO_ENABLED=0 go build -o \"".concat(outputBinary, "\" -trimpath -buildvcs=false -ldflags=\"-s -w -buildid=\" -v ./main");
+                    _b.label = 1;
+                case 1:
+                    _b.trys.push([1, 4, , 6]);
+                    return [4 /*yield*/, execAsync(buildCmd, {
+                            cwd: goProjectDir,
+                        })];
+                case 2:
+                    _a = _b.sent(), stdout = _a.stdout, stderr = _a.stderr;
+                    if (stdout)
+                        console.log(stdout);
+                    if (stderr)
+                        console.error(stderr);
+                    console.log("✅ Xray binary built successfully at:", outputBinary);
+                    return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 1000); })];
+                case 3:
+                    _b.sent();
+                    return [3 /*break*/, 6];
+                case 4:
+                    error_1 = _b.sent();
+                    console.error("❌ Build failed:", error_1);
+                    return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 1000); })];
+                case 5:
+                    _b.sent();
+                    return [2 /*return*/];
+                case 6: return [3 /*break*/, 9];
+                case 7:
+                    console.log("✅ Xray binary exists at:", outputBinary);
+                    return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 1000); })];
+                case 8:
+                    _b.sent();
+                    _b.label = 9;
+                case 9: return [2 /*return*/];
+            }
+        });
+    });
+}
 function mainMenu() {
     return __awaiter(this, void 0, void 0, function () {
         var choice, _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0:
+                case 0: return [4 /*yield*/, CheckAndBuildXrayCore()];
+                case 1:
+                    _b.sent();
                     console.clear();
                     showLogo();
                     console.log("\n🚀 Welcome to the Odyssey monitoring service admin wizard \n");
-                    _b.label = 1;
-                case 1:
-                    if (!true) return [3 /*break*/, 14];
+                    _b.label = 2;
+                case 2:
+                    if (!true) return [3 /*break*/, 15];
                     return [4 /*yield*/, inquirer_1.default.prompt([
                             {
                                 type: "list",
@@ -672,43 +725,43 @@ function mainMenu() {
                                 ],
                             },
                         ])];
-                case 2:
+                case 3:
                     choice = (_b.sent()).choice;
                     if (choice === "Exit") {
                         shutdown("manual");
-                        return [3 /*break*/, 14];
+                        return [3 /*break*/, 15];
                     }
                     _a = choice;
                     switch (_a) {
-                        case "Start Service": return [3 /*break*/, 3];
-                        case "Stop Service": return [3 /*break*/, 5];
-                        case "Add Service": return [3 /*break*/, 7];
-                        case "Delete Service": return [3 /*break*/, 9];
-                        case "Running Services": return [3 /*break*/, 11];
+                        case "Start Service": return [3 /*break*/, 4];
+                        case "Stop Service": return [3 /*break*/, 6];
+                        case "Add Service": return [3 /*break*/, 8];
+                        case "Delete Service": return [3 /*break*/, 10];
+                        case "Running Services": return [3 /*break*/, 12];
                     }
-                    return [3 /*break*/, 13];
-                case 3: return [4 /*yield*/, startService()];
-                case 4:
+                    return [3 /*break*/, 14];
+                case 4: return [4 /*yield*/, startService()];
+                case 5:
                     _b.sent();
-                    return [3 /*break*/, 13];
-                case 5: return [4 /*yield*/, stopService()];
-                case 6:
+                    return [3 /*break*/, 14];
+                case 6: return [4 /*yield*/, stopService()];
+                case 7:
                     _b.sent();
-                    return [3 /*break*/, 13];
-                case 7: return [4 /*yield*/, addService()];
-                case 8:
+                    return [3 /*break*/, 14];
+                case 8: return [4 /*yield*/, addService()];
+                case 9:
                     _b.sent();
-                    return [3 /*break*/, 13];
-                case 9: return [4 /*yield*/, deleteService()];
-                case 10:
+                    return [3 /*break*/, 14];
+                case 10: return [4 /*yield*/, deleteService()];
+                case 11:
                     _b.sent();
-                    return [3 /*break*/, 13];
-                case 11: return [4 /*yield*/, runningServices()];
-                case 12:
+                    return [3 /*break*/, 14];
+                case 12: return [4 /*yield*/, runningServices()];
+                case 13:
                     _b.sent();
-                    return [3 /*break*/, 13];
-                case 13: return [3 /*break*/, 1];
-                case 14: return [2 /*return*/];
+                    return [3 /*break*/, 14];
+                case 14: return [3 /*break*/, 2];
+                case 15: return [2 /*return*/];
             }
         });
     });

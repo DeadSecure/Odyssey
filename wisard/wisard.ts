@@ -7,7 +7,9 @@ import { spawn } from "child_process";
 import fs from "fs";
 import path from "path";
 import axios from "axios";
+import { exec } from "child_process";
 
+import { promisify } from "util";
 function showLogo() {
   const text = figlet.textSync("ODYSSEY", { font: "Big" });
   console.log(gradient.pastel.multiline(text));
@@ -675,7 +677,44 @@ async function runningServices() {
   }
 }
 
+async function CheckAndBuildXrayCore() {
+  const execAsync = promisify(exec);
+
+  const goProjectDir = path.resolve(
+    process.cwd(),
+    "src/server/services/core/xrayCore"
+  );
+  const outputBinary = path.resolve(goProjectDir, "xray");
+
+  if (!fs.existsSync(outputBinary)) {
+    console.error("❌ Xray Core is not built yet.");
+    console.log("Building Xray Core...");
+
+    const buildCmd = `CGO_ENABLED=0 go build -o "${outputBinary}" -trimpath -buildvcs=false -ldflags="-s -w -buildid=" -v ./main`;
+
+    try {
+      const { stdout, stderr } = await execAsync(buildCmd, {
+        cwd: goProjectDir,
+      });
+      if (stdout) console.log(stdout);
+      if (stderr) console.error(stderr);
+      console.log("✅ Xray binary built successfully at:", outputBinary);
+      await new Promise((r) => setTimeout(r, 1000));
+    } catch (error) {
+      console.error("❌ Build failed:", error);
+      await new Promise((r) => setTimeout(r, 1000));
+
+      return;
+    }
+  } else {
+    console.log("✅ Xray binary exists at:", outputBinary);
+    await new Promise((r) => setTimeout(r, 1000));
+  }
+}
+
 async function mainMenu() {
+  await CheckAndBuildXrayCore();
+
   console.clear();
   showLogo();
   console.log("\n🚀 Welcome to the Odyssey monitoring service admin wizard \n");
