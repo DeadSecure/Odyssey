@@ -2,9 +2,15 @@
 
 ![Odyssey Logo](public/odyssey.png)
 
-[![Build Status](https://img.shields.io/travis/com/Javadyakuza/Odyssey.svg?style=for-the-badge)](https://travis-ci.com/Javadyakuza/Odyssey)
-[![License](https://img.shields.io/github/license/Javadyakuza/Odyssey?style=for-the-badge)](LICENSE)
-[![Version](https://img.shields.io/github/package-json/v/Javadyakuza/Odyssey?style=for-the-badge)](package.json)
+[![Build](https://img.shields.io/github/actions/workflow/status/Javadyakuza/Odyssey/ci.yml?branch=main&style=for-the-badge)](https://github.com/Javadyakuza/Odyssey/actions)
+[![License](https://img.shields.io/github/license/Javadyakuza/Odyssey?style=for-the-badge)](https://github.com/Javadyakuza/Odyssey/blob/main/LICENSE)
+[![Version](https://img.shields.io/github/package-json/v/Javadyakuza/Odyssey?style=for-the-badge)](https://github.com/Javadyakuza/Odyssey/blob/main/package.json)
+[![NPM Downloads](https://img.shields.io/npm/dt/odyssey?style=for-the-badge)](https://www.npmjs.com/package/odyssey)
+[![Issues](https://img.shields.io/github/issues/Javadyakuza/Odyssey?style=for-the-badge)](https://github.com/Javadyakuza/Odyssey/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/Javadyakuza/Odyssey?style=for-the-badge)](https://github.com/Javadyakuza/Odyssey/pulls)
+[![Stars](https://img.shields.io/github/stars/Javadyakuza/Odyssey?style=for-the-badge)](https://github.com/Javadyakuza/Odyssey/stargazers)
+[![Forks](https://img.shields.io/github/forks/Javadyakuza/Odyssey?style=for-the-badge)](https://github.com/Javadyakuza/Odyssey/network/members)
+[![Last Commit](https://img.shields.io/github/last-commit/Javadyakuza/Odyssey?style=for-the-badge)](https://github.com/Javadyakuza/Odyssey/commits/main)
 
 A unified monitoring service built on X-ray Core to fully monitor X-ray based services. Odyssey provides a user-friendly web interface to visualize and manage your X-ray instances.
 
@@ -56,9 +62,7 @@ sudo bash -c "$(curl -sL https://raw.githubusercontent.com/javadyakuza/odyssey/f
 
 ```
 
-## Usage
-
-### Development
+## Development
 
 First, clone the project with its submodules:
 
@@ -76,7 +80,7 @@ npm install
 To run the application in wizard mode, use the following command:
 
 ```bash
-npm run wizard
+npm run start
 ```
 
 To run the application in development mode, use the following command:
@@ -108,7 +112,7 @@ If you encounter any issues or have suggestions for improvements, please open an
 
 ## License
 
-This project is under the [MIT License](./LICENSE).
+This project is under the [MIT License](./LICENSE.md).
 
 ## Donate
 
