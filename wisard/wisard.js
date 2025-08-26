@@ -98,14 +98,14 @@ function waitForServer(url_1) {
                 case 3:
                     response = _b.sent();
                     console.log("✅ Server is up!");
-                    return [2 /*return*/];
+                    return [2 /*return*/, true];
                 case 4:
                     _a = _b.sent();
                     console.log("\u23F3 Waiting for server... (".concat(i + 1, "/").concat(retries, ")"));
                     return [4 /*yield*/, new Promise(function (res) { return setTimeout(res, delay); })];
                 case 5:
                     _b.sent();
-                    return [3 /*break*/, 6];
+                    return [2 /*return*/, false];
                 case 6:
                     i++;
                     return [3 /*break*/, 1];
@@ -117,11 +117,11 @@ function waitForServer(url_1) {
 var devProcess = null;
 function addService() {
     return __awaiter(this, void 0, void 0, function () {
-        var params_1, _a, _b, _c, err_1, BreathDelay, dirPath_1, files, count, page_content, config_content, generatedFile, configFile, err_2;
+        var params_1, _a, _b, _c, res, err_1, BreathDelay, dirPath_1, files, count, page_content, config_content, generatedFile, configFile, err_2;
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
-                    _d.trys.push([0, 10, , 11]);
+                    _d.trys.push([0, 11, , 12]);
                     params_1 = {
                         subLink: "",
                         name: "",
@@ -186,6 +186,10 @@ function addService() {
                         ])];
                 case 4:
                     _d.sent();
+                    return [4 /*yield*/, waitForServer("http://localhost:3000/api/health")];
+                case 5:
+                    res = _d.sent();
+                    if (!!res) return [3 /*break*/, 7];
                     // Step 2: Start server
                     console.log("\n▶️ Starting Odyssey server...");
                     devProcess = (0, child_process_1.spawn)("npm", ["run", "dev", "-turbopack"], {
@@ -205,23 +209,23 @@ function addService() {
                             console.error("❌ Server did not respond in time:", err.message);
                             shutdown("manual");
                         })];
-                case 5:
-                    _d.sent();
-                    _d.label = 6;
                 case 6:
-                    _d.trys.push([6, 8, , 9]);
+                    _d.sent();
+                    _d.label = 7;
+                case 7:
+                    _d.trys.push([7, 9, , 10]);
                     return [4 /*yield*/, axios_1.default.post("http://localhost:3000/api/config", {
                             url: params_1.subLink,
                             name: params_1.name,
                         })];
-                case 7:
-                    _d.sent();
-                    return [3 /*break*/, 9];
                 case 8:
+                    _d.sent();
+                    return [3 /*break*/, 10];
+                case 9:
                     err_1 = _d.sent();
                     console.error("⚠️ Failed to send config:", err_1.message);
-                    return [3 /*break*/, 9];
-                case 9:
+                    return [3 /*break*/, 10];
+                case 10:
                     BreathDelay = 60;
                     dirPath_1 = "./configs/".concat(params_1.name, "/json");
                     try {
@@ -257,29 +261,29 @@ function addService() {
                     catch (err) {
                         console.error("⚠️ Failed to generate file:", err.message);
                     }
-                    devProcess.on("spawn", function () {
+                    devProcess === null || devProcess === void 0 ? void 0 : devProcess.on("spawn", function () {
                         console.log("\n \uD83E\uDDDC\u200D\u2642\uFE0F Base odyssey server started successfully! See it at: http://localhost:3000/\n");
                     });
                     console.log("\n ".concat(params_1.name, " monitoring services added successfully!, run it from the main menu\n"));
                     return [2 /*return*/];
-                case 10:
+                case 11:
                     err_2 = _d.sent();
                     console.error("❌ Fatal error:", err_2.message);
                     shutdown("manual");
-                    return [3 /*break*/, 11];
-                case 11: return [2 /*return*/];
+                    return [3 /*break*/, 12];
+                case 12: return [2 /*return*/];
             }
         });
     });
 }
 function startService() {
     return __awaiter(this, void 0, void 0, function () {
-        var items, items_list, choice_1, res, BreathDelay_1, dirPath_2, files, count, err_3;
+        var items, items_list, choice_1, server_res, res, BreathDelay_1, dirPath_2, files, count, err_3;
         var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 6, , 7]);
+                    _a.trys.push([0, 7, , 8]);
                     items = fs_1.default.readdirSync(path_1.default.join(process.cwd(), "pages"), {
                         withFileTypes: true,
                     });
@@ -306,11 +310,10 @@ function startService() {
                     if (choice_1 === "⬅️ Back") {
                         return [2 /*return*/]; // just return to mainMenu
                     }
-                    return [4 /*yield*/, waitForServer("http://localhost:3000/api/health", 3).catch(function (err) {
-                            console.error("❌ Looks like the Base odyssey server is offline");
-                        })];
+                    return [4 /*yield*/, waitForServer("http://localhost:3000/api/health")];
                 case 2:
-                    _a.sent();
+                    server_res = _a.sent();
+                    if (!!server_res) return [3 /*break*/, 4];
                     console.log("\n▶️ Starting Odyssey server...");
                     devProcess = (0, child_process_1.spawn)("npm", ["run", "dev", "-turbopack"], {
                         stdio: "ignore",
@@ -331,9 +334,11 @@ function startService() {
                         })];
                 case 3:
                     _a.sent();
+                    _a.label = 4;
+                case 4:
                     console.log("🗿 Odyssey Base server running");
                     return [4 /*yield*/, axios_1.default.get("http://localhost:3000/api/cores")];
-                case 4:
+                case 5:
                     res = (_a.sent()).data;
                     if (res["".concat(choice_1, "_core")]) {
                         console.error("\u274C Service ".concat(choice_1, " is already running on port ").concat(res[choice_1], ". stop it first before starting it again."));
@@ -402,14 +407,14 @@ function startService() {
                                 });
                             }); }, 5000);
                         })];
-                case 5: 
+                case 6: 
                 // Step 6: Background request
                 return [2 /*return*/, _a.sent()];
-                case 6:
+                case 7:
                     err_3 = _a.sent();
                     console.error("❌ Fatal error:", err_3.message);
                     return [2 /*return*/];
-                case 7: return [2 /*return*/];
+                case 8: return [2 /*return*/];
             }
         });
     });
