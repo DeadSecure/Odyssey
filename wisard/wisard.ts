@@ -8,8 +8,9 @@ import fs from "fs";
 import path from "path";
 import axios from "axios";
 import { exec } from "child_process";
-
+import kill from "tree-kill";
 import { promisify } from "util";
+
 function showLogo() {
   const text = figlet.textSync("ODYSSEY", { font: "Big" });
   console.log(gradient.pastel.multiline(text));
@@ -18,7 +19,8 @@ function showLogo() {
 async function waitForServer(url: string, retries = 20, delay = 3000) {
   for (let i = 0; i < retries; i++) {
     try {
-      await axios.get(url);
+      let response = await axios.get(url, { timeout: 3000 }); // HEAD request with timeout
+      console.log("✅ Server is up!");
       return;
     } catch {
       console.log(`⏳ Waiting for server... (${i + 1}/${retries})`);
@@ -99,7 +101,7 @@ async function addService() {
 
     devProcess.on("error", (err) => {
       console.error("❌ Failed to start Base odyssey server:", err.message);
-      process.exit(1);
+      shutdown("manual");
     });
     devProcess.on("exit", (code) => {
       if (code !== 0) {
@@ -109,7 +111,7 @@ async function addService() {
 
     await waitForServer("http://localhost:3000/api/health").catch((err) => {
       console.error("❌ Server did not respond in time:", err.message);
-      process.exit(1);
+      shutdown("manual");
     });
 
     // Step 3: API call
@@ -309,7 +311,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return;
   } catch (err: any) {
     console.error("❌ Fatal error:", err.message);
-    process.exit(1);
+    shutdown("manual");
   }
 }
 
@@ -712,9 +714,47 @@ async function CheckAndBuildXrayCore() {
   }
 }
 
+async function genEnv() {
+  console.log("\n▶️ Generating fresh env file...");
+  let domain = (await inquirer.prompt([
+    {
+      type: "input",
+      name: "domain",
+      message:
+        "Enter the Domain for the app with http(eg. http://localhost:3000, https://myapp.com):",
+      default: "http://localhost:3000",
+    },
+  ])) as { domain: string };
+
+  let content = `NEXT_PUBLIC_DOMAIN="${domain.domain}"`;
+
+  try {
+    if (fs.existsSync(path.join(process.cwd(), ".env.local"))) {
+      fs.unlinkSync(path.join(process.cwd(), ".env.local"));
+      fs.writeFileSync(path.join(process.cwd(), ".env.local"), content);
+      console.log(`✅ Updated .env.local file`);
+      await new Promise((r) => setTimeout(r, 1000));
+
+      return;
+    } else {
+      fs.writeFileSync(path.join(process.cwd(), ".env.local"), content);
+      console.log(`✅ Generated .env.local file`);
+      await new Promise((r) => setTimeout(r, 1000));
+
+      return;
+    }
+  } catch (err: any) {
+    console.error("⚠️ Failed to generate .env.local file:", err.message);
+    await new Promise((r) => setTimeout(r, 1000));
+
+    return;
+  }
+}
+
 async function mainMenu() {
   await CheckAndBuildXrayCore();
 
+  await genEnv();
   console.clear();
   showLogo();
   console.log("\n🚀 Welcome to the Odyssey monitoring service admin wizard \n");
@@ -778,21 +818,29 @@ process.on("uncaughtException", (err) => {
 
 process.on("SIGINT", () => shutdown("SIGINT")); // ctrl+c
 process.on("SIGTERM", () => shutdown("SIGTERM")); // kill command
+
 function shutdown(signal: string) {
   console.log(`\n🛑 Caught ${signal}, shutting down gracefully...`);
 
   if (devProcess && devProcess.pid) {
     console.log("⏹ Stopping Base odyssey server...");
     try {
-      // Kill the entire process group (requires the minus sign!)
-      process.kill(-devProcess.pid, "SIGTERM");
+      kill(devProcess.pid, "SIGTERM", (err) => {
+        if (err) {
+          console.warn("⚠️ Failed to kill dev process:", err.message);
+        }
+      });
     } catch (err) {
-      console.warn("⚠️ Failed to kill process group:", (err as Error).message);
+      console.warn(
+        "⚠️ Unexpected error while killing process:",
+        (err as Error).message
+      );
     }
   }
 
   setTimeout(() => {
     console.log("👋 Goodbye!");
+    // exit code: 0 = normal, 1 = error/crash
     process.exit(signal === "manual" ? 0 : 1);
   }, 1000);
 }

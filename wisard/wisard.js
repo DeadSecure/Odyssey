@@ -73,6 +73,7 @@ var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 var axios_1 = __importDefault(require("axios"));
 var child_process_2 = require("child_process");
+var tree_kill_1 = __importDefault(require("tree-kill"));
 var util_1 = require("util");
 function showLogo() {
     var text = figlet_1.default.textSync("ODYSSEY", { font: "Big" });
@@ -80,7 +81,7 @@ function showLogo() {
 }
 function waitForServer(url_1) {
     return __awaiter(this, arguments, void 0, function (url, retries, delay) {
-        var i, _a;
+        var i, response, _a;
         if (retries === void 0) { retries = 20; }
         if (delay === void 0) { delay = 3000; }
         return __generator(this, function (_b) {
@@ -93,9 +94,10 @@ function waitForServer(url_1) {
                     _b.label = 2;
                 case 2:
                     _b.trys.push([2, 4, , 6]);
-                    return [4 /*yield*/, axios_1.default.get(url)];
+                    return [4 /*yield*/, axios_1.default.get(url, { timeout: 3000 })];
                 case 3:
-                    _b.sent();
+                    response = _b.sent();
+                    console.log("✅ Server is up!");
                     return [2 /*return*/];
                 case 4:
                     _a = _b.sent();
@@ -192,7 +194,7 @@ function addService() {
                     });
                     devProcess.on("error", function (err) {
                         console.error("❌ Failed to start Base odyssey server:", err.message);
-                        process.exit(1);
+                        shutdown("manual");
                     });
                     devProcess.on("exit", function (code) {
                         if (code !== 0) {
@@ -201,7 +203,7 @@ function addService() {
                     });
                     return [4 /*yield*/, waitForServer("http://localhost:3000/api/health").catch(function (err) {
                             console.error("❌ Server did not respond in time:", err.message);
-                            process.exit(1);
+                            shutdown("manual");
                         })];
                 case 5:
                     _d.sent();
@@ -263,7 +265,7 @@ function addService() {
                 case 10:
                     err_2 = _d.sent();
                     console.error("❌ Fatal error:", err_2.message);
-                    process.exit(1);
+                    shutdown("manual");
                     return [3 /*break*/, 11];
                 case 11: return [2 /*return*/];
             }
@@ -695,6 +697,55 @@ function CheckAndBuildXrayCore() {
         });
     });
 }
+function genEnv() {
+    return __awaiter(this, void 0, void 0, function () {
+        var domain, content, err_7;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    console.log("\n▶️ Generating fresh env file...");
+                    return [4 /*yield*/, inquirer_1.default.prompt([
+                            {
+                                type: "input",
+                                name: "domain",
+                                message: "Enter the Domain for the app with http(eg. http://localhost:3000, https://myapp.com):",
+                                default: "http://localhost:3000",
+                            },
+                        ])];
+                case 1:
+                    domain = (_a.sent());
+                    content = "NEXT_PUBLIC_DOMAIN=\"".concat(domain.domain, "\"");
+                    _a.label = 2;
+                case 2:
+                    _a.trys.push([2, 7, , 9]);
+                    if (!fs_1.default.existsSync(path_1.default.join(process.cwd(), ".env.local"))) return [3 /*break*/, 4];
+                    fs_1.default.unlinkSync(path_1.default.join(process.cwd(), ".env.local"));
+                    fs_1.default.writeFileSync(path_1.default.join(process.cwd(), ".env.local"), content);
+                    console.log("\u2705 Updated .env.local file");
+                    return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 1000); })];
+                case 3:
+                    _a.sent();
+                    return [2 /*return*/];
+                case 4:
+                    fs_1.default.writeFileSync(path_1.default.join(process.cwd(), ".env.local"), content);
+                    console.log("\u2705 Generated .env.local file");
+                    return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 1000); })];
+                case 5:
+                    _a.sent();
+                    return [2 /*return*/];
+                case 6: return [3 /*break*/, 9];
+                case 7:
+                    err_7 = _a.sent();
+                    console.error("⚠️ Failed to generate .env.local file:", err_7.message);
+                    return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 1000); })];
+                case 8:
+                    _a.sent();
+                    return [2 /*return*/];
+                case 9: return [2 /*return*/];
+            }
+        });
+    });
+}
 function mainMenu() {
     return __awaiter(this, void 0, void 0, function () {
         var choice, _a;
@@ -703,12 +754,15 @@ function mainMenu() {
                 case 0: return [4 /*yield*/, CheckAndBuildXrayCore()];
                 case 1:
                     _b.sent();
+                    return [4 /*yield*/, genEnv()];
+                case 2:
+                    _b.sent();
                     console.clear();
                     showLogo();
                     console.log("\n🚀 Welcome to the Odyssey monitoring service admin wizard \n");
-                    _b.label = 2;
-                case 2:
-                    if (!true) return [3 /*break*/, 15];
+                    _b.label = 3;
+                case 3:
+                    if (!true) return [3 /*break*/, 16];
                     return [4 /*yield*/, inquirer_1.default.prompt([
                             {
                                 type: "list",
@@ -725,43 +779,43 @@ function mainMenu() {
                                 ],
                             },
                         ])];
-                case 3:
+                case 4:
                     choice = (_b.sent()).choice;
                     if (choice === "Exit") {
                         shutdown("manual");
-                        return [3 /*break*/, 15];
+                        return [3 /*break*/, 16];
                     }
                     _a = choice;
                     switch (_a) {
-                        case "Start Service": return [3 /*break*/, 4];
-                        case "Stop Service": return [3 /*break*/, 6];
-                        case "Add Service": return [3 /*break*/, 8];
-                        case "Delete Service": return [3 /*break*/, 10];
-                        case "Running Services": return [3 /*break*/, 12];
+                        case "Start Service": return [3 /*break*/, 5];
+                        case "Stop Service": return [3 /*break*/, 7];
+                        case "Add Service": return [3 /*break*/, 9];
+                        case "Delete Service": return [3 /*break*/, 11];
+                        case "Running Services": return [3 /*break*/, 13];
                     }
-                    return [3 /*break*/, 14];
-                case 4: return [4 /*yield*/, startService()];
-                case 5:
+                    return [3 /*break*/, 15];
+                case 5: return [4 /*yield*/, startService()];
+                case 6:
                     _b.sent();
-                    return [3 /*break*/, 14];
-                case 6: return [4 /*yield*/, stopService()];
-                case 7:
+                    return [3 /*break*/, 15];
+                case 7: return [4 /*yield*/, stopService()];
+                case 8:
                     _b.sent();
-                    return [3 /*break*/, 14];
-                case 8: return [4 /*yield*/, addService()];
-                case 9:
+                    return [3 /*break*/, 15];
+                case 9: return [4 /*yield*/, addService()];
+                case 10:
                     _b.sent();
-                    return [3 /*break*/, 14];
-                case 10: return [4 /*yield*/, deleteService()];
-                case 11:
+                    return [3 /*break*/, 15];
+                case 11: return [4 /*yield*/, deleteService()];
+                case 12:
                     _b.sent();
-                    return [3 /*break*/, 14];
-                case 12: return [4 /*yield*/, runningServices()];
-                case 13:
+                    return [3 /*break*/, 15];
+                case 13: return [4 /*yield*/, runningServices()];
+                case 14:
                     _b.sent();
-                    return [3 /*break*/, 14];
-                case 14: return [3 /*break*/, 2];
-                case 15: return [2 /*return*/];
+                    return [3 /*break*/, 15];
+                case 15: return [3 /*break*/, 3];
+                case 16: return [2 /*return*/];
             }
         });
     });
@@ -782,15 +836,19 @@ function shutdown(signal) {
     if (devProcess && devProcess.pid) {
         console.log("⏹ Stopping Base odyssey server...");
         try {
-            // Kill the entire process group (requires the minus sign!)
-            process.kill(-devProcess.pid, "SIGTERM");
+            (0, tree_kill_1.default)(devProcess.pid, "SIGTERM", function (err) {
+                if (err) {
+                    console.warn("⚠️ Failed to kill dev process:", err.message);
+                }
+            });
         }
         catch (err) {
-            console.warn("⚠️ Failed to kill process group:", err.message);
+            console.warn("⚠️ Unexpected error while killing process:", err.message);
         }
     }
     setTimeout(function () {
         console.log("👋 Goodbye!");
+        // exit code: 0 = normal, 1 = error/crash
         process.exit(signal === "manual" ? 0 : 1);
     }, 1000);
 }
