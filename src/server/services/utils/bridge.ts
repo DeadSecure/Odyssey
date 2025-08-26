@@ -1,4 +1,3 @@
-
 import { AccessBar, latencyBar, statusBar } from "@/server/models/client/bars";
 
 export async function fetchAccessAndStatusBars(
@@ -19,7 +18,11 @@ export async function fetchAccessAndStatusBars(
 
   // ✅ Parse once
   let res_parse: { access: AccessBar[]; status: statusBar } = await res.json();
-
+  console.log(
+    "these are the bars from the fetchAccessBars, they are: ",
+    res,
+    res_parse
+  );
   return res_parse;
 }
 
@@ -40,5 +43,10 @@ export async function fetchLatencyBars(
 
   // ✅ Parse once
   let res_parse: latencyBar[] = await res.json();
+  console.log(
+    "these are the bars from the fetchLatencyBars, they are: ",
+    res,
+    res_parse
+  );
   return res_parse;
 }
