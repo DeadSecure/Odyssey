@@ -129,7 +129,7 @@ echo "✅ npm version: $(npm -v)"
 # --- Clone project ---
 if [ ! -d "$APP_DIR" ]; then
   echo "📂 Cloning Odyssey ..."
-  git clone $APP_REPO $APP_DIR
+  git clone --recursive $APP_REPO $APP_DIR
 else
   echo "📂 Project already exists, pulling latest..."
   cd $APP_DIR && git pull
