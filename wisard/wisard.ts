@@ -109,10 +109,10 @@ async function addService() {
         stdio: "ignore",
         detached: true,
       });
-
+      devProcess.unref(); // <- important!
       devProcess.on("error", (err) => {
         console.error("❌ Failed to start Base odyssey server:", err.message);
-        shutdown("manual");
+        return;
       });
       devProcess.on("exit", (code) => {
         if (code !== 0) {
@@ -122,7 +122,7 @@ async function addService() {
 
       await waitForServer("http://localhost:3000/api/health").catch((err) => {
         console.error("❌ Server did not respond in time:", err.message);
-        shutdown("manual");
+        return;
       });
     }
 
@@ -327,7 +327,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return;
   } catch (err: any) {
     console.error("❌ Fatal error:", err.message);
-    shutdown("manual");
+    return;
   }
 }
 
@@ -368,7 +368,7 @@ async function startService() {
         stdio: "ignore",
         detached: true,
       });
-
+      devProcess.unref(); // <- important!
       devProcess.on("error", (err) => {
         console.error("❌ Failed to start Base odyssey server:", err.message);
         return;
@@ -539,10 +539,10 @@ async function stopService() {
     console.error(
       `❌ could not stop the ${choice} monitoring services: UNKNOWN_ERROR`
     );
+
     return;
   }
 }
-
 
 async function deleteService() {
   const items = fs.readdirSync(path.join(process.cwd(), "pages"), {
@@ -703,39 +703,45 @@ async function mainMenu() {
         message:
           "Select an option(type back at any step to go back to main menu):",
         choices: [
-          "Start Service",
-          "Stop Service",
+          "✚ Add Service",
+          "🗑️ Delete Service",
+          "🚀 Start Service",
+          "▐▐ Stop Service core",
+          "🔄 Running Services",
+          "⏻ Stop Odyssey",
+          "🏃🚪Exit",
           // "Edit Service", // to be removed
-          "Add Service",
-          "Delete Service",
-          "Running Services",
-          "Exit",
         ],
       },
     ]);
 
-    if (choice === "Exit") {
+    if (choice === "🏃🚪Exit") {
       shutdown("manual");
       break;
     }
 
+    if (choice === "⏻ Stop Odyssey") {
+      shutdown("manual", true);
+      break;
+    }
+
     switch (choice) {
-      case "Start Service":
+      case "✚ Add Service":
         await startService();
         break;
-      case "Stop Service":
+      case "🗑️ Delete Service":
         await stopService();
         break;
       // case "Edit Service":
       //   await editService();
       //   break; // to be removed
-      case "Add Service":
+      case "🚀 Start Service":
         await addService();
         break;
-      case "Delete Service":
+      case "▐▐ Stop Service core":
         await deleteService();
         break;
-      case "Running Services":
+      case "🔄 Running Services":
         await runningServices();
         break;
     }
@@ -756,10 +762,10 @@ process.on("uncaughtException", (err) => {
 process.on("SIGINT", () => shutdown("SIGINT")); // ctrl+c
 process.on("SIGTERM", () => shutdown("SIGTERM")); // kill command
 
-function shutdown(signal: string) {
+function shutdown(signal: string, stopProcess = false) {
   console.log(`\n🛑 Caught ${signal}, shutting down gracefully...`);
 
-  if (devProcess && devProcess.pid) {
+  if (stopProcess && devProcess && devProcess.pid) {
     console.log("⏹ Stopping Base odyssey server...");
     try {
       kill(devProcess.pid, "SIGTERM", (err) => {
@@ -771,6 +777,17 @@ function shutdown(signal: string) {
       console.warn(
         "⚠️ Unexpected error while killing process:",
         (err as Error).message
+      );
+    }
+    try {
+      console.log("🛑 Stopping any running Xray processes...");
+      const { execSync } = require("child_process");
+      execSync('pkill -f "xray run -config"');
+      console.log("✔ Xray processes stopped.");
+    } catch (err: any) {
+      console.warn(
+        "⚠️ No Xray processes were running or failed to stop:",
+        err.message
       );
     }
   }
