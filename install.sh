@@ -107,18 +107,24 @@ EOF
 nginx -t && systemctl reload nginx
 
 
-# --- Install Node.js (LTS) + PM2 ---
-echo "📦 Installing Node.js LTS..."
-curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
-apt install -y nodejs build-essential
+# --- Install NVM ---
+echo "📦 Installing NVM..."
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
-# Refresh shell environment
-export PATH=$PATH:/usr/bin
-hash -r
+# Load NVM in the current shell
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-# Verify Node.js and npm
-node -v
-npm -v
+# --- Install specific Node.js version ---
+NODE_VERSION="20.19.3"
+echo "📦 Installing Node.js $NODE_VERSION via NVM..."
+nvm install $NODE_VERSION
+nvm use $NODE_VERSION
+nvm alias default $NODE_VERSION
+
+# Verify installation
+echo "✅ Node.js version: $(node -v)"
+echo "✅ npm version: $(npm -v)"
 
 # --- Clone project ---
 if [ ! -d "$APP_DIR" ]; then
