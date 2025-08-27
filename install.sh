@@ -29,10 +29,22 @@ echo "📦 Installing base packages..."
 apt install -y curl git ufw nginx
 
 # --- Firewall rules ---
-echo "🔒 Configuring firewall..."
-ufw allow OpenSSH
-ufw allow 'Nginx Full'
-ufw --force enable
+read -p "🔒 Do you want firewall rules? (y/N): " UPDATE_FW
+UPDATE_FW=${UPDATE_FW:-N}
+
+if [[ "$UPDATE_FW" =~ ^[Yy]$ ]]; then
+    read -p "🔑 Enter SSH port (default 22): " PORT
+    PORT=${PORT:-22}
+
+    echo "🔒 Configuring firewall..."
+    ufw allow $PORT/tcp
+    ufw allow 'Nginx Full'
+    ufw --force enable
+
+    echo "✅ Firewall rules updated."
+else
+    echo "⚠️ Skipping firewall rules update. Make sure firewall is off or ngnix is accessible on ports 80 and 443."
+fi
 
 # --- Setup SSL with Certbot ---
 echo "🔐 Installing SSL certificate..."
