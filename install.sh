@@ -111,7 +111,14 @@ nginx -t && systemctl reload nginx
 echo "📦 Installing Node.js LTS..."
 curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
 apt install -y nodejs build-essential
-npm install -g pm2
+
+# Refresh shell environment
+export PATH=$PATH:/usr/bin
+hash -r
+
+# Verify Node.js and npm
+node -v
+npm -v
 
 # --- Clone project ---
 if [ ! -d "$APP_DIR" ]; then
