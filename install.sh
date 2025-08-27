@@ -46,6 +46,29 @@ else
     echo "⚠️ Skipping firewall rules update. Make sure firewall is off or ngnix is accessible on ports 80 and 443."
 fi
 
+# --- Configure Nginx (HTTP only) before SSL ---
+echo "🌐 Setting up temporary Nginx config for Certbot..."
+NGINX_CONF="/etc/nginx/sites-available/$DOMAIN"
+
+cat > $NGINX_CONF <<EOF
+server {
+    listen 80;
+    server_name $DOMAIN www.$DOMAIN;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+    }
+}
+EOF
+
+ln -sf $NGINX_CONF /etc/nginx/sites-enabled/
+nginx -t && systemctl reload nginx
+
 # --- Setup SSL with Certbot ---
 echo "🔐 Installing SSL certificate..."
 apt install -y certbot python3-certbot-nginx
@@ -53,10 +76,7 @@ certbot --nginx -d $DOMAIN -d www.$DOMAIN --email $EMAIL --agree-tos --non-inter
 
 echo "✅ SSL configured for https://$DOMAIN"
 
-# --- Configure Nginx ---
-echo "🌐 Setting up Nginx reverse proxy..."
-NGINX_CONF="/etc/nginx/sites-available/$DOMAIN"
-
+# --- Update Nginx to redirect HTTP → HTTPS ---
 cat > $NGINX_CONF <<EOF
 server {
     listen 80;
@@ -84,8 +104,8 @@ server {
 }
 EOF
 
-ln -sf $NGINX_CONF /etc/nginx/sites-enabled/
 nginx -t && systemctl reload nginx
+
 
 # --- Install Node.js (LTS) + PM2 ---
 echo "📦 Installing Node.js LTS..."
