@@ -29,22 +29,23 @@ echo "📦 Installing base packages..."
 apt install -y curl git ufw nginx
 
 # --- Firewall rules ---
-read -p "🔒 Do you want firewall rules? (y/N): " UPDATE_FW
-UPDATE_FW=${UPDATE_FW:-N}
+# all ports needed by xray-core
+# read -p "🔒 Do you want firewall rules? (y/N): " UPDATE_FW
+# UPDATE_FW=${UPDATE_FW:-N}
 
-if [[ "$UPDATE_FW" =~ ^[Yy]$ ]]; then
-    read -p "🔑 Enter SSH port (default 22): " PORT
-    PORT=${PORT:-22}
+# if [[ "$UPDATE_FW" =~ ^[Yy]$ ]]; then
+#     read -p "🔑 Enter SSH port (default 22): " PORT
+#     PORT=${PORT:-22}
 
-    echo "🔒 Configuring firewall..."
-    ufw allow $PORT/tcp
-    ufw allow 'Nginx Full'
-    ufw --force enable
+#     echo "🔒 Configuring firewall..."
+#     ufw allow $PORT/tcp
+#     ufw allow 'Nginx Full'
+#     ufw --force enable
 
-    echo "✅ Firewall rules updated."
-else
-    echo "⚠️ Skipping firewall rules update. Make sure firewall is off or ngnix is accessible on ports 80 and 443."
-fi
+#     echo "✅ Firewall rules updated."
+# else
+#     echo "⚠️ Skipping firewall rules update. Make sure firewall is off or ngnix is accessible on ports 80 and 443."
+# fi
 
 # --- Configure Nginx (HTTP only) before SSL ---
 echo "🌐 Setting up temporary Nginx config for Certbot..."
