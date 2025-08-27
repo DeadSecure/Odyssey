@@ -126,13 +126,19 @@ nvm alias default $NODE_VERSION
 echo "✅ Node.js version: $(node -v)"
 echo "✅ npm version: $(npm -v)"
 
-# --- Clone project ---
+# Clone the repo
 if [ ! -d "$APP_DIR" ]; then
-  echo "📂 Cloning Odyssey ..."
-  git clone --recursive $APP_REPO $APP_DIR
+    echo "📂 Cloning Odyssey..."
+    git clone $APP_REPO $APP_DIR
+    cd $APP_DIR
+    echo "🔄 Initializing submodules..."
+    git submodule update --init --recursive
 else
-  echo "📂 Project already exists, pulling latest..."
-  cd $APP_DIR && git pull
+    echo "📂 Project already exists, pulling latest..."
+    cd $APP_DIR
+    git pull
+    echo "🔄 Updating submodules..."
+    git submodule update --init --recursive
 fi
 
 cd $APP_DIR
