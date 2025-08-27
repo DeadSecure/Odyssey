@@ -793,7 +793,7 @@ function shutdown(signal: string, stopProcess = false) {
   }
 
   setTimeout(() => {
-    console.log("👋 Goodbye!");
+    console.log("👋 Goodbye!, type odyssey to reopen this menu");
     // exit code: 0 = normal, 1 = error/crash
     process.exit(signal === "manual" ? 0 : 1);
   }, 1000);

@@ -73,6 +73,8 @@ sudo bash -c "$(curl -sL https://raw.githubusercontent.com/javadyakuza/odyssey/m
 
 ```
 
+> NOTE: if you exited the wizard, you can run `odyssey` to reopen the menu.
+
 ### Remove Installation (ubuntu)
 
 ```bash
