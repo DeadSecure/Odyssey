@@ -24,7 +24,7 @@ async function waitForServer(
   for (let i = 0; i < retries; i++) {
     try {
       let response = await axios.get(url, { timeout: 3000 }); // HEAD request with timeout
-      console.log("✅ Server is up!");
+      console.log("✔ Server is up!");
       return true;
     } catch {
       console.log(`⏳ Waiting for server... (${i + 1}/${retries})`);
@@ -123,14 +123,17 @@ async function addService() {
       });
     }
 
-    // Step 3: API call
     try {
       await axios.post("http://localhost:3000/api/config", {
         url: params.subLink,
         name: params.name,
       });
     } catch (err: any) {
-      console.error("⚠️ Failed to send config:", err.message);
+      console.error(
+        "⚠️ Failed to send config:",
+        err.message,
+        "\ntry deleting and re adding the service details"
+      );
     }
 
     // Step 4: BreathDelay
@@ -145,7 +148,8 @@ async function addService() {
         BreathDelay = count * 10 || BreathDelay;
       } else {
         console.warn(
-          "⚠️ Config directory not found, using default BreathDelay"
+          "⚠️ Config directory not found, using default BreathDelay",
+          "\ntry deleting and re adding the service details"
         );
       }
     } catch (err: any) {
@@ -297,13 +301,13 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         `pages/${params.name}/index.tsx`
       );
       fs.writeFileSync(generatedFile, page_content);
-      console.log(`✅ Generated ${params.name} home page`);
+      console.log(`✔ Generated ${params.name} home page`);
       const configFile = path.join(
         process.cwd(),
         `pages/${params.name}/config.json`
       );
       fs.writeFileSync(configFile, config_content);
-      console.log(`✅ Generated ${params.name} config file`);
+      console.log(`✔ Generated ${params.name} config file`);
     } catch (err: any) {
       console.error("⚠️ Failed to generate file:", err.message);
     }
@@ -426,7 +430,7 @@ async function startService() {
               },
             }
           );
-          console.log("✅ Service responded:", res.data);
+          console.log("✔ Service responded:", res.data);
         } catch (err: any) {
           console.error("⚠️ Could not reach service yet:", err.message);
         } finally {
@@ -436,7 +440,7 @@ async function startService() {
           await new Promise((r) => setTimeout(r, BreathDelay * 1000));
 
           console.log(
-            `\n🎉 ${choice} monitoring services started successfully! See it at: http://localhost:3000/${choice}\n`
+            `\n🎉 ${choice} monitoring services started successfully! See it at: ${process.env.NEXT_PUBLIC_DOMAIN}/${choice}\n`
           );
           await inquirer.prompt([
             {
@@ -526,7 +530,7 @@ async function stopService() {
   );
 
   if (!res_after[`${choice}_core`]) {
-    console.error(`✅ Service ${choice} is stopped successfully!`);
+    console.error(`✔ Service ${choice} is stopped successfully!`);
     return;
   } else {
     console.error(
@@ -608,7 +612,7 @@ async function stopService() {
 //       config_content
 //     );
 
-//     console.log(`✅ Generated ${name} config file`);
+//     console.log(`✔ Generated ${name} config file`);
 //     return;
 //   } catch (err: any) {
 //     console.error("⚠️ Failed to generate config file:", err.message);
@@ -662,7 +666,7 @@ async function deleteService() {
       });
     }
 
-    console.log(`✅ Deleted ${choice} service`);
+    console.log(`✔ Deleted ${choice} service`);
     return;
   } catch (err: any) {
     console.error("⚠️ Failed to delete service:", err.message);
@@ -677,7 +681,7 @@ async function runningServices() {
     );
 
     console.log(
-      res.data ? "✅ runnings services :" : "❌ No Services running.",
+      res.data ? "✔ runnings services :" : "❌ No Services running.",
       res.data ? res.data : {}
     );
 
@@ -709,7 +713,7 @@ async function CheckAndBuildXrayCore() {
       });
       if (stdout) console.log(stdout);
       if (stderr) console.error(stderr);
-      console.log("✅ Xray binary built successfully at:", outputBinary);
+      console.log("✔ Xray binary built successfully at:", outputBinary);
       await new Promise((r) => setTimeout(r, 1000));
     } catch (error) {
       console.error("❌ Build failed:", error);
@@ -718,7 +722,7 @@ async function CheckAndBuildXrayCore() {
       return;
     }
   } else {
-    console.log("✅ Xray binary exists at:", outputBinary);
+    console.log("✔ Xray binary exists at:", outputBinary);
     await new Promise((r) => setTimeout(r, 1000));
   }
 }
@@ -741,13 +745,13 @@ async function genEnv() {
     if (fs.existsSync(path.join(process.cwd(), ".env.local"))) {
       fs.unlinkSync(path.join(process.cwd(), ".env.local"));
       fs.writeFileSync(path.join(process.cwd(), ".env.local"), content);
-      console.log(`✅ Updated .env.local file`);
+      console.log(`✔ Updated .env.local file`);
       await new Promise((r) => setTimeout(r, 1000));
 
       return;
     } else {
       fs.writeFileSync(path.join(process.cwd(), ".env.local"), content);
-      console.log(`✅ Generated .env.local file`);
+      console.log(`✔ Generated .env.local file`);
       await new Promise((r) => setTimeout(r, 1000));
 
       return;
