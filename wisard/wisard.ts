@@ -29,7 +29,10 @@ async function waitForServer(
     } catch {
       console.log(`⏳ Waiting for server... (${i + 1}/${retries})`);
       await new Promise((res) => setTimeout(res, delay));
-      return false;
+      if (i === retries - 1) {
+        console.log("❌ Server did not start in time");
+        return false;
+      }
     }
   }
   throw new Error("Server did not start in time");
