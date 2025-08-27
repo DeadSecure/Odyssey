@@ -144,6 +144,25 @@ fi
 
 cd $APP_DIR
 
+# --- Fix the odyssey command ---
+ODYSSEY_BIN="/usr/local/bin/odyssey"
+echo "📦 Creating global 'odyssey' command..."
+
+# Ensure /usr/local/bin exists
+mkdir -p /usr/local/bin
+
+# Create the wrapper script
+cat > "$ODYSSEY_BIN" <<EOF
+#!/bin/bash
+cd "$APP_DIR" || exit 1
+npm run start
+EOF
+
+# Make it executable
+chmod +x "$ODYSSEY_BIN"
+
+echo "✅ Global 'odyssey' command created! You can now run 'odyssey' from anywhere."
+
 # --- Install app dependencies ---
 echo "📦 Installing app dependencies..."
 npm install
