@@ -108,6 +108,7 @@ export default function ClientLayout({
             alt="profile"
           />
         </a>
+        
         <DayNightToggle
           onToggle={() => setIsDayMode(!isDayMode)}
           initialIsDay={false}

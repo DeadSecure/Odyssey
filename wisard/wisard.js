@@ -151,7 +151,7 @@ function startBaseServer() {
                 }
             }
             console.log("▶️ Starting Odyssey server...");
-            nextPath = (0, child_process_1.execSync)("npx --no-install which next", {
+            nextPath = (0, child_process_1.execSync)("which next", {
                 encoding: "utf-8",
             }).trim();
             console.log("nextPath", nextPath);
@@ -207,18 +207,19 @@ function stopBaseServer() {
 // let devProcess: ReturnType<typeof spawn> | null = null;
 function addService() {
     return __awaiter(this, void 0, void 0, function () {
-        var params_1, _a, _b, _c, res, err_1, BreathDelay, dirPath_1, files, count, page_content, config_content, generatedFile, configFile, err_2;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        var params, _a, _b, _c, _d, res, err_1, BreathDelay, dirPath_1, files, count, page_content, config_content, generatedFile, configFile, err_2;
+        return __generator(this, function (_e) {
+            switch (_e.label) {
                 case 0:
-                    _d.trys.push([0, 11, , 12]);
-                    params_1 = {
+                    _e.trys.push([0, 11, , 12]);
+                    params = {
                         subLink: "",
                         name: "",
                         tgSupportId: "",
+                        logo: "",
                     };
                     // Step 1: Ask user
-                    _a = params_1;
+                    _a = params;
                     return [4 /*yield*/, inquirer_1.default.prompt([
                             {
                                 type: "input",
@@ -231,11 +232,11 @@ function addService() {
                         ])];
                 case 1:
                     // Step 1: Ask user
-                    _a.subLink = (_d.sent()).subLink;
-                    if (params_1.subLink.trim().toLowerCase() === "back") {
+                    _a.subLink = (_e.sent()).subLink;
+                    if (params.subLink.trim().toLowerCase() === "back") {
                         return [2 /*return*/];
                     }
-                    _b = params_1;
+                    _b = params;
                     return [4 /*yield*/, inquirer_1.default.prompt([
                             {
                                 type: "input",
@@ -245,11 +246,11 @@ function addService() {
                             },
                         ])];
                 case 2:
-                    _b.name = (_d.sent()).name;
-                    if (params_1.name.trim().toLowerCase() === "back") {
+                    _b.name = (_e.sent()).name;
+                    if (params.name.trim().toLowerCase() === "back") {
                         return [2 /*return*/];
                     }
-                    _c = params_1;
+                    _c = params;
                     return [4 /*yield*/, inquirer_1.default.prompt([
                             {
                                 type: "input",
@@ -261,45 +262,52 @@ function addService() {
                             },
                         ])];
                 case 3:
-                    _c.tgSupportId = (_d.sent()).tgSupportId;
-                    if (params_1.tgSupportId.trim().toLowerCase() === "back") {
+                    _c.tgSupportId = (_e.sent()).tgSupportId;
+                    if (params.tgSupportId.trim().toLowerCase() === "back") {
                         return [2 /*return*/];
                     }
+                    _d = params;
                     return [4 /*yield*/, inquirer_1.default.prompt([
                             {
-                                type: "confirm",
-                                name: "pic",
+                                type: "input",
+                                name: "logo",
                                 message: function (answers) {
-                                    return "make sure your profile pic is in: public/profilePic/".concat(params_1.name, ".png then press Enter");
+                                    return "\nfollow the below steps to add your logo(your logo should be in png format):\n          \n1. upload your logo to https://imgpx.com\n          \n2. in your image page copy the \"Direct link to the image\", this link has a .png at the end.\n          \n3. paste the link here and press enter\n           ";
+                                },
+                                validate: function (input) {
+                                    return input.trim() !== "" || "logo cannot be empty";
                                 },
                             },
                         ])];
                 case 4:
-                    _d.sent();
+                    _d.logo = (_e.sent()).logo;
+                    if (params.logo.trim().toLowerCase() === "back") {
+                        return [2 /*return*/];
+                    }
                     return [4 /*yield*/, waitForServer("http://localhost:3000/api/health", 3)];
                 case 5:
-                    res = _d.sent();
+                    res = _e.sent();
                     if (!!res) return [3 /*break*/, 7];
                     return [4 /*yield*/, startBaseServer()];
                 case 6:
-                    _d.sent();
-                    _d.label = 7;
+                    _e.sent();
+                    _e.label = 7;
                 case 7:
-                    _d.trys.push([7, 9, , 10]);
+                    _e.trys.push([7, 9, , 10]);
                     return [4 /*yield*/, axios_1.default.post("http://localhost:3000/api/config", {
-                            url: params_1.subLink,
-                            name: params_1.name,
+                            url: params.subLink,
+                            name: params.name,
                         })];
                 case 8:
-                    _d.sent();
+                    _e.sent();
                     return [3 /*break*/, 10];
                 case 9:
-                    err_1 = _d.sent();
+                    err_1 = _e.sent();
                     console.error("⚠️ Failed to send config:", err_1.message, "\ntry deleting and re adding the service details");
                     return [3 /*break*/, 10];
                 case 10:
                     BreathDelay = 60;
-                    dirPath_1 = "./configs/".concat(params_1.name, "/json");
+                    dirPath_1 = "./configs/".concat(params.name, "/json");
                     try {
                         if (fs_1.default.existsSync(dirPath_1)) {
                             files = fs_1.default.readdirSync(dirPath_1);
@@ -315,28 +323,28 @@ function addService() {
                     catch (err) {
                         console.error("⚠️ Could not calculate BreathDelay:", err.message);
                     }
-                    page_content = "import { GetStaticProps } from \"next\";\nimport { serverSideTranslations } from \"next-i18next/serverSideTranslations\";\nimport ClientBarsWrapper from \"@/components/ui/clientWrapper\";\nimport ClientLayout from \"@/components/layout/clientLayout\";\nimport { useEffect, useState } from \"react\";\nimport { latencyBar, AccessBar, statusBar } from \"@/server/models/client/bars\";\nimport { Categories, SitesTestResponse } from \"@/server/models/interfaces\";\nimport { parseAccessBars } from \"@/server/services/utils/parser\";\nimport { FSLogger } from \"@/server/services/utils/logger\";\nimport {\n  fetchAccessAndStatusBars,\n  fetchLatencyBars,\n} from \"@/server/services/utils/bridge\";\ntype Props = {\n  AccessBars: AccessBar[];\n  LatencyBars: latencyBar[];\n  StatusBars: statusBar;\n  breathDelay: number;\n};\nimport raw_config from \"./config.json\";\nimport { ProviderConfig } from \"@/server/models/client/provider\";\nimport axios from \"axios\";\nimport CoreDownOverlay from \"@/components/ui/coreNotRunnings\";\nconst config: ProviderConfig = raw_config;\n\nexport default function Page({\n  AccessBars,\n  StatusBars,\n  LatencyBars,\n  breathDelay,\n}: Props) {\n  const [accessBars, setAccessBars] = useState<AccessBar[]>(AccessBars);\n  const [latencyBars, setLatencyBars] = useState<latencyBar[]>(LatencyBars);\n  const [statusBars, setStatusBars] = useState<statusBar>(StatusBars);\n  const [coreStatus, setCoreStatus] = useState<boolean>(true);\n  \n  const [breathDelayToPass, setBreathDelayToPass] =\n    useState<number>(breathDelay);\n  const [previousBars, setPreviousBars] = useState<{\n    AccessBars: AccessBar[];\n    LatencyBars: latencyBar[];\n    StatusBars: statusBar;\n  }>({ AccessBars, LatencyBars, StatusBars });\n  const [timeToRender, setTimeToRender] = useState<boolean>(true);\n  useEffect(() => {\n    const tab_knob = document.querySelector(\".tab-knob\");\n    const mode = document.querySelector(\".toggle-knob\")?.classList;\n    if (tab_knob && mode) {\n      if (mode.contains(\"dark\")) {\n        tab_knob.classList.add(\"dark\");\n        tab_knob.classList.remove(\"light\");\n      } else if (mode.contains(\"light\")) {\n        tab_knob.classList.add(\"light\");\n        tab_knob.classList.remove(\"dark\");\n      }\n    }\n    if (!timeToRender) return;\n    const fetchData = async () => {\n    const res: Record<string, number> = (\n        await axios.get(\"/api/cores\")\n      ).data;\n\n      if (!res[`${config.name}_core`]) {\n        console.error(\n          `\u274C Service ${config.name} is not running, start it before stopping it.`\n        );\n        setCoreStatus(false);\n        return;\n  } else {\n        setCoreStatus(true);\n  }\n\n      setAccessBars(previousBars.AccessBars);\n      setLatencyBars(previousBars.LatencyBars);\n      setStatusBars(previousBars.StatusBars);\n      const access_and_status = await fetchAccessAndStatusBars(config.name);\n      const latency = await fetchLatencyBars(config.name);\n      setPreviousBars({\n        AccessBars: access_and_status.access,\n        LatencyBars: latency,\n        StatusBars: access_and_status.status,\n      });\n      setTimeToRender(false);\n      setBreathDelayToPass((prev) =>\n        prev === breathDelay ? prev - 1 : breathDelay\n      );\n      setTimeout(() => setTimeToRender(true), breathDelay * 1000);\n    };\n    fetchData();\n  }, [timeToRender, breathDelay]);\n  return (\n    <ClientLayout\n      name={config.name}\n      logo={`/profilePic/${config.name}.png`}\n      bars={{\n        AccessBars: accessBars,\n        latencyBars: latencyBars,\n        statusBars: statusBars,\n      }}\n      delay={breathDelayToPass}\n      support_link={config.tg_support_link}\n    >\n      {coreStatus ? (\n              <ClientBarsWrapper />\n            ) : (\n              <CoreDownOverlay link={config.tg_support_link} />\n            )}\n    </ClientLayout>\n  );\n}\nexport const getStaticProps: GetStaticProps = async ({ locale }) => {\n  let access_and_status = await fetchAccessAndStatusBars(config.name);\n  const logger = new FSLogger(`${config.name}Logs`);\n  logger.log({\n    access: access_and_status.access,\n    status: access_and_status.status,\n  });\n  let latency = await fetchLatencyBars(config.name);\n  return {\n    props: {\n      AccessBars: access_and_status.access,\n      StatusBars: access_and_status.status,\n      LatencyBars: latency,\n      breathDelay: 40,\n      ...(await serverSideTranslations(locale ?? \"en\", [\"common\"])),\n    },\n    revalidate: 60,\n  };\n};";
-                    config_content = "{\n  \"name\": \"".concat(params_1.name, "\",\n  \"subscription_link\": \"").concat(params_1.subLink, "\",\n  \"tg_support_link\": \"https://t.me/").concat(params_1.tgSupportId.replace("@", ""), "\"\n}");
+                    page_content = "import { GetStaticProps } from \"next\";\nimport { serverSideTranslations } from \"next-i18next/serverSideTranslations\";\nimport ClientBarsWrapper from \"@/components/ui/clientWrapper\";\nimport ClientLayout from \"@/components/layout/clientLayout\";\nimport { useEffect, useState } from \"react\";\nimport { latencyBar, AccessBar, statusBar } from \"@/server/models/client/bars\";\nimport { Categories, SitesTestResponse } from \"@/server/models/interfaces\";\nimport { parseAccessBars } from \"@/server/services/utils/parser\";\nimport { FSLogger } from \"@/server/services/utils/logger\";\nimport {\n  fetchAccessAndStatusBars,\n  fetchLatencyBars,\n} from \"@/server/services/utils/bridge\";\ntype Props = {\n  AccessBars: AccessBar[];\n  LatencyBars: latencyBar[];\n  StatusBars: statusBar;\n  breathDelay: number;\n};\nimport raw_config from \"./config.json\";\nimport { ProviderConfig } from \"@/server/models/client/provider\";\nimport axios from \"axios\";\nimport CoreDownOverlay from \"@/components/ui/coreNotRunnings\";\nconst config: ProviderConfig = raw_config;\n\nexport default function Page({\n  AccessBars,\n  StatusBars,\n  LatencyBars,\n  breathDelay,\n}: Props) {\n  const [accessBars, setAccessBars] = useState<AccessBar[]>(AccessBars);\n  const [latencyBars, setLatencyBars] = useState<latencyBar[]>(LatencyBars);\n  const [statusBars, setStatusBars] = useState<statusBar>(StatusBars);\n  const [coreStatus, setCoreStatus] = useState<boolean>(true);\n  \n  const [breathDelayToPass, setBreathDelayToPass] =\n    useState<number>(breathDelay);\n  const [previousBars, setPreviousBars] = useState<{\n    AccessBars: AccessBar[];\n    LatencyBars: latencyBar[];\n    StatusBars: statusBar;\n  }>({ AccessBars, LatencyBars, StatusBars });\n  const [timeToRender, setTimeToRender] = useState<boolean>(true);\n  useEffect(() => {\n    const tab_knob = document.querySelector(\".tab-knob\");\n    const mode = document.querySelector(\".toggle-knob\")?.classList;\n    if (tab_knob && mode) {\n      if (mode.contains(\"dark\")) {\n        tab_knob.classList.add(\"dark\");\n        tab_knob.classList.remove(\"light\");\n      } else if (mode.contains(\"light\")) {\n        tab_knob.classList.add(\"light\");\n        tab_knob.classList.remove(\"dark\");\n      }\n    }\n    if (!timeToRender) return;\n    const fetchData = async () => {\n    const res: Record<string, number> = (\n        await axios.get(\"/api/cores\")\n      ).data;\n\n      if (!res[`${config.name}_core`]) {\n        console.error(\n          `\u274C Service ${config.name} is not running, start it before stopping it.`\n        );\n        setCoreStatus(false);\n        return;\n  } else {\n        setCoreStatus(true);\n  }\n\n      setAccessBars(previousBars.AccessBars);\n      setLatencyBars(previousBars.LatencyBars);\n      setStatusBars(previousBars.StatusBars);\n      const access_and_status = await fetchAccessAndStatusBars(config.name);\n      const latency = await fetchLatencyBars(config.name);\n      setPreviousBars({\n        AccessBars: access_and_status.access,\n        LatencyBars: latency,\n        StatusBars: access_and_status.status,\n      });\n      setTimeToRender(false);\n      setBreathDelayToPass((prev) =>\n        prev === breathDelay ? prev - 1 : breathDelay\n      );\n      setTimeout(() => setTimeToRender(true), breathDelay * 1000);\n    };\n    fetchData();\n  }, [timeToRender, breathDelay]);\n  return (\n    <ClientLayout\n      name={config.name}\n      logo={\"".concat(params.logo, "\"}\n      bars={{\n        AccessBars: accessBars,\n        latencyBars: latencyBars,\n        statusBars: statusBars,\n      }}\n      delay={breathDelayToPass}\n      support_link={config.tg_support_link}\n    >\n      {coreStatus ? (\n              <ClientBarsWrapper />\n            ) : (\n              <CoreDownOverlay link={config.tg_support_link} />\n            )}\n    </ClientLayout>\n  );\n}\nexport const getStaticProps: GetStaticProps = async ({ locale }) => {\n  let access_and_status = await fetchAccessAndStatusBars(config.name);\n  const logger = new FSLogger(`${config.name}Logs`);\n  logger.log({\n    access: access_and_status.access,\n    status: access_and_status.status,\n  });\n  let latency = await fetchLatencyBars(config.name);\n  return {\n    props: {\n      AccessBars: access_and_status.access,\n      StatusBars: access_and_status.status,\n      LatencyBars: latency,\n      breathDelay: 40,\n      ...(await serverSideTranslations(locale ?? \"en\", [\"common\"])),\n    },\n    revalidate: 60,\n  };\n};");
+                    config_content = "{\n  \"name\": \"".concat(params.name, "\",\n  \"subscription_link\": \"").concat(params.subLink, "\",\n  \"tg_support_link\": \"https://t.me/").concat(params.tgSupportId.replace("@", ""), "\"\n}");
                     try {
-                        if (!fs_1.default.existsSync(path_1.default.join(process.cwd(), "pages/".concat(params_1.name)))) {
-                            fs_1.default.mkdirSync(path_1.default.join(process.cwd(), "pages/".concat(params_1.name)), {
+                        if (!fs_1.default.existsSync(path_1.default.join(process.cwd(), "pages/".concat(params.name)))) {
+                            fs_1.default.mkdirSync(path_1.default.join(process.cwd(), "pages/".concat(params.name)), {
                                 recursive: true,
                             });
                         }
-                        generatedFile = path_1.default.join(process.cwd(), "pages/".concat(params_1.name, "/index.tsx"));
+                        generatedFile = path_1.default.join(process.cwd(), "pages/".concat(params.name, "/index.tsx"));
                         fs_1.default.writeFileSync(generatedFile, page_content);
-                        console.log("\u2714 Generated ".concat(params_1.name, " home page"));
-                        configFile = path_1.default.join(process.cwd(), "pages/".concat(params_1.name, "/config.json"));
+                        console.log("\u2714 Generated ".concat(params.name, " home page"));
+                        configFile = path_1.default.join(process.cwd(), "pages/".concat(params.name, "/config.json"));
                         fs_1.default.writeFileSync(configFile, config_content);
-                        console.log("\u2714 Generated ".concat(params_1.name, " config file"));
+                        console.log("\u2714 Generated ".concat(params.name, " config file"));
                     }
                     catch (err) {
                         console.error("⚠️ Failed to generate file:", err.message);
                     }
-                    console.log("\n ".concat(params_1.name, " monitoring services added successfully!, run it from the main menu\n"));
+                    console.log("\n ".concat(params.name, " monitoring services added successfully!, run it from the main menu\n"));
                     return [2 /*return*/];
                 case 11:
-                    err_2 = _d.sent();
+                    err_2 = _e.sent();
                     console.error("❌ Fatal error:", err_2.message);
                     return [2 /*return*/];
                 case 12: return [2 /*return*/];
@@ -722,7 +730,7 @@ function genEnv() {
                                 type: "confirm",
                                 name: "ok",
                                 message: "press enter to continue",
-                                default: true,
+                                default: false,
                             },
                         ])];
                 case 1:

@@ -121,6 +121,7 @@ async function addService() {
       subLink: "",
       name: "",
       tgSupportId: "",
+      logo: "",
     };
     // Step 1: Ask user
     params.subLink = (
@@ -167,15 +168,27 @@ async function addService() {
     if (params.tgSupportId.trim().toLowerCase() === "back") {
       return;
     }
-    await inquirer.prompt([
-      {
-        type: "confirm",
-        name: "pic",
-        message: (answers) =>
-          `make sure your profile pic is in: public/profilePic/${params.name}.png then press Enter`,
-      },
-    ]);
+    params.logo = (
+      (await inquirer.prompt([
+        {
+          type: "input",
+          name: "logo",
+          message: (answers) =>
+            `\nfollow the below steps to add your logo(your logo should be in png format):
+          \n1. upload your logo to https://imgpx.com
+          \n2. in your image page copy the "Direct link to the image", this link has a .png at the end.
+          \n3. paste the link here and press enter
+           `,
+          validate: (input) => {
+            return input.trim() !== "" || "logo cannot be empty";
+          },
+        },
+      ])) as { logo: string }
+    ).logo;
 
+    if (params.logo.trim().toLowerCase() === "back") {
+      return;
+    }
     let res = await waitForServer("http://localhost:3000/api/health", 3);
 
     if (!res) {
@@ -307,7 +320,7 @@ export default function Page({
   return (
     <ClientLayout
       name={config.name}
-      logo={\`/profilePic/\${config.name}.png\`}
+      logo={"${params.logo}"}
       bars={{
         AccessBars: accessBars,
         latencyBars: latencyBars,
@@ -725,7 +738,7 @@ async function genEnv() {
           type: "confirm",
           name: "ok",
           message: "press enter to continue",
-          default: true,
+          default: false,
         },
       ]);
       return;
