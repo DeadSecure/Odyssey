@@ -29,8 +29,12 @@ rm -rf /etc/letsencrypt/renewal/*
 echo "🗑️  Removing Certbot and Nginx..."
 apt purge -y certbot python3-certbot-nginx nginx || true
 
+# --- Remove global Odyssey command ---
+echo "🗑️  Removing Odyssey command..."
+rm -f /usr/local/bin/odyssey
+
 # --- Clean up unused packages ---
 apt autoremove -y
 apt clean
 
-echo "✅ Odyssey and dependencies removed. VM is clean."
+echo "✅ Odyssey and dependencies removed."
