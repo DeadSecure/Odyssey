@@ -56,7 +56,7 @@ async function startBaseServer() {
   }
 
   console.log("▶️ Starting Odyssey server...");
-  const nextPath = execSync("npx --no-install which next", {
+  const nextPath = execSync("which next", {
     encoding: "utf-8",
   }).trim();
 
