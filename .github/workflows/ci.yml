@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -13,5 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20 # or 18/22 depending on your project
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Build
-        run: echo "Build successful"
+        run: npm run build
