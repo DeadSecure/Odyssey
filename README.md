@@ -137,7 +137,9 @@ This project is under the [MIT License](./LICENSE.md).
 
 ## Donate
 
-If you like this project, consider donating to support its development:
+The best way is to give a star to the project on GitHub.
+
+Also If you like this project, consider donating to support its development:
 
 ARBITRUM ADDRESS: 0xefDe3a8E20b7B970D37f35C2b7ba5D4E9Cbb7557
 

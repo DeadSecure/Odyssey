@@ -1,6 +1,6 @@
 {
   "name": "odyssey",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "private": true,
   "scripts": {
     "dev": " rm -f ./src/server/services/utils/worker.js ./src/server/services/utils/access.js ./src/server/services/utils/ports.js ./src/server/services/utils/tester.js && tsc  ./src/server/services/utils/worker.ts ./src/server/services/utils/tester.ts --downlevelIteration --esModuleInterop && next dev --turbopack",
@@ -12,6 +12,7 @@
     "@types/figlet": "^1.7.0",
     "axios": "^1.11.0",
     "better-sqlite3": "^12.2.0",
+    "dotenv": "^17.2.1",
     "figlet": "^1.8.2",
     "gradient-string": "^3.0.0",
     "i18next": "^25.3.2",

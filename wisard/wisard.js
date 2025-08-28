@@ -61,6 +61,17 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -75,6 +86,8 @@ var axios_1 = __importDefault(require("axios"));
 var child_process_2 = require("child_process");
 var tree_kill_1 = __importDefault(require("tree-kill"));
 var util_1 = require("util");
+var dotenv_1 = __importDefault(require("dotenv"));
+var PID_FILE = path_1.default.join(process.cwd(), ".odyssey.pid");
 function showLogo() {
     var text = figlet_1.default.textSync("ODYSSEY", { font: "Big" });
     console.log(gradient_string_1.default.pastel.multiline(text));
@@ -97,7 +110,7 @@ function waitForServer(url_1) {
                     return [4 /*yield*/, axios_1.default.get(url, { timeout: 3000 })];
                 case 3:
                     response = _b.sent();
-                    console.log("✅ Server is up!");
+                    console.log("✔ Server is up!");
                     return [2 /*return*/, true];
                 case 4:
                     _a = _b.sent();
@@ -105,7 +118,11 @@ function waitForServer(url_1) {
                     return [4 /*yield*/, new Promise(function (res) { return setTimeout(res, delay); })];
                 case 5:
                     _b.sent();
-                    return [2 /*return*/, false];
+                    if (i === retries - 1) {
+                        console.log("❌ Server did not start in time");
+                        return [2 /*return*/, false];
+                    }
+                    return [3 /*break*/, 6];
                 case 6:
                     i++;
                     return [3 /*break*/, 1];
@@ -114,7 +131,80 @@ function waitForServer(url_1) {
         });
     });
 }
-var devProcess = null;
+// Function to start the base Odyssey server
+function startBaseServer() {
+    return __awaiter(this, void 0, void 0, function () {
+        var existingPid, nextPath, devProcess, pid_tp_write;
+        var _a;
+        return __generator(this, function (_b) {
+            // Check if already running
+            if (fs_1.default.existsSync(PID_FILE)) {
+                existingPid = parseInt(fs_1.default.readFileSync(PID_FILE, "utf-8"));
+                try {
+                    process.kill(existingPid, 0); // check if process exists
+                    console.log("\u26A0\uFE0F Odyssey server is already running (PID ".concat(existingPid, ")"));
+                    return [2 /*return*/, existingPid];
+                }
+                catch (_c) {
+                    console.log("⚠️ Found stale PID file, removing...");
+                    fs_1.default.unlinkSync(PID_FILE);
+                }
+            }
+            console.log("▶️ Starting Odyssey server...");
+            nextPath = (0, child_process_1.execSync)("npx --no-install which next", {
+                encoding: "utf-8",
+            }).trim();
+            console.log("nextPath", nextPath);
+            devProcess = (0, child_process_1.spawn)(nextPath, ["dev", "--turbo"], {
+                cwd: process.cwd(),
+                stdio: "ignore",
+                detached: true,
+            });
+            devProcess.unref();
+            pid_tp_write = (_a = devProcess.pid) === null || _a === void 0 ? void 0 : _a.toString();
+            if (!pid_tp_write) {
+                console.error("❌ Failed to start Odyssey server: No PID");
+                return [2 /*return*/];
+            }
+            fs_1.default.writeFileSync(PID_FILE, pid_tp_write, "utf-8");
+            console.log("\u2714 Odyssey server started (PID ".concat(devProcess.pid, ")"));
+            return [2 /*return*/, devProcess.pid];
+        });
+    });
+}
+// Function to stop the base Odyssey server
+function stopBaseServer() {
+    if (!fs_1.default.existsSync(PID_FILE)) {
+        console.log("⚠️ No PID file found. Odyssey server may not be running.");
+        return;
+    }
+    var pid = parseInt(fs_1.default.readFileSync(PID_FILE, "utf-8"));
+    try {
+        (0, tree_kill_1.default)(pid, "SIGTERM", function (err) {
+            if (err) {
+                console.warn("⚠️ Failed to kill Odyssey server:", err.message);
+            }
+            else {
+                console.log("\uD83D\uDED1 Odyssey server stopped (PID ".concat(pid, ")"));
+                fs_1.default.unlinkSync(PID_FILE);
+            }
+        });
+    }
+    catch (err) {
+        console.warn("⚠️ Error stopping Odyssey server:", err.message);
+        fs_1.default.unlinkSync(PID_FILE);
+    }
+    // Kill any Xray processes
+    try {
+        var execSync_1 = require("child_process").execSync;
+        execSync_1('pkill -f "xray run -config"');
+        console.log("✔ Xray processes stopped.");
+    }
+    catch (err) {
+        console.warn("⚠️ No Xray processes were running or failed to stop:", err.message);
+    }
+}
+// let devProcess: ReturnType<typeof spawn> | null = null;
 function addService() {
     return __awaiter(this, void 0, void 0, function () {
         var params_1, _a, _b, _c, res, err_1, BreathDelay, dirPath_1, files, count, page_content, config_content, generatedFile, configFile, err_2;
@@ -186,29 +276,11 @@ function addService() {
                         ])];
                 case 4:
                     _d.sent();
-                    return [4 /*yield*/, waitForServer("http://localhost:3000/api/health")];
+                    return [4 /*yield*/, waitForServer("http://localhost:3000/api/health", 3)];
                 case 5:
                     res = _d.sent();
                     if (!!res) return [3 /*break*/, 7];
-                    // Step 2: Start server
-                    console.log("\n▶️ Starting Odyssey server...");
-                    devProcess = (0, child_process_1.spawn)("npm", ["run", "dev", "-turbopack"], {
-                        stdio: "ignore",
-                        detached: true,
-                    });
-                    devProcess.on("error", function (err) {
-                        console.error("❌ Failed to start Base odyssey server:", err.message);
-                        shutdown("manual");
-                    });
-                    devProcess.on("exit", function (code) {
-                        if (code !== 0) {
-                            console.error("\u274C Base odyssey server exited with code ".concat(code));
-                        }
-                    });
-                    return [4 /*yield*/, waitForServer("http://localhost:3000/api/health").catch(function (err) {
-                            console.error("❌ Server did not respond in time:", err.message);
-                            shutdown("manual");
-                        })];
+                    return [4 /*yield*/, startBaseServer()];
                 case 6:
                     _d.sent();
                     _d.label = 7;
@@ -223,7 +295,7 @@ function addService() {
                     return [3 /*break*/, 10];
                 case 9:
                     err_1 = _d.sent();
-                    console.error("⚠️ Failed to send config:", err_1.message);
+                    console.error("⚠️ Failed to send config:", err_1.message, "\ntry deleting and re adding the service details");
                     return [3 /*break*/, 10];
                 case 10:
                     BreathDelay = 60;
@@ -237,7 +309,7 @@ function addService() {
                             BreathDelay = count * 10 || BreathDelay;
                         }
                         else {
-                            console.warn("⚠️ Config directory not found, using default BreathDelay");
+                            console.warn("⚠️ Config directory not found, using default BreathDelay", "\ntry deleting and re adding the service details");
                         }
                     }
                     catch (err) {
@@ -253,24 +325,20 @@ function addService() {
                         }
                         generatedFile = path_1.default.join(process.cwd(), "pages/".concat(params_1.name, "/index.tsx"));
                         fs_1.default.writeFileSync(generatedFile, page_content);
-                        console.log("\u2705 Generated ".concat(params_1.name, " home page"));
+                        console.log("\u2714 Generated ".concat(params_1.name, " home page"));
                         configFile = path_1.default.join(process.cwd(), "pages/".concat(params_1.name, "/config.json"));
                         fs_1.default.writeFileSync(configFile, config_content);
-                        console.log("\u2705 Generated ".concat(params_1.name, " config file"));
+                        console.log("\u2714 Generated ".concat(params_1.name, " config file"));
                     }
                     catch (err) {
                         console.error("⚠️ Failed to generate file:", err.message);
                     }
-                    devProcess === null || devProcess === void 0 ? void 0 : devProcess.on("spawn", function () {
-                        console.log("\n \uD83E\uDDDC\u200D\u2642\uFE0F Base odyssey server started successfully! See it at: http://localhost:3000/\n");
-                    });
                     console.log("\n ".concat(params_1.name, " monitoring services added successfully!, run it from the main menu\n"));
                     return [2 /*return*/];
                 case 11:
                     err_2 = _d.sent();
                     console.error("❌ Fatal error:", err_2.message);
-                    shutdown("manual");
-                    return [3 /*break*/, 12];
+                    return [2 /*return*/];
                 case 12: return [2 /*return*/];
             }
         });
@@ -283,7 +351,7 @@ function startService() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 7, , 8]);
+                    _a.trys.push([0, 8, , 9]);
                     items = fs_1.default.readdirSync(path_1.default.join(process.cwd(), "pages"), {
                         withFileTypes: true,
                     });
@@ -310,35 +378,24 @@ function startService() {
                     if (choice_1 === "⬅️ Back") {
                         return [2 /*return*/]; // just return to mainMenu
                     }
-                    return [4 /*yield*/, waitForServer("http://localhost:3000/api/health")];
+                    return [4 /*yield*/, waitForServer("http://localhost:3000/api/health", 3)];
                 case 2:
                     server_res = _a.sent();
                     if (!!server_res) return [3 /*break*/, 4];
-                    console.log("\n▶️ Starting Odyssey server...");
-                    devProcess = (0, child_process_1.spawn)("npm", ["run", "dev", "-turbopack"], {
-                        stdio: "ignore",
-                        detached: true,
-                    });
-                    devProcess.on("error", function (err) {
-                        console.error("❌ Failed to start Base odyssey server:", err.message);
-                        return;
-                    });
-                    devProcess.on("exit", function (code) {
-                        if (code !== 0) {
-                            console.error("\u274C Base odyssey server exited with code ".concat(code));
-                        }
-                    });
-                    return [4 /*yield*/, waitForServer("http://localhost:3000/api/health").catch(function (err) {
-                            console.error("❌ Base odyssey Server did not respond in time:", err.message);
-                            return;
-                        })];
+                    return [4 /*yield*/, startBaseServer()];
                 case 3:
                     _a.sent();
                     _a.label = 4;
-                case 4:
+                case 4: return [4 /*yield*/, waitForServer("http://localhost:3000/api/health", 3)];
+                case 5:
+                    server_res = _a.sent();
+                    if (!server_res) {
+                        console.error("❌ Server did not start in time");
+                        return [2 /*return*/];
+                    }
                     console.log("🗿 Odyssey Base server running");
                     return [4 /*yield*/, axios_1.default.get("http://localhost:3000/api/cores")];
-                case 5:
+                case 6:
                     res = (_a.sent()).data;
                     if (res["".concat(choice_1, "_core")]) {
                         console.error("\u274C Service ".concat(choice_1, " is already running on port ").concat(res[choice_1], ". stop it first before starting it again."));
@@ -378,7 +435,7 @@ function startService() {
                                                 })];
                                         case 1:
                                             res_1 = _a.sent();
-                                            console.log("✅ Service responded:", res_1.data);
+                                            console.log("✔ Service responded:", res_1.data);
                                             return [3 /*break*/, 6];
                                         case 2:
                                             err_4 = _a.sent();
@@ -389,7 +446,7 @@ function startService() {
                                             return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, BreathDelay_1 * 1000); })];
                                         case 4:
                                             _a.sent();
-                                            console.log("\n\uD83C\uDF89 ".concat(choice_1, " monitoring services started successfully! See it at: http://localhost:3000/").concat(choice_1, "\n"));
+                                            console.log("\n\uD83C\uDF89 ".concat(choice_1, " monitoring services started successfully! See it at: ").concat(process.env.NEXT_PUBLIC_DOMAIN, "/").concat(choice_1, "\n"));
                                             return [4 /*yield*/, inquirer_1.default.prompt([
                                                     {
                                                         type: "confirm",
@@ -407,14 +464,14 @@ function startService() {
                                 });
                             }); }, 5000);
                         })];
-                case 6: 
+                case 7: 
                 // Step 6: Background request
                 return [2 /*return*/, _a.sent()];
-                case 7:
+                case 8:
                     err_3 = _a.sent();
-                    console.error("❌ Fatal error:", err_3.message);
+                    console.error("❌ Fatal error:", err_3);
                     return [2 /*return*/];
-                case 8: return [2 /*return*/];
+                case 9: return [2 /*return*/];
             }
         });
     });
@@ -485,7 +542,7 @@ function stopService() {
                 case 8:
                     res_after = _a.sent();
                     if (!res_after["".concat(choice, "_core")]) {
-                        console.error("\u2705 Service ".concat(choice, " is stopped successfully!"));
+                        console.error("\u2714 Service ".concat(choice, " is stopped successfully!"));
                         return [2 /*return*/];
                     }
                     else {
@@ -497,81 +554,6 @@ function stopService() {
         });
     });
 }
-// to be removed
-// async function editService() {
-//   const items = fs.readdirSync(path.join(process.cwd(), "pages"), {
-//     withFileTypes: true,
-//   });
-//   const items_list = items
-//     .filter((item) => item.isDirectory())
-//     .filter((dir) => dir.name != "api");
-//   if (items_list.length === 0) {
-//     console.error("❌ No service found, add one first");
-//     return;
-//   }
-//   const { choice } = await inquirer.prompt([
-//     {
-//       type: "list",
-//       name: "choice",
-//       message: "Select a Service:",
-//       choices: [
-//         ...items_list.map((item) => item.name),
-//         new inquirer.Separator(),
-//         "⬅️ Back",
-//       ],
-//     },
-//   ]);
-//   if (choice === "⬅️ Back") {
-//     return; // just return to mainMenu
-//   }
-//   const { subLink, name, tgSupportId } = await inquirer.prompt([
-//     {
-//       type: "input",
-//       name: "subLink",
-//       message: "Enter the sub link(unlimited in days and traffic):",
-//       validate: (input) => input.trim() !== "" || "Config link cannot be empty",
-//     },
-//     {
-//       type: "input",
-//       name: "name",
-//       message: "Enter a name for this service:",
-//       validate: (input) => input.trim() !== "" || "Name cannot be empty",
-//     },
-//     {
-//       type: "input",
-//       name: "tgSupportId",
-//       message: "Enter the Telegram support id (eg. @PolNetSupport):",
-//       validate: (input) =>
-//         input.trim() !== "" || "Telegram support id cannot be empty",
-//     },
-//     {
-//       type: "confirm",
-//       name: "pic",
-//       message: (answers) =>
-//         `make sure your profile pic is in: public/profilePic/${answers.name}.png then press Enter`,
-//     },
-//   ]);
-//   let config_content = `{
-//   "name": "${name}",
-//   "subscription_link": "${subLink}",
-//   "tg_support_link": "https://t.me/${tgSupportId.replace("@", "")}"
-// }`;
-//   try {
-//     if (fs.existsSync(path.join(process.cwd(), `pages/${choice}/config.json`))) {
-//       fs.unlinkSync(path.join(process.cwd(), `pages/${choice}/config.json`));
-//     }
-//     // deleting first
-//     fs.writeFileSync(
-//       path.join(process.cwd(), `pages/${name}/config.json`),
-//       config_content
-//     );
-//     console.log(`✅ Generated ${name} config file`);
-//     return;
-//   } catch (err: any) {
-//     console.error("⚠️ Failed to generate config file:", err.message);
-//     return;
-//   }
-// }
 function deleteService() {
     return __awaiter(this, void 0, void 0, function () {
         var items, items_list, choice;
@@ -620,7 +602,7 @@ function deleteService() {
                                 recursive: true,
                             });
                         }
-                        console.log("\u2705 Deleted ".concat(choice, " service"));
+                        console.log("\u2714 Deleted ".concat(choice, " service"));
                         return [2 /*return*/];
                     }
                     catch (err) {
@@ -642,7 +624,7 @@ function runningServices() {
                     return [4 /*yield*/, axios_1.default.get("http://localhost:3000/api/cores")];
                 case 1:
                     res = _a.sent();
-                    console.log(res.data ? "✅ runnings services :" : "❌ No Services running.", res.data ? res.data : {});
+                    console.log(res.data ? "✔ runnings services :" : "❌ No Services running.", res.data ? res.data : {});
                     return [2 /*return*/];
                 case 2:
                     err_6 = _a.sent();
@@ -650,6 +632,25 @@ function runningServices() {
                     return [2 /*return*/];
                 case 3: return [2 /*return*/];
             }
+        });
+    });
+}
+function services() {
+    return __awaiter(this, void 0, void 0, function () {
+        var items, items_list;
+        return __generator(this, function (_a) {
+            items = fs_1.default.readdirSync(path_1.default.join(process.cwd(), "pages"), {
+                withFileTypes: true,
+            });
+            items_list = items
+                .filter(function (item) { return item.isDirectory(); })
+                .filter(function (dir) { return dir.name != "api"; });
+            if (items_list.length === 0) {
+                console.error("❌ No service found, add one first");
+                return [2 /*return*/];
+            }
+            console.log("✔ Added services :", items_list.map(function (item) { return item.name; }));
+            return [2 /*return*/];
         });
     });
 }
@@ -678,7 +679,7 @@ function CheckAndBuildXrayCore() {
                         console.log(stdout);
                     if (stderr)
                         console.error(stderr);
-                    console.log("✅ Xray binary built successfully at:", outputBinary);
+                    console.log("✔ Xray binary built successfully at:", outputBinary);
                     return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 1000); })];
                 case 3:
                     _b.sent();
@@ -692,7 +693,7 @@ function CheckAndBuildXrayCore() {
                     return [2 /*return*/];
                 case 6: return [3 /*break*/, 9];
                 case 7:
-                    console.log("✅ Xray binary exists at:", outputBinary);
+                    console.log("✔ Xray binary exists at:", outputBinary);
                     return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 1000); })];
                 case 8:
                     _b.sent();
@@ -704,10 +705,34 @@ function CheckAndBuildXrayCore() {
 }
 function genEnv() {
     return __awaiter(this, void 0, void 0, function () {
-        var domain, content, err_7;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var existing_env, ok, domain, content, targets, targets_1, targets_1_1, file, filePath, e_1_1, err_7;
+        var e_1, _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
+                    if (!(fs_1.default.existsSync(path_1.default.join(process.cwd(), ".env.local")) ||
+                        fs_1.default.existsSync(path_1.default.join(process.cwd(), ".env")))) return [3 /*break*/, 3];
+                    existing_env = String(fs_1.default.readFileSync(path_1.default.join(process.cwd(), ".env.local"))).trim();
+                    if (!(existing_env.length > 0)) return [3 /*break*/, 2];
+                    console.log("\n Detected a .env.local or .env", existing_env);
+                    console.log("⚠️ Skipping .env file generation");
+                    console.log("⚠️ If you want to change the domain, please delete the .env.local and .env file and stop the odyssey(⏻ Stop Odyssey) and run the odyssey again.");
+                    return [4 /*yield*/, inquirer_1.default.prompt([
+                            {
+                                type: "confirm",
+                                name: "ok",
+                                message: "press enter to continue",
+                                default: true,
+                            },
+                        ])];
+                case 1:
+                    ok = _b.sent();
+                    return [2 /*return*/];
+                case 2:
+                    console.log("corrupted .env file detected, delete the .env and .env.local using \n rm .env .env.local \n and run the odyssey again.");
+                    shutdown("manual", true);
+                    return [2 /*return*/];
+                case 3:
                     console.log("\n▶️ Generating fresh env file...");
                     return [4 /*yield*/, inquirer_1.default.prompt([
                             {
@@ -717,36 +742,58 @@ function genEnv() {
                                 default: "http://localhost:3000",
                             },
                         ])];
-                case 1:
-                    domain = (_a.sent());
-                    content = "NEXT_PUBLIC_DOMAIN=\"".concat(domain.domain, "\"");
-                    _a.label = 2;
-                case 2:
-                    _a.trys.push([2, 7, , 9]);
-                    if (!fs_1.default.existsSync(path_1.default.join(process.cwd(), ".env.local"))) return [3 /*break*/, 4];
-                    fs_1.default.unlinkSync(path_1.default.join(process.cwd(), ".env.local"));
-                    fs_1.default.writeFileSync(path_1.default.join(process.cwd(), ".env.local"), content);
-                    console.log("\u2705 Updated .env.local file");
-                    return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 1000); })];
-                case 3:
-                    _a.sent();
-                    return [2 /*return*/];
                 case 4:
-                    fs_1.default.writeFileSync(path_1.default.join(process.cwd(), ".env.local"), content);
-                    console.log("\u2705 Generated .env.local file");
-                    return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 1000); })];
+                    domain = (_b.sent());
+                    content = "NEXT_PUBLIC_DOMAIN=\"".concat(domain.domain, "\"");
+                    targets = [".env.local", ".env"];
+                    _b.label = 5;
                 case 5:
-                    _a.sent();
-                    return [2 /*return*/];
-                case 6: return [3 /*break*/, 9];
+                    _b.trys.push([5, 14, , 16]);
+                    _b.label = 6;
+                case 6:
+                    _b.trys.push([6, 11, 12, 13]);
+                    targets_1 = __values(targets), targets_1_1 = targets_1.next();
+                    _b.label = 7;
                 case 7:
-                    err_7 = _a.sent();
-                    console.error("⚠️ Failed to generate .env.local file:", err_7.message);
-                    return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 1000); })];
+                    if (!!targets_1_1.done) return [3 /*break*/, 10];
+                    file = targets_1_1.value;
+                    filePath = path_1.default.join(process.cwd(), file);
+                    fs_1.default.writeFileSync(filePath, content, "utf-8");
+                    if (fs_1.default.existsSync(filePath)) {
+                        console.log("\u2714 Updated ".concat(file));
+                    }
+                    else {
+                        console.log("\u2714 Created ".concat(file));
+                    }
+                    // small delay to ensure FS flush in some environments
+                    return [4 /*yield*/, new Promise(function (resolve) { return setTimeout(resolve, 500); })];
                 case 8:
-                    _a.sent();
+                    // small delay to ensure FS flush in some environments
+                    _b.sent();
+                    _b.label = 9;
+                case 9:
+                    targets_1_1 = targets_1.next();
+                    return [3 /*break*/, 7];
+                case 10: return [3 /*break*/, 13];
+                case 11:
+                    e_1_1 = _b.sent();
+                    e_1 = { error: e_1_1 };
+                    return [3 /*break*/, 13];
+                case 12:
+                    try {
+                        if (targets_1_1 && !targets_1_1.done && (_a = targets_1.return)) _a.call(targets_1);
+                    }
+                    finally { if (e_1) throw e_1.error; }
+                    return [7 /*endfinally*/];
+                case 13: return [2 /*return*/];
+                case 14:
+                    err_7 = _b.sent();
+                    console.error("\u26A0\uFE0F Failed to write environment files: ".concat(err_7.message, ", please stop the odyssey(\u23FB Stop Odyssey) and try again."));
+                    return [4 /*yield*/, new Promise(function (resolve) { return setTimeout(resolve, 500); })];
+                case 15:
+                    _b.sent();
                     return [2 /*return*/];
-                case 9: return [2 /*return*/];
+                case 16: return [2 /*return*/];
             }
         });
     });
@@ -762,98 +809,91 @@ function mainMenu() {
                     return [4 /*yield*/, genEnv()];
                 case 2:
                     _b.sent();
+                    dotenv_1.default.config();
                     console.clear();
                     showLogo();
                     console.log("\n🚀 Welcome to the Odyssey monitoring service admin wizard \n");
                     _b.label = 3;
                 case 3:
-                    if (!true) return [3 /*break*/, 16];
+                    if (!true) return [3 /*break*/, 18];
                     return [4 /*yield*/, inquirer_1.default.prompt([
                             {
                                 type: "list",
                                 name: "choice",
                                 message: "Select an option(type back at any step to go back to main menu):",
                                 choices: [
-                                    "Start Service",
-                                    "Stop Service",
+                                    "✚ Add Service",
+                                    "🗑️ Delete Service",
+                                    "🚀 Start Service",
+                                    "▐▐ Stop Service core",
+                                    "🔄 Running Services",
+                                    "✔ Added Services",
+                                    "⏻ Stop Odyssey",
+                                    "🏃🚪Exit",
                                     // "Edit Service", // to be removed
-                                    "Add Service",
-                                    "Delete Service",
-                                    "Running Services",
-                                    "Exit",
                                 ],
                             },
                         ])];
                 case 4:
                     choice = (_b.sent()).choice;
-                    if (choice === "Exit") {
+                    if (choice === "🏃🚪Exit") {
                         shutdown("manual");
-                        return [3 /*break*/, 16];
+                        return [3 /*break*/, 18];
+                    }
+                    if (choice === "⏻ Stop Odyssey") {
+                        shutdown("manual", true);
+                        return [3 /*break*/, 18];
                     }
                     _a = choice;
                     switch (_a) {
-                        case "Start Service": return [3 /*break*/, 5];
-                        case "Stop Service": return [3 /*break*/, 7];
-                        case "Add Service": return [3 /*break*/, 9];
-                        case "Delete Service": return [3 /*break*/, 11];
-                        case "Running Services": return [3 /*break*/, 13];
+                        case "✚ Add Service": return [3 /*break*/, 5];
+                        case "🗑️ Delete Service": return [3 /*break*/, 7];
+                        case "🚀 Start Service": return [3 /*break*/, 9];
+                        case "▐▐ Stop Service core": return [3 /*break*/, 11];
+                        case "🔄 Running Services": return [3 /*break*/, 13];
+                        case "✔ Added Services": return [3 /*break*/, 15];
                     }
-                    return [3 /*break*/, 15];
-                case 5: return [4 /*yield*/, startService()];
+                    return [3 /*break*/, 17];
+                case 5: return [4 /*yield*/, addService()];
                 case 6:
                     _b.sent();
-                    return [3 /*break*/, 15];
-                case 7: return [4 /*yield*/, stopService()];
+                    return [3 /*break*/, 17];
+                case 7: return [4 /*yield*/, deleteService()];
                 case 8:
                     _b.sent();
-                    return [3 /*break*/, 15];
-                case 9: return [4 /*yield*/, addService()];
+                    return [3 /*break*/, 17];
+                case 9: return [4 /*yield*/, startService()];
                 case 10:
                     _b.sent();
-                    return [3 /*break*/, 15];
-                case 11: return [4 /*yield*/, deleteService()];
+                    return [3 /*break*/, 17];
+                case 11: return [4 /*yield*/, stopService()];
                 case 12:
                     _b.sent();
-                    return [3 /*break*/, 15];
+                    return [3 /*break*/, 17];
                 case 13: return [4 /*yield*/, runningServices()];
                 case 14:
                     _b.sent();
-                    return [3 /*break*/, 15];
-                case 15: return [3 /*break*/, 3];
-                case 16: return [2 /*return*/];
+                    return [3 /*break*/, 17];
+                case 15: return [4 /*yield*/, services()];
+                case 16:
+                    _b.sent();
+                    return [3 /*break*/, 17];
+                case 17: return [3 /*break*/, 3];
+                case 18: return [2 /*return*/];
             }
         });
     });
 }
-// global safety nets
-process.on("unhandledRejection", function (reason) {
-    console.error("❌ Unhandled promise rejection:", reason);
-    shutdown("unhandledRejection");
-});
-process.on("uncaughtException", function (err) {
-    console.error("❌ Uncaught exception:", err.message);
-    shutdown("uncaughtException");
-});
-process.on("SIGINT", function () { return shutdown("SIGINT"); }); // ctrl+c
-process.on("SIGTERM", function () { return shutdown("SIGTERM"); }); // kill command
-function shutdown(signal) {
+process.on("SIGINT", function () { return shutdown("SIGINT"); });
+process.on("SIGTERM", function () { return shutdown("SIGTERM"); });
+// Shutdown function
+function shutdown(signal, stopServer) {
+    if (stopServer === void 0) { stopServer = false; }
     console.log("\n\uD83D\uDED1 Caught ".concat(signal, ", shutting down gracefully..."));
-    if (devProcess && devProcess.pid) {
-        console.log("⏹ Stopping Base odyssey server...");
-        try {
-            (0, tree_kill_1.default)(devProcess.pid, "SIGTERM", function (err) {
-                if (err) {
-                    console.warn("⚠️ Failed to kill dev process:", err.message);
-                }
-            });
-        }
-        catch (err) {
-            console.warn("⚠️ Unexpected error while killing process:", err.message);
-        }
-    }
+    if (stopServer)
+        stopBaseServer();
     setTimeout(function () {
-        console.log("👋 Goodbye!");
-        // exit code: 0 = normal, 1 = error/crash
+        console.log("👋 Goodbye! Type 'odyssey' to reopen this menu");
         process.exit(signal === "manual" ? 0 : 1);
     }, 1000);
 }

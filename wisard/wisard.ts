@@ -3,13 +3,15 @@
 import figlet from "figlet";
 import gradient from "gradient-string";
 import inquirer from "inquirer";
-import { spawn } from "child_process";
+import { execSync, spawn } from "child_process";
 import fs from "fs";
 import path from "path";
 import axios from "axios";
 import { exec } from "child_process";
 import kill from "tree-kill";
 import { promisify } from "util";
+import dotenv from "dotenv";
+const PID_FILE = path.join(process.cwd(), ".odyssey.pid");
 
 function showLogo() {
   const text = figlet.textSync("ODYSSEY", { font: "Big" });
@@ -38,7 +40,81 @@ async function waitForServer(
   throw new Error("Server did not start in time");
 }
 
-let devProcess: ReturnType<typeof spawn> | null = null;
+// Function to start the base Odyssey server
+async function startBaseServer() {
+  // Check if already running
+  if (fs.existsSync(PID_FILE)) {
+    const existingPid = parseInt(fs.readFileSync(PID_FILE, "utf-8"));
+    try {
+      process.kill(existingPid, 0); // check if process exists
+      console.log(`⚠️ Odyssey server is already running (PID ${existingPid})`);
+      return existingPid;
+    } catch {
+      console.log("⚠️ Found stale PID file, removing...");
+      fs.unlinkSync(PID_FILE);
+    }
+  }
+
+  console.log("▶️ Starting Odyssey server...");
+  const nextPath = execSync("npx --no-install which next", {
+    encoding: "utf-8",
+  }).trim();
+
+  console.log("nextPath", nextPath);
+
+  const devProcess = spawn(nextPath, ["dev", "--turbo"], {
+    cwd: process.cwd(),
+    stdio: "ignore",
+    detached: true,
+  });
+
+  devProcess.unref();
+  let pid_tp_write = devProcess.pid?.toString();
+  if (!pid_tp_write) {
+    console.error("❌ Failed to start Odyssey server: No PID");
+    return;
+  }
+  fs.writeFileSync(PID_FILE, pid_tp_write, "utf-8");
+  console.log(`✔ Odyssey server started (PID ${devProcess.pid})`);
+  return devProcess.pid;
+}
+
+// Function to stop the base Odyssey server
+function stopBaseServer() {
+  if (!fs.existsSync(PID_FILE)) {
+    console.log("⚠️ No PID file found. Odyssey server may not be running.");
+    return;
+  }
+
+  const pid = parseInt(fs.readFileSync(PID_FILE, "utf-8"));
+  try {
+    kill(pid, "SIGTERM", (err) => {
+      if (err) {
+        console.warn("⚠️ Failed to kill Odyssey server:", err.message);
+      } else {
+        console.log(`🛑 Odyssey server stopped (PID ${pid})`);
+        fs.unlinkSync(PID_FILE);
+      }
+    });
+  } catch (err: any) {
+    console.warn("⚠️ Error stopping Odyssey server:", err.message);
+    fs.unlinkSync(PID_FILE);
+  }
+
+  // Kill any Xray processes
+  try {
+    const { execSync } = require("child_process");
+    execSync('pkill -f "xray run -config"');
+    console.log("✔ Xray processes stopped.");
+  } catch (err: any) {
+    console.warn(
+      "⚠️ No Xray processes were running or failed to stop:",
+      err.message
+    );
+  }
+}
+
+// let devProcess: ReturnType<typeof spawn> | null = null;
 async function addService() {
   try {
     let params = {
@@ -100,30 +176,10 @@ async function addService() {
       },
     ]);
 
-    let res = await waitForServer("http://localhost:3000/api/health");
+    let res = await waitForServer("http://localhost:3000/api/health", 3);
 
     if (!res) {
-      // Step 2: Start server
-      console.log("\n▶️ Starting Odyssey server...");
-      devProcess = spawn("npm", ["run", "dev", "-turbopack"], {
-        stdio: "ignore",
-        detached: true,
-      });
-      devProcess.unref(); // <- important!
-      devProcess.on("error", (err) => {
-        console.error("❌ Failed to start Base odyssey server:", err.message);
-        return;
-      });
-      devProcess.on("exit", (code) => {
-        if (code !== 0) {
-          console.error(`❌ Base odyssey server exited with code ${code}`);
-        }
-      });
-
-      await waitForServer("http://localhost:3000/api/health").catch((err) => {
-        console.error("❌ Server did not respond in time:", err.message);
-        return;
-      });
+      await startBaseServer();
     }
 
     try {
@@ -315,12 +371,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       console.error("⚠️ Failed to generate file:", err.message);
     }
 
-    devProcess?.on("spawn", () => {
-      console.log(
-        `\n 🧜‍♂️ Base odyssey server started successfully! See it at: http://localhost:3000/\n`
-      );
-    });
-
     console.log(
       `\n ${params.name} monitoring services added successfully!, run it from the main menu\n`
     );
@@ -360,34 +410,16 @@ async function startService() {
       return; // just return to mainMenu
     }
 
-    let server_res = await waitForServer("http://localhost:3000/api/health");
+    let server_res = await waitForServer("http://localhost:3000/api/health", 3);
 
     if (!server_res) {
-      console.log("\n▶️ Starting Odyssey server...");
-      devProcess = spawn("npm", ["run", "dev", "-turbopack"], {
-        stdio: "ignore",
-        detached: true,
-      });
-      devProcess.unref(); // <- important!
-      devProcess.on("error", (err) => {
-        console.error("❌ Failed to start Base odyssey server:", err.message);
-        return;
-      });
-      devProcess.on("exit", (code) => {
-        if (code !== 0) {
-          console.error(`❌ Base odyssey server exited with code ${code}`);
-        }
-      });
-
-      await waitForServer("http://localhost:3000/api/health").catch((err) => {
-        console.error(
-          "❌ Base odyssey Server did not respond in time:",
-          err.message
-        );
-        return;
-      });
+      await startBaseServer();
     }
-
+    server_res = await waitForServer("http://localhost:3000/api/health", 3);
+    if (!server_res) {
+      console.error("❌ Server did not start in time");
+      return;
+    }
     console.log("🗿 Odyssey Base server running");
     // health check the service
     const res: Record<string, number> = (
@@ -457,7 +489,7 @@ async function startService() {
       }, 5000);
     });
   } catch (err: any) {
-    console.error("❌ Fatal error:", err.message);
+    console.error("❌ Fatal error:", err);
     return;
   }
 }
@@ -615,6 +647,25 @@ async function runningServices() {
     return;
   }
 }
+async function services() {
+  const items = fs.readdirSync(path.join(process.cwd(), "pages"), {
+    withFileTypes: true,
+  });
+  const items_list = items
+    .filter((item) => item.isDirectory())
+    .filter((dir) => dir.name != "api");
+
+  if (items_list.length === 0) {
+    console.error("❌ No service found, add one first");
+    return;
+  }
+
+  console.log(
+    "✔ Added services :",
+    items_list.map((item) => item.name)
+  );
+  return;
+}
 
 async function CheckAndBuildXrayCore() {
   const execAsync = promisify(exec);
@@ -652,6 +703,41 @@ async function CheckAndBuildXrayCore() {
 }
 
 async function genEnv() {
+  if (
+    fs.existsSync(path.join(process.cwd(), ".env.local")) ||
+    fs.existsSync(path.join(process.cwd(), ".env"))
+  ) {
+    let existing_env = String(
+      fs.readFileSync(path.join(process.cwd(), ".env.local"))
+    ).trim();
+
+    if (existing_env.length > 0) {
+      console.log("\n Detected a .env.local or .env", existing_env);
+
+      console.log("⚠️ Skipping .env file generation");
+
+      console.log(
+        "⚠️ If you want to change the domain, please delete the .env.local and .env file and stop the odyssey(⏻ Stop Odyssey) and run the odyssey again."
+      );
+      // getting the ok from user
+      let ok = await inquirer.prompt([
+        {
+          type: "confirm",
+          name: "ok",
+          message: "press enter to continue",
+          default: true,
+        },
+      ]);
+      return;
+    } else {
+      console.log(
+        "corrupted .env file detected, delete the .env and .env.local using \n rm .env .env.local \n and run the odyssey again."
+      );
+      shutdown("manual", true);
+      return;
+    }
+  }
+
   console.log("\n▶️ Generating fresh env file...");
   let domain = (await inquirer.prompt([
     {
@@ -665,25 +751,30 @@ async function genEnv() {
 
   let content = `NEXT_PUBLIC_DOMAIN="${domain.domain}"`;
 
+  const targets = [".env.local", ".env"];
+
   try {
-    if (fs.existsSync(path.join(process.cwd(), ".env.local"))) {
-      fs.unlinkSync(path.join(process.cwd(), ".env.local"));
-      fs.writeFileSync(path.join(process.cwd(), ".env.local"), content);
-      console.log(`✔ Updated .env.local file`);
-      await new Promise((r) => setTimeout(r, 1000));
+    for (const file of targets) {
+      const filePath = path.join(process.cwd(), file);
 
-      return;
-    } else {
-      fs.writeFileSync(path.join(process.cwd(), ".env.local"), content);
-      console.log(`✔ Generated .env.local file`);
-      await new Promise((r) => setTimeout(r, 1000));
+      fs.writeFileSync(filePath, content, "utf-8");
 
-      return;
+      if (fs.existsSync(filePath)) {
+        console.log(`✔ Updated ${file}`);
+      } else {
+        console.log(`✔ Created ${file}`);
+      }
+
+      // small delay to ensure FS flush in some environments
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
-  } catch (err: any) {
-    console.error("⚠️ Failed to generate .env.local file:", err.message);
-    await new Promise((r) => setTimeout(r, 1000));
 
+    return;
+  } catch (err: any) {
+    console.error(
+      `⚠️ Failed to write environment files: ${err.message}, please stop the odyssey(⏻ Stop Odyssey) and try again.`
+    );
+    await new Promise((resolve) => setTimeout(resolve, 500));
     return;
   }
 }
@@ -692,6 +783,8 @@ async function mainMenu() {
   await CheckAndBuildXrayCore();
 
   await genEnv();
+  dotenv.config();
+
   console.clear();
   showLogo();
   console.log("\n🚀 Welcome to the Odyssey monitoring service admin wizard \n");
@@ -708,6 +801,7 @@ async function mainMenu() {
           "🚀 Start Service",
           "▐▐ Stop Service core",
           "🔄 Running Services",
+          "✔ Added Services",
           "⏻ Stop Odyssey",
           "🏃🚪Exit",
           // "Edit Service", // to be removed
@@ -727,76 +821,37 @@ async function mainMenu() {
 
     switch (choice) {
       case "✚ Add Service":
-        await startService();
-        break;
-      case "🗑️ Delete Service":
-        await stopService();
-        break;
-      // case "Edit Service":
-      //   await editService();
-      //   break; // to be removed
-      case "🚀 Start Service":
         await addService();
         break;
-      case "▐▐ Stop Service core":
+      case "🗑️ Delete Service":
         await deleteService();
+        break;
+      case "🚀 Start Service":
+        await startService();
+        break;
+      case "▐▐ Stop Service core":
+        await stopService();
         break;
       case "🔄 Running Services":
         await runningServices();
         break;
+      case "✔ Added Services":
+        await services();
+        break;
     }
   }
 }
 
-// global safety nets
-process.on("unhandledRejection", (reason) => {
-  console.error("❌ Unhandled promise rejection:", reason);
-  shutdown("unhandledRejection");
-});
+process.on("SIGINT", () => shutdown("SIGINT"));
+process.on("SIGTERM", () => shutdown("SIGTERM"));
 
-process.on("uncaughtException", (err) => {
-  console.error("❌ Uncaught exception:", err.message);
-  shutdown("uncaughtException");
-});
-
-process.on("SIGINT", () => shutdown("SIGINT")); // ctrl+c
-process.on("SIGTERM", () => shutdown("SIGTERM")); // kill command
-
-function shutdown(signal: string, stopProcess = false) {
+// Shutdown function
+function shutdown(signal: string, stopServer = false) {
   console.log(`\n🛑 Caught ${signal}, shutting down gracefully...`);
-
-  if (stopProcess && devProcess && devProcess.pid) {
-    console.log("⏹ Stopping Base odyssey server...");
-    try {
-      kill(devProcess.pid, "SIGTERM", (err) => {
-        if (err) {
-          console.warn("⚠️ Failed to kill dev process:", err.message);
-        }
-      });
-    } catch (err) {
-      console.warn(
-        "⚠️ Unexpected error while killing process:",
-        (err as Error).message
-      );
-    }
-    try {
-      console.log("🛑 Stopping any running Xray processes...");
-      const { execSync } = require("child_process");
-      execSync('pkill -f "xray run -config"');
-      console.log("✔ Xray processes stopped.");
-    } catch (err: any) {
-      console.warn(
-        "⚠️ No Xray processes were running or failed to stop:",
-        err.message
-      );
-    }
-  }
-
+  if (stopServer) stopBaseServer();
   setTimeout(() => {
-    console.log("👋 Goodbye!, type odyssey to reopen this menu");
-    // exit code: 0 = normal, 1 = error/crash
+    console.log("👋 Goodbye! Type 'odyssey' to reopen this menu");
     process.exit(signal === "manual" ? 0 : 1);
   }, 1000);
 }
-
 mainMenu();
