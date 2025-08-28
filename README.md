@@ -65,6 +65,12 @@ These instructions will get you a copy of the project up and running on your loc
 - [Node.js](https://nodejs.org/) (v20 or later)
 - [npm](https://www.npmjs.com/)
 
+### Wizard
+
+This project contains a wizard that will help you to add and manage your services.
+
+see the [Wizard Wiki Page](https://github.com/Javadyakuza/Odyssey/wiki/Wizard-Wiki) for more information.
+
 ### Installation (ubuntu)
 
 ```bash
