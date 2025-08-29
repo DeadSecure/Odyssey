@@ -44,20 +44,19 @@ A unified monitoring service built on X-ray Core to fully monitor X-ray based se
 
 ## Purchase
 
-Do you want to get rid of all configurations and bring up your own monitoring services with one subscription link ?
+Do you want to get rid of all configurations and bring up your own monitoring services with one click ?
 
 Purchase the ready to go version of the project from the [Odyssey Telegram Support](https://t.me/javad_yakuzaa).
 
-## Disclaimer
-The project is tested only with subscription links containing vless and vmess as their config protocols.
+## ⚠️ Disclaimer
 
-If the config protocol is "ws" (websocket) the program will detect it and will not show or consider it as a config since the http/1.1 is not supported in the newest version of xray-core.
-
-The paid version of the project is absolutely the same with its open-source and free version, only the cost of configuration and the hardware of the vm will be paid.
-
-This project is still in development and may contain bugs or incomplete features. Use it at your own risk.
-
-This project is only tested on ubuntu 20 or higher versions.
+> **Important:**
+>
+> - The project is tested **only with subscription links containing `vless` and `vmess`** as their config protocols.
+> - If the config protocol is `"ws"` (websocket), the program will detect it but ignore it (since HTTP/1.1 is not supported in the newest version of xray-core).
+> - The paid version of the project is **identical** to the open-source version — you only pay for configuration and VM hardware.
+> - This project is still **in development** and may contain bugs or incomplete features. Use it at your own risk.
+> - Tested only on **Ubuntu 20+**.
 
 ## Getting Started
 
@@ -65,8 +64,17 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
+**dev**
+
 - [Node.js](https://nodejs.org/) (v20 or later)
 - [npm](https://www.npmjs.com/)
+
+**prod**
+
+- [Node.js](https://nodejs.org/) (v20 or later)
+- [npm](https://www.npmjs.com/)
+- [Go](https://go.dev/doc/install)
+- [nginx]()
 
 ### Wizard
 
