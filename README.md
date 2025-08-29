@@ -154,3 +154,4 @@ TRON ADDRESS: TKDwVxe2A9L2ndU1BAwmHmq5ztE16SUSNS
 ## Acknowledgments
 
 - The team behind [X-ray Core](https://github.com/XTLS/Xray-core) for their amazing work.
+- the team behind [country.is](https://github.com/lineofflight/country) for their amazing "open source" work.

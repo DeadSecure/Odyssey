@@ -24,7 +24,6 @@ export async function testSite(
   site: string,
   port: number
 ): Promise<SitesTestResponse> {
-
   const curlArgs = [
     "-o",
     "/dev/null",
@@ -40,7 +39,7 @@ export async function testSite(
     "-s",
     "--socks5-hostname",
     `localhost:${port}`,
-    "http://www.geoplugin.net/json.gp?ip=IP_ADDRESS",
+    "https://api.country.is",
   ];
 
   try {
@@ -48,14 +47,15 @@ export async function testSite(
       runCurlCommand(curlArgs),
       runCurlCommand(ipArgs),
     ]);
+
     const parsedCurl: SitesTestResponse = JSON.parse(curlOutput);
     const parsedIp =
       typeof ipOutput === "object" ? ipOutput : JSON.parse(ipOutput);
 
-    if (!parsedIp.geoplugin_request || !parsedIp.geoplugin_countryName) throw new Error("Bad IP data");
+    if (!parsedIp.country) throw new Error("Bad IP data");
 
-    parsedCurl.ip = parsedIp.geoplugin_request;
-    parsedCurl.country = getCountryCode(parsedIp.geoplugin_countryName);
+    parsedCurl.ip = parsedIp.ip;
+    parsedCurl.country = parsedIp.country;
 
     return parsedCurl;
   } catch (err) {
