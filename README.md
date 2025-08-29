@@ -51,11 +51,17 @@ Purchase the ready to go version of the project from the [Odyssey Telegram Suppo
 ## ⚠️ Disclaimer
 
 > **Important:**
->
+
 > - The project is tested **only with subscription links containing `vless` and `vmess`** as their config protocols.
+
 > - If the config protocol is `"ws"` (websocket), the program will detect it but ignore it (since HTTP/1.1 is not supported in the newest version of xray-core).
+
+> - If the protocol of the target configuration is not **vless** or **vmess** then it was not in the testing scope of this project. you can test it yourself via the normal explained flow or add a issue to the project if you want it added.
+
 > - The paid version of the project is **identical** to the open-source version — you only pay for configuration and VM hardware.
+
 > - This project is still **in development** and may contain bugs or incomplete features. Use it at your own risk.
+
 > - Tested only on **Ubuntu 20+**.
 
 ## Getting Started
