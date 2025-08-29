@@ -49,6 +49,9 @@ Do you want to get rid of all configurations and bring up your own monitoring se
 Purchase the ready to go version of the project from the [Odyssey Telegram Support](https://t.me/javad_yakuzaa).
 
 ## Disclaimer
+The project is tested only with subscription links containing vless and vmess as their config protocols.
+
+If the config protocol is "ws" (websocket) the program will detect it and will not show or consider it as a config since the http/1.1 is not supported in the newest version of xray-core.
 
 The paid version of the project is absolutely the same with its open-source and free version, only the cost of configuration and the hardware of the vm will be paid.
 
