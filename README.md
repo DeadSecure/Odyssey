@@ -56,7 +56,7 @@ Purchase the ready to go version of the project from the [Odyssey Telegram Suppo
 
 > - If the config protocol is `"ws"` (websocket), the program will detect it but ignore it (since HTTP/1.1 is not supported in the newest version of xray-core).
 
-> - If the protocol of the target configuration is not **vless** or **vmess** then it was not in the testing scope of this project. you can test it yourself via the normal explained flow or add a issue to the project if you want it added.
+> - If the protocol of the target configuration is not **vless** or **vmess** then it was not in the testing scope of this project. you can  add a issue to the project if you want it added.
 
 > - The paid version of the project is **identical** to the open-source version — you only pay for configuration and VM hardware.
 

@@ -127,6 +127,56 @@ nvm alias default $NODE_VERSION
 echo "✅ Node.js version: $(node -v)"
 echo "✅ npm version: $(npm -v)"
 
+
+# Installing Golang
+#!/bin/bash
+
+# Installing Golang
+echo "📦 Installing Go..."
+
+# Check if Go is already installed and remove if exists
+if command -v go &> /dev/null; then
+    echo "⚠️  Go is already installed. Removing existing installation..."
+    
+    # Remove APT installed Go packages
+    sudo apt remove golang-go golang-1.* --purge -y 2>/dev/null || true
+    
+    # Remove snap installed Go
+    sudo snap remove go 2>/dev/null || true
+    
+    # Remove manually installed Go (if in /usr/local)
+    if [ -d "/usr/local/go" ]; then
+        echo "🗑️  Removing manual Go installation from /usr/local/go"
+        sudo rm -rf /usr/local/go
+    fi
+    
+    # Clean up PATH references (optional - user may need to restart shell)
+    echo "⚠️  Note: You may need to restart your shell or remove Go from your PATH manually"
+fi
+
+# Add PPA and install latest Go
+echo "📥 Adding Go PPA repository..."
+sudo add-apt-repository ppa:longsleep/golang-backports -y
+
+echo "🔄 Updating package lists..."
+sudo apt update
+
+echo "⬇️  Installing Go..."
+# Install the latest available version (golang-go gets the latest)
+sudo apt install golang-go -y
+
+# Verify installation
+if command -v go &> /dev/null; then
+    echo "✅ Go installed successfully!"
+    echo "📋 Go version: $(go version)"
+    echo "📁 Go root: $(go env GOROOT)"
+else
+    echo "❌ Go installation failed!, run the remove script and try again."
+    exit 1
+fi
+
+echo "🎉 Go installation complete!"
+
 # Clone the repo
 if [ ! -d "$APP_DIR" ]; then
     echo "📂 Cloning Odyssey..."
