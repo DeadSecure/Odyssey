@@ -34,7 +34,7 @@
 A unified monitoring service built on X-ray Core to fully monitor X-ray based services. Odyssey provides a user-friendly web interface to visualize and manage your X-ray instances.
 
 [demo](https://test.odyssey.watch/polnet)
-[Telegram Community](https://t.me/odyssey_mointoring)
+[Telegram Community](https://t.me/odyssey_monitoring)
 
 ## Features
 
