@@ -33,6 +33,9 @@
 
 A unified monitoring service built on X-ray Core to fully monitor X-ray based services. Odyssey provides a user-friendly web interface to visualize and manage your X-ray instances.
 
+[demo](https://test.odyssey.watch/polnet)
+[Telegram Community](https://t.me/odyssey_mointoring)
+
 ## Features
 
 - **Automatic detection:** Start with only one subscription link and monitor all your xray based configurations.
@@ -41,6 +44,7 @@ A unified monitoring service built on X-ray Core to fully monitor X-ray based se
 - **Access Control:** Monitor the access to your xray based configurations to different websites and urls.
 - **Interactive Charts:** Visualize data with interactive charts, inspired by [Arvan Cloud Radar](https://radar.arvancloud.ir).
 - **Multi-language Support:** Available in English and Farsi.
+
 
 ## Purchase
 
